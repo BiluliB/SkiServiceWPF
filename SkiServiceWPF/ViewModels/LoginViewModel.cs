@@ -1,0 +1,73 @@
+﻿using System;
+using System.Windows.Input;
+using System.Windows;
+using System.Windows.Input;
+using SkiServiceWPF.Views;
+
+namespace SkiServiceWPF.ViewModel
+{
+    public class RelayCommand : ICommand
+    {
+        private readonly Action _execute;
+        private readonly Func<bool> _canExecute;
+
+        public RelayCommand(Action execute, Func<bool> canExecute = null)
+        {
+            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+            _canExecute = canExecute;
+        }
+
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return _canExecute?.Invoke() ?? true;
+        }
+
+        public void Execute(object parameter)
+        {
+            _execute();
+        }
+    }
+
+    public class LoginViewModel
+    {
+        public ICommand LoginCommand { get; }
+
+        public LoginViewModel()
+        {
+            LoginCommand = new RelayCommand(ExecuteLogin, CanExecuteLogin);
+        }
+
+        private void ExecuteLogin()
+        {
+            // Führen Sie die Login-Logik aus
+            // Zum Beispiel Navigation zur Dashboard-Seite:
+            // NavigateToDashboard();
+            Application.Current.Dispatcher.Invoke(NavigateToDashboard);
+        }
+
+        private bool CanExecuteLogin()
+        {
+            // Bestimmen Sie, ob der Login-Befehl ausgeführt werden kann,
+            // zum Beispiel könnte überprüft werden, ob Benutzername und Passwort eingegeben wurden
+            return true; // Diese Logik muss entsprechend Ihrer Validierungslogik implementiert werden
+        }
+
+        // Sie können eine Methode hinzufügen, um zur Dashboard-Seite zu navigieren
+        private void NavigateToDashboard()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                var dashboardView = new DashboardView(); // DashboardView ist jetzt ein UserControl
+                var mainWindow = Application.Current.MainWindow;
+                mainWindow.Content = dashboardView; // Ersetzen Sie den Inhalt des Hauptfensters
+            });
+        }
+
+    }
+}
