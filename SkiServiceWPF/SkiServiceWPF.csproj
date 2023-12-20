@@ -11,6 +11,18 @@
   <ItemGroup>
     <None Remove="Assets\Icons\password.png" />
     <None Remove="Assets\Icons\username.png" />
+    <None Remove="Assets\Images\add.png" />
+    <None Remove="Assets\Images\pen.png" />
+    <None Remove="Assets\Images\trashcan.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\Images\add.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Images\pen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Fluent.Ribbon" Version="10.0.4" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
   </ItemGroup>
 
@@ -31,6 +44,9 @@
     <Resource Include="Assets\Icons\username.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Content Include="Assets\Images\trashcan.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

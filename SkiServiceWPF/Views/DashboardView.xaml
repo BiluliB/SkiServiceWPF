@@ -3,32 +3,54 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:Fluent="urn:fluent-ribbon"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <DockPanel>
-        <!-- Menüleiste -->
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header="Edit"/>
-            <MenuItem Header="Delete"/>
-            <MenuItem Header="Add"/>
-            <MenuItem Header="Help"/>
-        </Menu>
+    <Grid>
+        <!-- Haupt-Grid mit zwei Zeilen: eine für Ribbon und Menü, eine für den Inhalt -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Ribbon und Menü -->
+            <RowDefinition Height="*"/>
+            <!-- Inhalt -->
+        </Grid.RowDefinitions>
 
-        <!-- Werkzeugleiste -->
-        <ToolBar DockPanel.Dock="Top">
-            <Button Content="Edit"/>
-            <Button Content="Delete"/>
-            <Button Content="Add"/>
-        </ToolBar>
+        <!-- Erste Zeile: Menü und Ribbon -->
+        <DockPanel Grid.Row="0">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="Editieren"/>
+                <MenuItem Header="Löschen"/>
+                <MenuItem Header="Hinzufügen"/>
+                <MenuItem Header="Hilfe"/>
+                <MenuItem Header="Einstellung"/>
+            </Menu>
+            <Fluent:Ribbon>
+                <Fluent:RibbonTabItem Header="Start">
+                    <Fluent:RibbonGroupBox>
+                        <Fluent:Button Header="Editieren" Icon=".\Assets\Images\pen.png" LargeIcon=".\Assets\Images\pen.png"/>
+                        <Fluent:Button Header="Löschen" Icon=".\Assets\Images\trashcan.png" LargeIcon=".\Assets\Images\trashcan.png"/>
+                        <Fluent:Button Header="Hinzufügen" Icon=".\Assets\Images\add.png"/>
+                    </Fluent:RibbonGroupBox>
+                </Fluent:RibbonTabItem>
+            </Fluent:Ribbon>
+        </DockPanel>
 
-        <!-- Hauptinhaltsbereich -->
-        <Grid>
+        <!-- Suchleiste rechtsbündig über dem Ribbon -->
+        <!-- Verwenden Sie Margin, um den Abstand von oben anzupassen -->
+        <DockPanel Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,60,10,10">
+            <TextBox Width="200"/>
+            <Button Content="Suchen" Width="80" Margin="10,0,0,0"/>
+        </DockPanel>
+
+        <!-- Zweite Zeile: Inhalt mit TreeView und DataGrid -->
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="190"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Baumansicht für Aufträge -->
+            <!-- TreeView -->
             <TreeView Grid.Column="0">
                 <TreeViewItem Header="Alle Aufträge" IsExpanded="True">
                     <TreeViewItem Header="Offene Aufträge" IsExpanded="True">
@@ -41,18 +63,11 @@
                 </TreeViewItem>
             </TreeView>
 
-            <!-- Bereich für die Auftragsdetails -->
-            <Grid Grid.Column="1">
-                <!-- Suchbereich -->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <TextBox Width="100" Margin="5" />
-                    <TextBox Width="100" Margin="5" />
-                    <Button Content="Suchen" Margin="5"/>
-                </StackPanel>
+            <!-- GridSplitter -->
+            <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns"/>
 
-                <!-- Datengitter für die ausgewählten Aufträge -->
-                <DataGrid Margin="0,40,0,0"/>
-            </Grid>
+            <!-- DataGrid -->
+            <DataGrid Grid.Column="2"/>
         </Grid>
-    </DockPanel>
+    </Grid>
 </UserControl>
