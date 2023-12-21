@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34407.89
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiServiceWPF", "SkiServiceWPF\SkiServiceWPF.csproj", "{5FC220F1-B0F8-4D63-9CE4-ED1EAA5A4F56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkiServiceWPF", "SkiServiceWPF\SkiServiceWPF.csproj", "{5FC220F1-B0F8-4D63-9CE4-ED1EAA5A4F56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiService.Tests", "SkiService.Tests\SkiService.Tests.csproj", "{7E88B4CA-6428-419D-A4D5-147AD01619A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkiService.Tests", "SkiService.Tests\SkiService.Tests.csproj", "{7E88B4CA-6428-419D-A4D5-147AD01619A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

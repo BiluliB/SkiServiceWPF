@@ -1,73 +1,97 @@
-﻿using System;
-using System.Windows.Input;
+﻿using SkiServiceWPF.Commands;
+using SkiServiceWPF.Common;
+using SkiServiceWPF.Models;
+using SkiServiceWPF.Views;
+using System;
+using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using SkiServiceWPF.Views;
 
 namespace SkiServiceWPF.ViewModel
 {
-    public class RelayCommand : ICommand
+    public class LoginViewModel : INotifyPropertyChanged
     {
-        private readonly Action _execute;
-        private readonly Func<bool> _canExecute;
+        private readonly UserLoginApi _userLoginApi;
+        private string _username;
+        private string _password;
+        private string _errorMessage;
 
-        public RelayCommand(Action execute, Func<bool> canExecute = null)
+        public string UserName
         {
-            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
-            _canExecute = canExecute;
+            get => _username;
+            set
+            {
+                _username = value;
+                OnPropertyChanged(nameof(UserName));
+            }
         }
 
-        public event EventHandler CanExecuteChanged
+        public string Password
         {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
+            get => _password;
+            set
+            {
+                _password = value;
+                OnPropertyChanged(nameof(Password));
+            }
         }
 
-        public bool CanExecute(object parameter)
+        public string ErrorMessage
         {
-            return _canExecute?.Invoke() ?? true;
+            get => _errorMessage;
+            set
+            {
+                _errorMessage = value;
+                OnPropertyChanged(nameof(ErrorMessage));
+            }
         }
 
-        public void Execute(object parameter)
-        {
-            _execute();
-        }
-    }
-
-    public class LoginViewModel
-    {
         public ICommand LoginCommand { get; }
 
-        public LoginViewModel()
+        public LoginViewModel(UserLoginApi userLoginApi)
         {
-            LoginCommand = new RelayCommand(ExecuteLogin, CanExecuteLogin);
+            _userLoginApi = userLoginApi;
+            LoginCommand = new RelayCommand(async () => await ExecuteLogin(), CanExecuteLogin);
         }
 
-        private void ExecuteLogin()
+        private async Task ExecuteLogin()
         {
-            // Führen Sie die Login-Logik aus
-            // Zum Beispiel Navigation zur Dashboard-Seite:
-            // NavigateToDashboard();
-            Application.Current.Dispatcher.Invoke(NavigateToDashboard);
+            try
+            {
+                var authRequest = new AuthRequestModel
+                {
+                    UserName = this.UserName,
+                    Password = this.Password
+                };
+                var response = await _userLoginApi.LoginAsync(authRequest);
+                NavigateToDashboard();
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = "Login fehlgeschlagen: " + ex.Message;
+            }
         }
 
         private bool CanExecuteLogin()
         {
-            // Bestimmen Sie, ob der Login-Befehl ausgeführt werden kann,
-            // zum Beispiel könnte überprüft werden, ob Benutzername und Passwort eingegeben wurden
-            return true; // Diese Logik muss entsprechend Ihrer Validierungslogik implementiert werden
+            return !string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(Password);
         }
 
-        // Sie können eine Methode hinzufügen, um zur Dashboard-Seite zu navigieren
         private void NavigateToDashboard()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                var dashboardView = new DashboardView(); // DashboardView ist jetzt ein UserControl
+                var dashboardView = new DashboardView();
                 var mainWindow = Application.Current.MainWindow;
-                mainWindow.Content = dashboardView; // Ersetzen Sie den Inhalt des Hauptfensters
+                mainWindow.Content = dashboardView;
             });
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
