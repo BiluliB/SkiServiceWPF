@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SkiServiceWPF.Services;
+using SkiServiceWPF.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,11 +27,15 @@ namespace SkiServiceWPF.Views
             InitializeComponent();
         }
 
-        private void TreeView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void TreeViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (sender is TreeView treeView && treeView.SelectedItem is TreeViewItem selectedItem)
+            if (e.Source is TreeViewItem item && item.Header is string header)
             {
-                var header = selectedItem.Header as string;
+                if (header == "Alle Aufträge")
+                {
+                    var listViewControl = new ListViewUserControl();
+                    this.ContentPlaceholder.Content = listViewControl;
+                }
             }
         }
     }

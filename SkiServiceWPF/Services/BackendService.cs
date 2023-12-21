@@ -35,7 +35,7 @@ namespace SkiServiceWPF.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var obj = JsonConvert.DeserializeObject<List<RegistrationsModel>>(json);
+                    return JsonConvert.DeserializeObject<List<RegistrationsModel>>(json);
                 }
             }
             catch (Exception ex)
@@ -44,6 +44,7 @@ namespace SkiServiceWPF.Services
             }
             return new List<RegistrationsModel>();
         }
+
 
         public async Task<LoginResponseModel> LoginAsync(AuthRequestModel authRequest)
         {
@@ -57,8 +58,6 @@ namespace SkiServiceWPF.Services
 
                 var response = await _httpClient.PostAsync(fullUrl, content);
 
-                Debug.WriteLine($"Sending POST request to {fullUrl}");
-
                 if (response.IsSuccessStatusCode)
                 {
                     var responseContent = await response.Content.ReadAsStringAsync();
@@ -66,14 +65,12 @@ namespace SkiServiceWPF.Services
                 }
                 else
                 {
-                    Debug.WriteLine($"Failed to POST data to {fullUrl}. Response status: {response.StatusCode}");
                     throw new Exception($"Server returned non-success status code: {response.StatusCode}");
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Exception in LoginAsync: {ex.Message}");
-                throw; // Rethrow the exception to preserve the stack trace
+                throw new Exception($"Login fehlgeschlagen: {ex.Message}");
             }
         }
     }

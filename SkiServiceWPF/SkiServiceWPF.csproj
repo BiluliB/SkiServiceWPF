@@ -26,9 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Helpers\" />
     <Folder Include="Converters\" />
     <Folder Include="DTOs\" />
+    <Folder Include="Helpers\" />
     <Folder Include="Resources\" />
   </ItemGroup>
 
