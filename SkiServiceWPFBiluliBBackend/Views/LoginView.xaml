@@ -26,27 +26,15 @@
 
         <Border Grid.Row="1" Background="Black" Height="2" Margin="20,0"/>
 
-        <StackPanel 
-            Grid.Row="2" 
-            Orientation="Horizontal" 
-            VerticalAlignment="Center" 
-            HorizontalAlignment="Center">
-            
-            <Image 
-                Source="pack://application:,,,/Assets/Icons/username.png" 
-                Width="40" Height="40"/>
-            
-            <TextBox Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"
-                     adorners:Watermark.Text="Benutzername" 
-                     Width="300" Height="40" Margin="10,4" FontSize="25" 
-                     adorners:Watermark.TextStyle="{StaticResource AdornerTextStyle}" />
+        <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Image Source="pack://application:,,,/Assets/Icons/username.png" Width="40" Height="40"/>
+            <TextBox adorners:Watermark.Text="Benutzername" Width="300" Height="40" Margin="10,4" FontSize="25" adorners:Watermark.TextStyle="{StaticResource AdornerTextStyle}" />
         </StackPanel>
 
         <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Image Source="pack://application:,,,/Assets/Icons/password.png" Width="40" Height="40"/>
             <Grid>
-                <PasswordBox x:Name="passwordBox" PasswordChanged="PasswordBox_PasswordChanged" 
-                    adorners:Watermark.Text="Passwort" Width="300" Height="40" Margin="10,4" FontSize="25" adorners:Watermark.TextStyle="{StaticResource AdornerTextStyle}"/>
+                <PasswordBox adorners:Watermark.Text="Passwort" Width="300" Height="40" Margin="10,4" FontSize="25" adorners:Watermark.TextStyle="{StaticResource AdornerTextStyle}"/>
             </Grid>
             
             
