@@ -1,6 +1,6 @@
 ﻿using SkiServiceWPF.Commands;
-using SkiServiceWPF.Common;
 using SkiServiceWPF.Models;
+using SkiServiceWPF.Services;
 using SkiServiceWPF.Views;
 using System;
 using System.ComponentModel;
@@ -12,10 +12,10 @@ namespace SkiServiceWPF.ViewModel
 {
     public class LoginViewModel : INotifyPropertyChanged
     {
-        private readonly UserLoginApi _userLoginApi;
         private string _username;
         private string _password;
         private string _errorMessage;
+        private readonly BackendService _backendService;
 
         public string UserName
         {
@@ -49,9 +49,9 @@ namespace SkiServiceWPF.ViewModel
 
         public ICommand LoginCommand { get; }
 
-        public LoginViewModel(UserLoginApi userLoginApi)
+        public LoginViewModel(BackendService backendService)
         {
-            _userLoginApi = userLoginApi;
+            _backendService = backendService;
             LoginCommand = new RelayCommand(async () => await ExecuteLogin(), CanExecuteLogin);
         }
 
@@ -64,7 +64,7 @@ namespace SkiServiceWPF.ViewModel
                     UserName = this.UserName,
                     Password = this.Password
                 };
-                var response = await _userLoginApi.LoginAsync(authRequest);
+                var response = await _backendService.LoginAsync(authRequest);
                 NavigateToDashboard();
             }
             catch (Exception ex)

@@ -52,7 +52,7 @@
 
             <!-- TreeView -->
             <TreeView Grid.Column="0">
-                <TreeViewItem Header="Alle Aufträge" IsExpanded="True">
+                <TreeViewItem Header="Alle Aufträge" IsExpanded="True" MouseDoubleClick="TreeView_MouseDoubleClick">
                     <TreeViewItem Header="Offene Aufträge" IsExpanded="True">
                         <!-- Fügen Sie hier die Kinder hinzu -->
                     </TreeViewItem>

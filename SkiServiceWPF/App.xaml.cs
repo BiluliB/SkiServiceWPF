@@ -5,22 +5,33 @@ using SkiServiceWPF.Views;
 using System.Windows;
 using Microsoft.Extensions.Configuration;
 using System.IO;
-using SkiServiceWPF.Common;
 using SkiServiceWPF.ViewModel;
+using SkiServiceWPF.Services;
+using System.Net.Http;
 
 namespace SkiServiceWPF
 {
     public partial class App : Application
     {
+        public static HttpClient HttpClient { get; private set; }
         public ServiceProvider ServiceProvider { get; private set; }
+
+        public static IConfiguration Configuration { get; private set; }
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            HttpClient = new HttpClient();
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
             ServiceProvider = serviceCollection.BuildServiceProvider();
 
+            // Endpoint setter
+            var builder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+            Configuration = builder.Build();
             var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show();
 
@@ -31,16 +42,22 @@ namespace SkiServiceWPF
 
         private void ConfigureServices(IServiceCollection services)
         {
-            var configuration = new ConfigurationBuilder()
-                .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json"), optional: false, reloadOnChange: true)
+            Configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
 
-            var apiSettings = configuration.GetSection("ApiSettings").Get<ApiSettings>();
-            services.AddSingleton(apiSettings);
+            services.AddSingleton<IConfiguration>(Configuration);
 
-            services.AddHttpClient<UserLoginApi>();
-            services.AddSingleton<UserLoginApi>();
-            services.AddSingleton<UserCreationApi>();
+            // Konfigurieren des HttpClient für BackendService
+            services.AddHttpClient<BackendService>(client =>
+            {
+                // Hier wird die Basis-URL aus der Konfiguration gesetzt
+                string baseUrl = Configuration["ApiSettings:BaseUrl"];
+                client.BaseAddress = new Uri(baseUrl);
+            });
+
+            services.AddSingleton<BackendService>();
             services.AddSingleton<LoginViewModel>();
 
             services.AddSingleton<INavigationService>(provider =>

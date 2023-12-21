@@ -16,21 +16,13 @@ using System.Windows.Shapes;
 namespace SkiServiceWPF.Views
 {
     /// <summary>
-    /// Interaction logic for DashboardView.xaml
+    /// Interaction logic for ListViewUserControl.xaml
     /// </summary>
-    public partial class DashboardView : UserControl
+    public partial class ListViewUserControl : UserControl
     {
-        public DashboardView()
+        public ListViewUserControl()
         {
             InitializeComponent();
-        }
-
-        private void TreeView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (sender is TreeView treeView && treeView.SelectedItem is TreeViewItem selectedItem)
-            {
-                var header = selectedItem.Header as string;
-            }
         }
     }
 }
