@@ -45,7 +45,7 @@ namespace SkiServiceWPF.Services
             return new List<RegistrationsModel>();
         }
 
-        public async Task<LoginResponseModel> LoginAsync(AuthRequestModel authRequest)
+        public async Task<AuthResponseModel> LoginAsync(AuthRequestModel authRequest)
         {
             try
             {
@@ -59,23 +59,40 @@ namespace SkiServiceWPF.Services
 
                 Debug.WriteLine($"Sending POST request to {fullUrl}");
 
+                var responseContent = await response.Content.ReadAsStringAsync();
+
                 if (response.IsSuccessStatusCode)
                 {
-                    var responseContent = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<LoginResponseModel>(responseContent);
+                    // Erfolgreiche Authentifizierung
+                    return new AuthResponseModel
+                    {
+                        IsSuccess = true,
+                        ResponseMessage = responseContent // oder Deserialisieren, wenn der Body eine spezifische Nachricht enthält
+                    };
                 }
                 else
                 {
-                    Debug.WriteLine($"Failed to POST data to {fullUrl}. Response status: {response.StatusCode}");
-                    throw new Exception($"Server returned non-success status code: {response.StatusCode}");
+                    // Authentifizierungsfehler
+                    return new AuthResponseModel
+                    {
+                        IsSuccess = false,
+                        ResponseMessage = responseContent // oder eine angepasste Nachricht basierend auf dem Statuscode
+                    };
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Exception in LoginAsync: {ex.Message}");
-                throw; // Rethrow the exception to preserve the stack trace
+                // Fehlerfall
+                return new AuthResponseModel
+                {
+                    IsSuccess = false,
+                    ResponseMessage = $"Ein Fehler ist aufgetreten: {ex.Message}"
+                };
             }
         }
+
+
     }
 }
 

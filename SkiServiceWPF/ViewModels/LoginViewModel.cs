@@ -4,6 +4,7 @@ using SkiServiceWPF.Services;
 using SkiServiceWPF.Views;
 using System;
 using System.ComponentModel;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -64,14 +65,27 @@ namespace SkiServiceWPF.ViewModel
                     UserName = this.UserName,
                     Password = this.Password
                 };
+
                 var response = await _backendService.LoginAsync(authRequest);
-                NavigateToDashboard();
+
+                if (response.IsSuccess)
+                {
+                    // Erfolgreiche Anmeldung
+                    NavigateToDashboard();
+                }
+                else
+                {
+                    // Authentifizierungsfehler
+                    ErrorMessage = response.ResponseMessage;
+                }
             }
             catch (Exception ex)
             {
+                // Allgemeiner Fehler
                 ErrorMessage = "Login fehlgeschlagen: " + ex.Message;
             }
         }
+
 
         private bool CanExecuteLogin()
         {
