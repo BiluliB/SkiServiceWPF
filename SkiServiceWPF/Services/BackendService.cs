@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using SkiServiceWPF.DTOs;
 using SkiServiceWPF.Models;
+using SkiServiceWPF.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,7 +26,7 @@ namespace SkiServiceWPF.Services
             _configuration = configuration;
         }
 
-        public async Task<List<RegistrationsModel>> GetRegistrations(string routeKey)
+        public async Task<List<RegistrationModel>> GetRegistrations(string routeKey)
         {
             try
             {
@@ -35,15 +37,18 @@ namespace SkiServiceWPF.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var obj = JsonConvert.DeserializeObject<List<RegistrationsModel>>(json);
+                    var registrationdto = JsonConvert.DeserializeObject<List<RegistrationsDto>>(json);
+                    var models = registrationdto.Select(dto => ConvertDtoToModel(dto)).ToList();
+                    return models;
                 }
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message, ex);
             }
-            return new List<RegistrationsModel>();
+            return new List<RegistrationModel>();
         }
+
 
         public async Task<AuthResponseModel> LoginAsync(AuthRequestModel authRequest)
         {
@@ -90,6 +95,21 @@ namespace SkiServiceWPF.Services
                     ResponseMessage = $"Ein Fehler ist aufgetreten HTTP 404"
                 };
             }
+        }
+
+        private RegistrationModel ConvertDtoToModel(RegistrationsDto registrationdto)
+        {
+            return new RegistrationModel
+            {
+                RegistrationId = registrationdto.RegistrationId,
+                LastName = registrationdto.LastName,
+                FirstName = registrationdto.FirstName,
+                PickupDate = registrationdto.PickupDate,
+                Priority = registrationdto.Priority,
+                Service = registrationdto.Service,
+                Status = registrationdto.Status
+
+            };
         }
 
     }

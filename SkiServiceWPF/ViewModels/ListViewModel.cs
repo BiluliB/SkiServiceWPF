@@ -16,14 +16,14 @@ namespace SkiServiceWPF.ViewModels
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         public ICommand LoadRegistrationsCommand { get; private set; }
-        public ObservableCollection<RegistrationsModel> Registrations { get; private set; }
+        public ObservableCollection<RegistrationModel> Registrations { get; private set; }
 
         private readonly BackendService _backendService;
 
         public ListViewModel(BackendService backendService)
         {
             _backendService = backendService;
-            Registrations = new ObservableCollection<RegistrationsModel>();
+            Registrations = new ObservableCollection<RegistrationModel>();
             LoadRegistrationsCommand = new RelayCommand(async () => await Load_Registrations());
         }
 
@@ -31,11 +31,22 @@ namespace SkiServiceWPF.ViewModels
         {
             try
             {
-                var registrations = await _backendService.GetRegistrations("https://localhost:7119/Registrations");
+                var registrationDtos = await _backendService.GetRegistrations("GetAllRegistrationsEndpoint");
                 Registrations.Clear();
-                foreach (var registration in registrations)
+                foreach (var registrationdto in registrationDtos)
                 {
-                    Registrations.Add(registration);
+                    var model = new RegistrationModel
+                    {
+                        RegistrationId = registrationdto.RegistrationId,
+                        LastName = registrationdto.LastName,
+                        FirstName = registrationdto.FirstName,
+                        PickupDate = registrationdto.PickupDate,
+                        Priority = registrationdto.Priority,
+                        Service = registrationdto.Service,
+                        Status = registrationdto.Status
+
+                    };
+                    Registrations.Add(model);
                 }
             }
             catch (Exception ex)

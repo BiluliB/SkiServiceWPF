@@ -29,7 +29,7 @@
                     <GridViewColumn Header="Enddatum"
                                     Width="{Binding ActualWidth, ElementName=MyListView, 
                                     Converter={StaticResource WidthConverter}, ConverterParameter=0.15}" 
-                                    DisplayMemberBinding="{Binding EndDate}" />
+                                    DisplayMemberBinding="{Binding PickupDate}" />
                     <GridViewColumn Header="Status"
                                     Width="{Binding ActualWidth, ElementName=MyListView, 
                                     Converter={StaticResource WidthConverter}, ConverterParameter=0.1}" 

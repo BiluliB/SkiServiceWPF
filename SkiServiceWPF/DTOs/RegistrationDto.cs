@@ -1,8 +1,13 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 
-namespace SkiServiceWPF.Models
+namespace SkiServiceWPF.DTOs
 {
-    public class RegistrationsModel
+    public class RegistrationsDto
     {
         [JsonProperty("registrationId")]
         public int RegistrationId { get; set; }
@@ -30,6 +35,9 @@ namespace SkiServiceWPF.Models
 
         [JsonProperty("service")]
         public string Service { get; set; }
+
+        [JsonProperty("status")]
+        public string Status { get; set; }
 
         [JsonProperty("price")]
         public string Price { get; set; }

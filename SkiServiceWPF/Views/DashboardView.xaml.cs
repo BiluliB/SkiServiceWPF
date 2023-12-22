@@ -22,9 +22,12 @@ namespace SkiServiceWPF.Views
     /// </summary>
     public partial class DashboardView : UserControl
     {
-        public DashboardView()
+        private readonly BackendService _backendService;
+
+        public DashboardView(BackendService backendService)
         {
             InitializeComponent();
+            _backendService = backendService;
         }
 
         private void TreeViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -33,8 +36,14 @@ namespace SkiServiceWPF.Views
             {
                 if (header == "Alle Aufträge")
                 {
-                    var listViewControl = new ListViewUserControl();
+                    var listViewViewModel = new ListViewModel(_backendService);
+                    var listViewControl = new ListViewUserControl
+                    {
+                        DataContext = listViewViewModel
+                    };
                     this.ContentPlaceholder.Content = listViewControl;
+
+                    listViewViewModel.LoadRegistrationsCommand.Execute(null);
                 }
             }
         }
