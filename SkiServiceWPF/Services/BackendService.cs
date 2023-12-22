@@ -35,7 +35,7 @@ namespace SkiServiceWPF.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<List<RegistrationsModel>>(json);
+                    var obj = JsonConvert.DeserializeObject<List<RegistrationsModel>>(json);
                 }
             }
             catch (Exception ex)
@@ -45,7 +45,7 @@ namespace SkiServiceWPF.Services
             return new List<RegistrationsModel>();
         }
 
-        public async Task<LoginResponseModel> LoginAsync(AuthRequestModel authRequest)
+        public async Task<AuthResponseModel> LoginAsync(AuthRequestModel authRequest)
         {
             try
             {
@@ -56,6 +56,10 @@ namespace SkiServiceWPF.Services
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 var response = await _httpClient.PostAsync(fullUrl, content);
+
+                Debug.WriteLine($"Sending POST request to {fullUrl}");
+
+                var responseContent = await response.Content.ReadAsStringAsync();
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -74,8 +78,6 @@ namespace SkiServiceWPF.Services
                         IsSuccess = false,
                         ResponseMessage = responseContent // oder eine angepasste Nachricht basierend auf dem Statuscode
                     };
-
-                    throw new Exception($"Server returned non-success status code: {response.StatusCode}");
                 }
             }
             catch (Exception ex)
@@ -87,10 +89,8 @@ namespace SkiServiceWPF.Services
                     IsSuccess = false,
                     ResponseMessage = $"Ein Fehler ist aufgetreten: {ex.Message}"
                 };
-                throw new Exception($"Login fehlgeschlagen: {ex.Message}");
             }
         }
-
 
     }
 }
