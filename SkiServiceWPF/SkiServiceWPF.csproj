@@ -29,7 +29,7 @@
     <Folder Include="Converters\" />
     <Folder Include="DTOs\" />
     <Folder Include="Resources\" />
-    <Folder Include="Helpers"/>
+    <Folder Include="Helpers" />
   </ItemGroup>
 
   <ItemGroup>
@@ -55,6 +55,12 @@
     <Content Include="Assets\Images\trashcan.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="AssemblyInfo.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
