@@ -34,7 +34,7 @@
             Bitte einloggen
         </TextBlock>
 
-        <Border Grid.Row="1" Background="Black" Height="2" Margin="20,0"/>
+        <Border Grid.Row="1" Background="Black" Height="2" Margin="20,0" Width="340"/>
 
         <StackPanel 
             Grid.Row="2" 

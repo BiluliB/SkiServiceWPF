@@ -87,7 +87,7 @@ namespace SkiServiceWPF.Services
                 return new AuthResponseModel
                 {
                     IsSuccess = false,
-                    ResponseMessage = $"Ein Fehler ist aufgetreten: {ex.Message}"
+                    ResponseMessage = $"Ein Fehler ist aufgetreten HTTP 404"
                 };
             }
         }

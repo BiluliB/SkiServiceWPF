@@ -87,7 +87,7 @@ namespace SkiServiceWPF.ViewModel
     catch (Exception ex)
     {
         // Allgemeiner Fehler
-        ErrorMessage = "Login fehlgeschlagen: " + ex.Message;
+        ErrorMessage = ex.Message;
     }
 }
 
