@@ -57,34 +57,34 @@ namespace SkiServiceWPF.ViewModel
         }
 
         private async Task ExecuteLogin()
+{
+    try
+    {
+        var authRequest = new AuthRequestModel
         {
-            try
-            {
-                var authRequest = new AuthRequestModel
-                {
-                    UserName = this.UserName,
-                    Password = this.Password
-                };
+            UserName = this.UserName,
+            Password = this.Password
+        };
 
-                var response = await _backendService.LoginAsync(authRequest);
+        var response = await _backendService.LoginAsync(authRequest);
 
-                if (response.IsSuccess)
-                {
-                    // Erfolgreiche Anmeldung
-                    NavigateToDashboard();
-                }
-                else
-                {
-                    // Authentifizierungsfehler
-                    ErrorMessage = response.ResponseMessage;
-                }
-            }
-            catch (Exception ex)
-            {
-                // Allgemeiner Fehler
-                ErrorMessage = "Login fehlgeschlagen: " + ex.Message;
-            }
+        if (response.IsSuccess)
+        {
+            // Erfolgreiche Anmeldung
+            NavigateToDashboard();
         }
+        else
+        {
+            // Authentifizierungsfehler
+            ErrorMessage = response.ResponseMessage;
+        }
+    }
+    catch (Exception ex)
+    {
+        // Allgemeiner Fehler
+        ErrorMessage = "Login fehlgeschlagen: " + ex.Message;
+    }
+}
 
 
         private bool CanExecuteLogin()
