@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Navigation;
 
 namespace SkiServiceWPF.Views
 {
@@ -10,6 +11,17 @@ namespace SkiServiceWPF.Views
         public MainWindow()
         {
             InitializeComponent();
+
+            // Event-Handler innerhalb des Konstruktors hinzufügen
+            MainContentFrame.Navigating += MainFrame_Navigating;
+        }
+
+        private void MainFrame_Navigating(object sender, NavigatingCancelEventArgs e)
+        {
+            if (e.NavigationMode == NavigationMode.Back)
+            {
+                e.Cancel = true;
+            }
         }
     }
 }

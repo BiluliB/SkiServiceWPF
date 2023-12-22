@@ -12,6 +12,7 @@
     <None Remove="Assets\Icons\password.png" />
     <None Remove="Assets\Icons\username.png" />
     <None Remove="Assets\Images\add.png" />
+    <None Remove="Assets\Images\dashboardImage.png" />
     <None Remove="Assets\Images\pen.png" />
     <None Remove="Assets\Images\trashcan.png" />
   </ItemGroup>
@@ -20,6 +21,9 @@
     <Content Include="Assets\Images\add.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Assets\Images\dashboardImage.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Assets\Images\pen.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

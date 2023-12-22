@@ -24,7 +24,7 @@
                 <MenuItem Header="Hilfe"/>
                 <MenuItem Header="Einstellung"/>
             </Menu>
-            
+
             <!-- Ribbon -->
             <Fluent:Ribbon>
                 <Fluent:RibbonTabItem Header="Start">
@@ -66,6 +66,7 @@
             <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns"/>
 
             <!-- ContentControl: ListViewUserControl -->
+            <Image x:Name="DashboardImage" Source="../Assets/Images/dashboardImage.png" Grid.Column="2" Margin="0,40,0,0"/>
             <ContentControl x:Name="ContentPlaceholder" Grid.Column="2"/>
         </Grid>
     </Grid>

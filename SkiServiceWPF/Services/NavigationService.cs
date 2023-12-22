@@ -54,6 +54,8 @@ namespace SkiServiceWPF.Services
 
             var newPage = createFunc();
             _mainContentFrame.Navigate(newPage);
+
+            _mainContentFrame.NavigationService.RemoveBackEntry();
         }
         #endregion
     }

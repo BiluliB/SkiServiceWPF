@@ -2,6 +2,8 @@
 using SkiServiceWPF.ViewModels;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows;
+using System.Diagnostics;
 
 namespace SkiServiceWPF.Views
 {
@@ -16,6 +18,7 @@ namespace SkiServiceWPF.Views
         {
             InitializeComponent();
             _backendService = backendService;
+            Debug.WriteLine($"Image path: {DashboardImage.Source}");
         }
 
         private void TreeViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
