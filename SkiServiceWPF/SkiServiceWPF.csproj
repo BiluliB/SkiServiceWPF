@@ -25,10 +25,11 @@
     </Content>
   </ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup>
     <Folder Include="Converters\" />
     <Folder Include="DTOs\" />
     <Folder Include="Resources\" />
+    <Folder Include="Helpers"/>
   </ItemGroup>
 
   <ItemGroup>

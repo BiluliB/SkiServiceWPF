@@ -4,6 +4,8 @@ using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel;
 using System.Windows.Media;
+using System.Windows.Input;
+using SkiServiceWPF.Helpers;
 
 namespace SkiServiceWPF.Views
 {
@@ -23,26 +25,30 @@ namespace SkiServiceWPF.Views
         {
             if (DataContext is LoginViewModel viewModel)
             {
-                viewModel.Password = ((PasswordBox)sender).Password;
+                PasswordHandlingHelper.HandlePasswordChanged((PasswordBox)sender, viewModel);
             }
         }
 
         private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(LoginViewModel.ErrorMessage))
+            if (e.PropertyName == nameof(LoginViewModel.ErrorMessage) && sender is LoginViewModel viewModel)
             {
-                var viewModel = sender as LoginViewModel;
-                if (viewModel.ErrorMessage == "User not found")
-                {
-                    // Setzen des BorderBrush auf Rot
-                    passwordBox.BorderBrush = new SolidColorBrush(Colors.Red);
-                }
-                else
-                {
-                    // Zurücksetzen auf Standardfarbe
-                    passwordBox.BorderBrush = SystemColors.ControlDarkBrush;
-                }
+                PasswordHandlingHelper.UpdatePasswordBoxBorder(viewModel, passwordBox, usernameTextBox);
             }
         }
+
+        private void Button_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            PasswordHandlingHelper.ShowPassword(passwordBox, passwordTxtBox);
+            e.Handled = true;
+        }
+
+        private void Button_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            PasswordHandlingHelper.HidePassword(passwordBox, passwordTxtBox);
+            e.Handled = true;
+        }
+
+
     }
 }
