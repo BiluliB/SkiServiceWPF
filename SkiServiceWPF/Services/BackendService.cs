@@ -45,7 +45,6 @@ namespace SkiServiceWPF.Services
             return new List<RegistrationsModel>();
         }
 
-
         public async Task<LoginResponseModel> LoginAsync(AuthRequestModel authRequest)
         {
             try
@@ -60,19 +59,39 @@ namespace SkiServiceWPF.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var responseContent = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<LoginResponseModel>(responseContent);
+                    // Erfolgreiche Authentifizierung
+                    return new AuthResponseModel
+                    {
+                        IsSuccess = true,
+                        ResponseMessage = responseContent // oder Deserialisieren, wenn der Body eine spezifische Nachricht enthält
+                    };
                 }
                 else
                 {
+                    // Authentifizierungsfehler
+                    return new AuthResponseModel
+                    {
+                        IsSuccess = false,
+                        ResponseMessage = responseContent // oder eine angepasste Nachricht basierend auf dem Statuscode
+                    };
+
                     throw new Exception($"Server returned non-success status code: {response.StatusCode}");
                 }
             }
             catch (Exception ex)
             {
+                Debug.WriteLine($"Exception in LoginAsync: {ex.Message}");
+                // Fehlerfall
+                return new AuthResponseModel
+                {
+                    IsSuccess = false,
+                    ResponseMessage = $"Ein Fehler ist aufgetreten: {ex.Message}"
+                };
                 throw new Exception($"Login fehlgeschlagen: {ex.Message}");
             }
         }
+
+
     }
 }
 

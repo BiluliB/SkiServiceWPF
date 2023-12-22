@@ -4,11 +4,20 @@
         xmlns:adorners="http://gu.se/Adorners"
         Height="700" Width="800">
 
-    <UserControl.Resources>
+    <UserControl.Resources>        
         <Style x:Key="AdornerTextStyle" TargetType="{x:Type TextBlock}">
             <Setter Property="FontStyle" Value="Normal"/>
             <Setter Property="Foreground" Value="Gray"/>
         </Style>
+
+        <Style x:Key="TextBoxErrorStyle" TargetType="TextBox">
+            <Setter Property="BorderBrush" Value="#abadb3"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ErrorMessage}" Value="User not found">
+                    <Setter Property="BorderBrush" Value="Red"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>        
     </UserControl.Resources>
 
     <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -17,6 +26,7 @@
             <RowDefinition Height="20"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
@@ -31,27 +41,28 @@
             Orientation="Horizontal" 
             VerticalAlignment="Center" 
             HorizontalAlignment="Center">
-            
-            <Image 
-                Source="pack://application:,,,/Assets/Icons/username.png" 
-                Width="40" Height="40"/>
-            
-            <TextBox Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"
-                     adorners:Watermark.Text="Benutzername" 
-                     Width="300" Height="40" Margin="10,4" FontSize="25" 
-                     adorners:Watermark.TextStyle="{StaticResource AdornerTextStyle}" />
+        <Image 
+            Source="pack://application:,,,/Assets/Icons/username.png" 
+            Width="40" Height="40"/>
+        <TextBox Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"
+            Style="{StaticResource TextBoxErrorStyle}"
+            adorners:Watermark.Text="Benutzername" 
+            Width="300" Height="40" Margin="10,4" FontSize="25" 
+            adorners:Watermark.TextStyle="{StaticResource AdornerTextStyle}" />
         </StackPanel>
 
         <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Image Source="pack://application:,,,/Assets/Icons/password.png" Width="40" Height="40"/>
             <Grid>
-                <PasswordBox x:Name="passwordBox" PasswordChanged="PasswordBox_PasswordChanged" 
-                    adorners:Watermark.Text="Passwort" Width="300" Height="40" Margin="10,4" FontSize="25" adorners:Watermark.TextStyle="{StaticResource AdornerTextStyle}"/>
-            </Grid>
-            
-            
+            <PasswordBox x:Name="passwordBox" PasswordChanged="PasswordBox_PasswordChanged" 
+              adorners:Watermark.Text="Passwort" Width="300" Height="40" Margin="10,4" FontSize="25" adorners:Watermark.TextStyle="{StaticResource AdornerTextStyle}"/>
+            </Grid>   
         </StackPanel>
 
-        <Button Grid.Row="4" Height="40" Margin="7,4,10,4" Content="Login" Command="{Binding LoginCommand}" FontSize="20" Padding="10,5"/>
+        <StackPanel Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" FontSize="20" Height="30" />
+        </StackPanel>
+
+        <Button Grid.Row="5" Width="343" Height="40" Margin="7,4,10,4" Content="Login" Command="{Binding LoginCommand}" FontSize="20" Padding="10,5"/>
     </Grid>
 </UserControl>
