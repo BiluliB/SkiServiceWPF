@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls; // Wichtig für den Zugriff auf das Frame-Element
+using System.Windows.Controls;
 
 namespace SkiServiceWPF.Services
 {

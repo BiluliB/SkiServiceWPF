@@ -1,4 +1,5 @@
 ﻿using SkiServiceWPF.Commands;
+using SkiServiceWPF.Interfaces;
 using SkiServiceWPF.Models;
 using SkiServiceWPF.Services;
 using SkiServiceWPF.Views;
@@ -8,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace SkiServiceWPF.ViewModel
 {
@@ -17,6 +19,7 @@ namespace SkiServiceWPF.ViewModel
         private string _password;
         private string _errorMessage;
         private readonly BackendService _backendService;
+        private readonly INavigationService _navigationService;
 
         public string UserName
         {
@@ -50,11 +53,13 @@ namespace SkiServiceWPF.ViewModel
 
         public ICommand LoginCommand { get; }
 
-        public LoginViewModel(BackendService backendService)
+        public LoginViewModel(BackendService backendService, INavigationService navigationService)
         {
             _backendService = backendService;
+            _navigationService = navigationService;
             LoginCommand = new RelayCommand(async () => await ExecuteLogin(), CanExecuteLogin);
         }
+
 
         private async Task ExecuteLogin()
 {
@@ -96,9 +101,7 @@ namespace SkiServiceWPF.ViewModel
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                var dashboardView = new DashboardView();
-                var mainWindow = Application.Current.MainWindow;
-                mainWindow.Content = dashboardView;
+                _navigationService.NavigateTo("Dashboard");
             });
         }
 
