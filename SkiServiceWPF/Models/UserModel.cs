@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SkiServiceWPF.Models
+﻿namespace SkiServiceWPF.Models
 {
+    /// <summary>
+    /// Represents a user model with credentials for authentication purposes
+    /// </summary>
     public class UserModel
     {
         public string UserName { get; set; }

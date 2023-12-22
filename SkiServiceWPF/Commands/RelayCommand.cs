@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 namespace SkiServiceWPF.Commands
 {
@@ -48,18 +43,22 @@ namespace SkiServiceWPF.Commands
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns></returns>
+        #region CanExecute
         public bool CanExecute(object parameter)
         {
             return _canExecute == null || _canExecute();
         }
+        #endregion
 
         /// <summary>
         /// Executes the RelayCommand on the current command target
         /// </summary>
         /// <param name="parameter"></param>
+        #region Execute
         public void Execute(object parameter)
         {
             _execute();
         }
+        #endregion
     }
 }

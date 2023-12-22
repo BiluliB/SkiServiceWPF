@@ -1,30 +1,38 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using SkiServiceWPF.Interfaces;
 using SkiServiceWPF.Services;
-using SkiServiceWPF.Views;
-using System.Windows;
-using Microsoft.Extensions.Configuration;
-using System.IO;
 using SkiServiceWPF.ViewModel;
+using SkiServiceWPF.Views;
+using System.IO;
+using System.Windows;
 
 namespace SkiServiceWPF
 {
+    /// <summary>
+    /// Main application class with startup and configuration logic
+    /// </summary>
     public partial class App : Application
     {
         public ServiceProvider ServiceProvider { get; private set; }
         public static IConfiguration Configuration { get; private set; }
 
+        /// <summary>
+        /// Handles the application startup process
+        /// </summary>
+        /// <param name="e">Startup event arguments</param>
+        #region OnStartup
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            // Konfiguration erstellen
+            // Create configuration
             Configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
 
-            // DI-Container konfigurieren
+            // Configure DI container
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
             ServiceProvider = serviceCollection.BuildServiceProvider();
@@ -36,12 +44,18 @@ namespace SkiServiceWPF
             navigationService.SetMainFrame(mainWindow.MainContentFrame);
             navigationService.NavigateTo("Login");
         }
+        #endregion
 
+        /// <summary>
+        /// Configures services for dependency injection
+        /// </summary>
+        /// <param name="services">Service collection for DI</param>
+        #region ConfigureServices
         private void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IConfiguration>(Configuration);
 
-            // Konfigurieren des HttpClient für BackendService
+            // Configure HttpClient for BackendService
             services.AddHttpClient<BackendService>(client =>
             {
                 string baseUrl = Configuration["ApiSettings:BaseUrl"];
@@ -60,7 +74,9 @@ namespace SkiServiceWPF
                 return navigationService;
             });
 
+            // Register MainWindow for application
             services.AddSingleton<MainWindow>();
         }
+        #endregion
     }
 }

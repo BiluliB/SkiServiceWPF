@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SkiServiceWPF.Interfaces
+﻿namespace SkiServiceWPF.Interfaces
 {
+    /// <summary>
+    /// Represents a service for navigating between views
+    /// </summary>
     public interface INavigationService
     {
         void NavigateTo(string viewName);

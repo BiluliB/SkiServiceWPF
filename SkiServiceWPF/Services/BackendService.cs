@@ -2,30 +2,40 @@
 using Newtonsoft.Json;
 using SkiServiceWPF.DTOs;
 using SkiServiceWPF.Models;
-using SkiServiceWPF.DTOs;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace SkiServiceWPF.Services
 {
+    /// <summary>
+    /// BackendService class for communicating with the backend
+    /// </summary>
     public class BackendService
     {
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
 
+        /// <summary>
+        /// Constructor for BackendService
+        /// </summary>
+        /// <param name="httpClient">HTTP client for making requests</param>
+        /// <param name="configuration">Configuration settings</param>
+        #region BackendService
         public BackendService(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
             _configuration = configuration;
         }
+        #endregion
 
+        /// <summary>
+        /// Gets a list of registrations from the backend
+        /// </summary>
+        /// <param name="routeKey">Route key to identify specific endpoints</param>
+        /// <returns>List of RegistrationModel instances</returns>
+        /// <exception cref="Exception">Throws an exception if the request fails</exception>
+        #region GetRegistrations
         public async Task<List<RegistrationModel>> GetRegistrations(string routeKey)
         {
             try
@@ -48,8 +58,34 @@ namespace SkiServiceWPF.Services
             }
             return new List<RegistrationModel>();
         }
+        #endregion
 
+        /// <summary>
+        /// Convers a RegistrationsDto instance to a RegistrationModel instance
+        /// </summary>
+        /// <param name="registrationdto"></param>
+        /// <returns></returns>
+        private RegistrationModel ConvertDtoToModel(RegistrationsDto registrationdto)
+        {
+            return new RegistrationModel
+            {
+                RegistrationId = registrationdto.RegistrationId,
+                LastName = registrationdto.LastName,
+                FirstName = registrationdto.FirstName,
+                PickupDate = registrationdto.PickupDate,
+                Priority = registrationdto.Priority,
+                Service = registrationdto.Service,
+                Status = registrationdto.Status
 
+            };
+        }
+
+        /// <summary>
+        /// Processes login requests asynchronously
+        /// </summary>
+        /// <param name="authRequest">Authentication request data</param>
+        /// <returns>Response model indicating authentication success or failure</returns>
+        #region LoginAsync
         public async Task<AuthResponseModel> LoginAsync(AuthRequestModel authRequest)
         {
             try
@@ -68,50 +104,34 @@ namespace SkiServiceWPF.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    // Erfolgreiche Authentifizierung
+                    // Successful authentication
                     return new AuthResponseModel
                     {
                         IsSuccess = true,
-                        ResponseMessage = responseContent // oder Deserialisieren, wenn der Body eine spezifische Nachricht enthält
+                        ResponseMessage = responseContent // Deserialize if the body contains a specific message
                     };
                 }
                 else
                 {
-                    // Authentifizierungsfehler
+                    // Authentication error
                     return new AuthResponseModel
                     {
                         IsSuccess = false,
-                        ResponseMessage = responseContent // oder eine angepasste Nachricht basierend auf dem Statuscode
+                        ResponseMessage = responseContent // Customized message based on the status code
                     };
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Exception in LoginAsync: {ex.Message}");
-                // Fehlerfall
+                // Error case
                 return new AuthResponseModel
                 {
                     IsSuccess = false,
-                    ResponseMessage = $"Ein Fehler ist aufgetreten HTTP 404"
+                    ResponseMessage = $"An error occurred HTTP 404"
                 };
             }
         }
-
-        private RegistrationModel ConvertDtoToModel(RegistrationsDto registrationdto)
-        {
-            return new RegistrationModel
-            {
-                RegistrationId = registrationdto.RegistrationId,
-                LastName = registrationdto.LastName,
-                FirstName = registrationdto.FirstName,
-                PickupDate = registrationdto.PickupDate,
-                Priority = registrationdto.Priority,
-                Service = registrationdto.Service,
-                Status = registrationdto.Status
-
-            };
-        }
-
+        #endregion
     }
 }
-

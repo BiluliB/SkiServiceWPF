@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SkiServiceWPF.Models
+﻿namespace SkiServiceWPF.Models
 {
+    /// <summary>
+    /// Represents a response model for authentication, indicating success and providing a response message
+    /// </summary>
     public class AuthResponseModel
     {
         public bool IsSuccess { get; set; }

@@ -2,17 +2,15 @@
 using SkiServiceWPF.Interfaces;
 using SkiServiceWPF.Models;
 using SkiServiceWPF.Services;
-using SkiServiceWPF.Views;
-using System;
 using System.ComponentModel;
-using System.Net;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Navigation;
 
 namespace SkiServiceWPF.ViewModel
 {
+    /// <summary>
+    /// ViewModel for login functionality
+    /// </summary>
     public class LoginViewModel : INotifyPropertyChanged
     {
         private string _username;
@@ -21,6 +19,24 @@ namespace SkiServiceWPF.ViewModel
         private readonly BackendService _backendService;
         private readonly INavigationService _navigationService;
 
+        // Command for handling login
+        public ICommand LoginCommand { get; }
+
+        // Event to notify when a property changes
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Notifies listeners about property changes
+        /// </summary>
+        /// <param name="propertyName">Name of the changed property</param>
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary>
+        /// User name for login
+        /// </summary>
         public string UserName
         {
             get => _username;
@@ -31,6 +47,9 @@ namespace SkiServiceWPF.ViewModel
             }
         }
 
+        /// <summary>
+        /// Password for login
+        /// </summary>
         public string Password
         {
             get => _password;
@@ -41,6 +60,9 @@ namespace SkiServiceWPF.ViewModel
             }
         }
 
+        /// <summary>
+        /// Error message for login failures
+        /// </summary>
         public string ErrorMessage
         {
             get => _errorMessage;
@@ -51,52 +73,71 @@ namespace SkiServiceWPF.ViewModel
             }
         }
 
-        public ICommand LoginCommand { get; }
-
+        /// <summary>
+        /// Initializes the ViewModel with necessary services
+        /// </summary>
+        /// <param name="backendService">Backend service for authentication</param>
+        /// <param name="navigationService">Service for navigation</param>
+        #region LoginViewModel
         public LoginViewModel(BackendService backendService, INavigationService navigationService)
         {
             _backendService = backendService;
             _navigationService = navigationService;
             LoginCommand = new RelayCommand(async () => await ExecuteLogin(), CanExecuteLogin);
         }
+        #endregion
 
-
+        /// <summary>
+        /// Executes the login process
+        /// </summary>
+        /// <returns>Task for asynchronous login execution</returns>
+        #region ExecuteLogin
         private async Task ExecuteLogin()
-{
-    try
-    {
-        var authRequest = new AuthRequestModel
         {
-            UserName = this.UserName,
-            Password = this.Password
-        };
+            try
+            {
+                var authRequest = new AuthRequestModel
+                {
+                    UserName = this.UserName,
+                    Password = this.Password
+                };
 
-        var response = await _backendService.LoginAsync(authRequest);
+                var response = await _backendService.LoginAsync(authRequest);
 
-        if (response.IsSuccess)
-        {
-            // Erfolgreiche Anmeldung
-            NavigateToDashboard();
+                if (response.IsSuccess)
+                {
+                    // Successful login
+                    NavigateToDashboard();
+                }
+                else
+                {
+                    // Authentication error
+                    ErrorMessage = response.ResponseMessage;
+                }
+            }
+            catch (Exception ex)
+            {
+                // General error
+                ErrorMessage = ex.Message;
+            }
         }
-        else
-        {
-            // Authentifizierungsfehler
-            ErrorMessage = response.ResponseMessage;
-        }
-    }
-    catch (Exception ex)
-    {
-        // Allgemeiner Fehler
-        ErrorMessage = ex.Message;
-    }
-}
+        #endregion
 
-
+        /// <summary>
+        /// Determines if the login command can be executed
+        /// </summary>
+        /// <returns>True if username and password are not empty</returns>
+        #region CanExecuteLogin
         private bool CanExecuteLogin()
         {
             return !string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(Password);
         }
+        #endregion
 
+        /// <summary>
+        /// Navigates to the dashboard after successful login
+        /// </summary>
+        #region NavigateToDashboard
         private void NavigateToDashboard()
         {
             Application.Current.Dispatcher.Invoke(() =>
@@ -104,11 +145,6 @@ namespace SkiServiceWPF.ViewModel
                 _navigationService.NavigateTo("Dashboard");
             });
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        #endregion
     }
 }

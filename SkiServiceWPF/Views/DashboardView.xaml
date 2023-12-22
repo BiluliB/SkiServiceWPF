@@ -7,15 +7,15 @@
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <!-- Haupt-Grid mit zwei Zeilen: eine für Ribbon und Menü, eine für den Inhalt -->
+        <!-- MainGrid for two lines: One for Ribbon and one for Menu and their contents -->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Ribbon und Menü -->
+            <!-- Ribbon and Menu -->
             <RowDefinition Height="*"/>
-            <!-- Inhalt -->
+            <!-- Content -->
         </Grid.RowDefinitions>
 
-        <!-- Erste Zeile: Menü und Ribbon -->
+        <!-- Menu -->
         <DockPanel Grid.Row="0">
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="Editieren"/>
@@ -24,6 +24,8 @@
                 <MenuItem Header="Hilfe"/>
                 <MenuItem Header="Einstellung"/>
             </Menu>
+            
+            <!-- Ribbon -->
             <Fluent:Ribbon>
                 <Fluent:RibbonTabItem Header="Start">
                     <Fluent:RibbonGroupBox>
@@ -35,14 +37,13 @@
             </Fluent:Ribbon>
         </DockPanel>
 
-        <!-- Suchleiste rechtsbündig über dem Ribbon -->
-        <!-- Verwenden Sie Margin, um den Abstand von oben anzupassen -->
+        <!-- Searchbar right on the menu -->
         <DockPanel Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,60,10,10">
             <TextBox Width="200"/>
             <Button Content="Suchen" Width="80" Margin="10,0,0,0"/>
         </DockPanel>
 
-        <!-- Zweite Zeile: Inhalt mit TreeView und DataGrid -->
+        <!-- Second Grid for TreeView and ListViewUserControl -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="190"/>
@@ -54,10 +55,8 @@
             <TreeView Grid.Column="0">
                 <TreeViewItem Header="Alle Aufträge" IsExpanded="True" MouseDoubleClick="TreeViewItem_MouseDoubleClick">
                     <TreeViewItem Header="Offene Aufträge" IsExpanded="True">
-                        <!-- Fügen Sie hier die Kinder hinzu -->
                     </TreeViewItem>
                     <TreeViewItem Header="In Arbeit" IsExpanded="True">
-                        <!-- Fügen Sie hier die Kinder hinzu -->
                     </TreeViewItem>
                     <TreeViewItem Header="Abgeschlossene Aufträge"/>
                 </TreeViewItem>
@@ -66,7 +65,7 @@
             <!-- GridSplitter -->
             <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns"/>
 
-            <!-- DataGrid -->
+            <!-- ContentControl: ListViewUserControl -->
             <ContentControl x:Name="ContentPlaceholder" Grid.Column="2"/>
         </Grid>
     </Grid>

@@ -1,11 +1,10 @@
-﻿using SkiServiceWPF.ViewModel;
-using System.Windows.Controls;
-using System.Windows;
-using Microsoft.Extensions.DependencyInjection;
-using System.ComponentModel;
-using System.Windows.Media;
-using System.Windows.Input;
+﻿using Microsoft.Extensions.DependencyInjection;
 using SkiServiceWPF.Helpers;
+using SkiServiceWPF.ViewModel;
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace SkiServiceWPF.Views
 {

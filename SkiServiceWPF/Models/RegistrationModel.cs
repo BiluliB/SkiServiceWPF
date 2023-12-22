@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json;
-
-namespace SkiServiceWPF.Models
+﻿namespace SkiServiceWPF.Models
 {
+    /// <summary>
+    /// Represents a model for ski service registration, including personal details and service information
+    /// This is for the ListViewUserControl
+    /// </summary>
     public class RegistrationModel
     {
         public int RegistrationId { get; set; }
