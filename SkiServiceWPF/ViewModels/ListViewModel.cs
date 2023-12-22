@@ -7,21 +7,26 @@ using System.Windows.Input;
 
 namespace SkiServiceWPF.ViewModels
 {
+
     /// <summary>
     /// ViewModel for managing and displaying a list of registrations
     /// </summary>
     public class ListViewModel : INotifyPropertyChanged
     {
+        private readonly BackendService _backendService;
+
+        private bool _isAscending = true;
+
         // Event for property change notifications
         public event PropertyChangedEventHandler? PropertyChanged;
-
-        // Command to load registration data
-        public ICommand LoadRegistrationsCommand { get; private set; }
 
         // Collection of registration models for data binding
         public ObservableCollection<RegistrationModel> Registrations { get; private set; }
 
-        private readonly BackendService _backendService;
+        // Command to load registration data
+        public ICommand LoadRegistrationsCommand { get; private set; }
+
+        public ICommand SortCommand { get; private set; }
 
         /// <summary>
         /// Constructor initializing the ViewModel with a backend service
@@ -32,7 +37,8 @@ namespace SkiServiceWPF.ViewModels
         {
             _backendService = backendService;
             Registrations = new ObservableCollection<RegistrationModel>();
-            LoadRegistrationsCommand = new RelayCommand(async () => await Load_Registrations());
+            LoadRegistrationsCommand = new AsyncRelayCommand(Load_Registrations);
+            SortCommand = new RelayCommand<string>(SortRegistrations);
         }
         #endregion
 
@@ -70,5 +76,22 @@ namespace SkiServiceWPF.ViewModels
             }
         }
         #endregion
+
+        private void SortRegistrations(string sortProperty)
+        {
+            if (sortProperty == "PickupDate")
+            {
+                if (_isAscending)
+                {
+                    Registrations = new ObservableCollection<RegistrationModel>(Registrations.OrderBy(r => r.PickupDate));
+                }
+                else
+                {
+                    Registrations = new ObservableCollection<RegistrationModel>(Registrations.OrderByDescending(r => r.PickupDate));
+                }
+                _isAscending = !_isAscending;
+            }
+           
+        }
     }
 }

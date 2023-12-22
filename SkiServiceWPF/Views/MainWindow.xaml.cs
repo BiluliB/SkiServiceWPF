@@ -12,7 +12,6 @@ namespace SkiServiceWPF.Views
         {
             InitializeComponent();
 
-            // Event-Handler innerhalb des Konstruktors hinzufügen
             MainContentFrame.Navigating += MainFrame_Navigating;
         }
 

@@ -83,7 +83,7 @@ namespace SkiServiceWPF.ViewModel
         {
             _backendService = backendService;
             _navigationService = navigationService;
-            LoginCommand = new RelayCommand(async () => await ExecuteLogin(), CanExecuteLogin);
+            LoginCommand = new AsyncRelayCommand(async () => await ExecuteLogin(), CanExecuteLogin);
         }
         #endregion
 

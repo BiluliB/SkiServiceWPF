@@ -4,8 +4,11 @@
              xmlns:helpers="clr-namespace:SkiServiceWPF.Helpers">
     <UserControl.Resources>
         <helpers:WidthConverter x:Key="WidthConverter"/>
-    </UserControl.Resources>
 
+        <DataTemplate x:Key="HeaderTemplate">
+            <Button Content="{Binding}" Command="{Binding DataContext.SortCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" CommandParameter="{Binding}"/>
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid>
         <ListView x:Name="MyListView" ItemsSource="{Binding Registrations}">
             <ListView.View>
@@ -26,7 +29,7 @@
                                     Width="{Binding ActualWidth, ElementName=MyListView, 
                                     Converter={StaticResource WidthConverter}, ConverterParameter=0.15}" 
                                     DisplayMemberBinding="{Binding Service}" />
-                    <GridViewColumn Header="Enddatum"
+                    <GridViewColumn Header="Enddatum" HeaderTemplate="{StaticResource HeaderTemplate}"
                                     Width="{Binding ActualWidth, ElementName=MyListView, 
                                     Converter={StaticResource WidthConverter}, ConverterParameter=0.15}" 
                                     DisplayMemberBinding="{Binding PickupDate}" />
