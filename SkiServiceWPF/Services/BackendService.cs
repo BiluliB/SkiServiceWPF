@@ -83,17 +83,17 @@ namespace SkiServiceWPF.Services
         /// <summary>
         /// Processes login requests asynchronously
         /// </summary>
-        /// <param name="authRequest">Authentication request data</param>
-        /// <returns>Response model indicating authentication success or failure</returns>
+        /// <param name="authRequestDto">Authentication request DTO</param>
+        /// <returns>Response DTO indicating authentication success or failure</returns>
         #region LoginAsync
-        public async Task<AuthResponseModel> LoginAsync(AuthRequestModel authRequest)
+        public async Task<AuthResponseDto> LoginAsync(AuthRequestDto authRequestDto)
         {
             try
             {
                 string loginEndpoint = _configuration["ApiSettings:LoginEndpoint"];
                 string fullUrl = $"{_configuration["ApiSettings:BaseUrl"]}{loginEndpoint}";
 
-                var json = JsonConvert.SerializeObject(authRequest);
+                var json = JsonConvert.SerializeObject(authRequestDto);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 var response = await _httpClient.PostAsync(fullUrl, content);
@@ -105,19 +105,17 @@ namespace SkiServiceWPF.Services
                 if (response.IsSuccessStatusCode)
                 {
                     // Successful authentication
-                    return new AuthResponseModel
-                    {
-                        IsSuccess = true,
-                        ResponseMessage = responseContent // Deserialize if the body contains a specific message
-                    };
+                    var authResponseDto = JsonConvert.DeserializeObject<AuthResponseDto>(responseContent);
+                    authResponseDto.IsSuccess = true;
+                    return authResponseDto;
                 }
                 else
                 {
                     // Authentication error
-                    return new AuthResponseModel
+                    return new AuthResponseDto
                     {
                         IsSuccess = false,
-                        ResponseMessage = responseContent // Customized message based on the status code
+                        ResponseMessage = responseContent
                     };
                 }
             }
@@ -125,13 +123,13 @@ namespace SkiServiceWPF.Services
             {
                 Debug.WriteLine($"Exception in LoginAsync: {ex.Message}");
                 // Error case
-                return new AuthResponseModel
+                return new AuthResponseDto
                 {
                     IsSuccess = false,
-                    ResponseMessage = $"An error occurred HTTP 404"
+                    ResponseMessage = $"Ein Fehler ist aufgetreten HTTP 404"
                 };
             }
+            #endregion
         }
-        #endregion
     }
 }

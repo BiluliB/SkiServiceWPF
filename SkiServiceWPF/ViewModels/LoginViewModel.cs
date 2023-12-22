@@ -1,4 +1,5 @@
 ﻿using SkiServiceWPF.Commands;
+using SkiServiceWPF.DTOs;
 using SkiServiceWPF.Interfaces;
 using SkiServiceWPF.Models;
 using SkiServiceWPF.Services;
@@ -96,28 +97,30 @@ namespace SkiServiceWPF.ViewModel
         {
             try
             {
-                var authRequest = new AuthRequestModel
+                // Erstellen einer Instanz von AuthRequestDTO
+                var authRequestDto = new AuthRequestDto
                 {
                     UserName = this.UserName,
                     Password = this.Password
                 };
 
-                var response = await _backendService.LoginAsync(authRequest);
+                // Rufen Sie den Login-Service auf und erwarten Sie eine AuthResponseDTO
+                var responseDto = await _backendService.LoginAsync(authRequestDto);
 
-                if (response.IsSuccess)
+                if (responseDto.IsSuccess)
                 {
-                    // Successful login
+                    // Erfolgreicher Login
                     NavigateToDashboard();
                 }
                 else
                 {
-                    // Authentication error
-                    ErrorMessage = response.ResponseMessage;
+                    // Authentifizierungsfehler
+                    ErrorMessage = responseDto.ResponseMessage;
                 }
             }
             catch (Exception ex)
             {
-                // General error
+                // Allgemeiner Fehler
                 ErrorMessage = ex.Message;
             }
         }
