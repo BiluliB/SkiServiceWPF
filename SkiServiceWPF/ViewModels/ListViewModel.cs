@@ -3,7 +3,6 @@ using SkiServiceWPF.Models;
 using SkiServiceWPF.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows.Input;
 
 namespace SkiServiceWPF.ViewModels

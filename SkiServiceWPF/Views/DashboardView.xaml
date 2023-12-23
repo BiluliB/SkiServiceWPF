@@ -20,6 +20,24 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
+        <DataTemplate x:Key="TreeViewItemTemplate">
+            <StackPanel Orientation="Horizontal">
+                <Image Width="16" Height="16" x:Name="Icon">
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Setter Property="Source" Value="../Assets/Icons/folderclose.png" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type TreeViewItem}}, Path=IsExpanded}" Value="True">
+                                    <Setter Property="Source" Value="../Assets/Icons/folderopen.png" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+                <TextBlock Text="{Binding}" Margin="5,0" />
+            </StackPanel>
+        </DataTemplate>
     </UserControl.Resources>
     <Grid>
         <!-- MainGrid for two lines: One for Ribbon and one for Menu and their contents -->
@@ -84,15 +102,33 @@
 
             <!-- TreeView -->
             <TreeView Grid.Column="0">
-                <TreeViewItem Header="Alle Aufträge" IsExpanded="True" MouseDoubleClick="TreeViewItem_MouseDoubleClick">
-                    <TreeViewItem Header="Offene Aufträge" IsExpanded="True">
+                <TreeViewItem Header="Alle Aufträge" MouseDoubleClick="TreeViewItem_MouseDoubleClick"  HeaderTemplate="{StaticResource TreeViewItemTemplate}">
+                    <TreeViewItem Header="Offene Aufträge"  HeaderTemplate="{StaticResource TreeViewItemTemplate}">
+                        <TreeViewItem Header="Kleiner Service"/>
+                        <TreeViewItem Header="Grosser Service"/>
+                        <TreeViewItem Header="Rennski Service"/>
+                        <TreeViewItem Header="Bindungen montieren und einstellen"/>
+                        <TreeViewItem Header="Fell zuschneiden"/>
+                        <TreeViewItem Header="Heisswachsen"/>
                     </TreeViewItem>
-                    <TreeViewItem Header="In Arbeit" IsExpanded="True">
+                    <TreeViewItem Header="In Arbeit"  HeaderTemplate="{StaticResource TreeViewItemTemplate}">
+                        <TreeViewItem Header="Kleiner Service"/>
+                        <TreeViewItem Header="Grosser Service"/>
+                        <TreeViewItem Header="Rennski Service"/>
+                        <TreeViewItem Header="Bindungen montieren und einstellen"/>
+                        <TreeViewItem Header="Fell zuschneiden"/>
+                        <TreeViewItem Header="Heisswachsen"/>
                     </TreeViewItem>
-                    <TreeViewItem Header="Abgeschlossene Aufträge"/>
+                    <TreeViewItem Header="Abgeschlossene Aufträge"  HeaderTemplate="{StaticResource TreeViewItemTemplate}">
+                        <TreeViewItem Header="Kleiner Service"/>
+                        <TreeViewItem Header="Grosser Service"/>
+                        <TreeViewItem Header="Rennski Service"/>
+                        <TreeViewItem Header="Bindungen montieren und einstellen"/>
+                        <TreeViewItem Header="Fell zuschneiden"/>
+                        <TreeViewItem Header="Heisswachsen"/>
+                    </TreeViewItem>
                 </TreeViewItem>
             </TreeView>
-
             <!-- GridSplitter -->
             <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns"/>
 

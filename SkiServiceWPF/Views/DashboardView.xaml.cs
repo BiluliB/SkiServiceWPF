@@ -21,21 +21,17 @@ namespace SkiServiceWPF.Views
             InitializeComponent();
             _backendService = backendService;
 
-            // ViewModel für DashboardView
             var dashboardViewModel = ((App)Application.Current).ServiceProvider.GetRequiredService<DashboardViewModel>();
             DataContext = dashboardViewModel;
 
-            // ViewModel für ListView
             var listViewViewModel = new ListViewModel(_backendService);
             var listViewControl = new ListViewUserControl
             {
                 DataContext = listViewViewModel
             };
 
-            // ListViewUserControl als Inhalt setzen
             this.ContentPlaceholder.Content = listViewControl;
 
-            // Daten laden
             listViewViewModel.LoadRegistrationsCommand.Execute(null);
         }
 

@@ -16,6 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Icons\folderclose.png" />
+    <None Remove="Assets\Icons\folderopen.png" />
     <None Remove="Assets\Icons\password.png" />
     <None Remove="Assets\Icons\sortarrow.png" />
     <None Remove="Assets\Icons\username.png" />
@@ -29,6 +31,12 @@
     <Content Include="Assets\Images\add.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Assets\Icons\folderclose.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\folderopen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\Icons\sortarrow.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
