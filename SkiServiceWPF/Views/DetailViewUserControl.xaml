@@ -1,0 +1,112 @@
+﻿<UserControl x:Class="SkiServiceWPF.Views.DetailViewUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SkiServiceWPF.Views"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="400">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Kundeninformationen -->
+            <RowDefinition Height="*"/>
+            <!-- Abstand zwischen den GroupBoxes -->
+            <RowDefinition Height="Auto"/>
+            <!-- Serviceinformationen -->
+        </Grid.RowDefinitions>
+
+        <!-- Kundeninformationen GroupBox -->
+        <GroupBox Grid.Row="0" Header="Kunde" Margin="5">
+            <Grid Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Auftrags-Nr -->
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Auftrags-Nr:" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,2"/>
+
+                <!-- Name -->
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Name:" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,2"/>
+
+                <!-- Vorname -->
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="Vorname:" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="5,2"/>
+
+                <!-- Email-Adresse und Telefonnummer -->
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Email-Adresse:" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,2"/>
+
+                <TextBlock Grid.Row="4" Grid.Column="2" Text="Telefonnummer:" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" Margin="5,2"/>
+            </Grid>
+        </GroupBox>
+
+        <!-- Serviceinformationen GroupBox -->
+        <GroupBox Header="Service Auftrag" Margin="5,1,5,70" Grid.Row="1">
+            <Grid Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Auftragsdatum -->
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Auftragsdatum:" VerticalAlignment="Center"/>
+                <DatePicker Grid.Row="1" Grid.Column="0" Margin="5,2"/>
+
+                <!-- Status -->
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="Status:" VerticalAlignment="Center"/>
+                <ComboBox Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Margin="5,2"/>
+
+                <!-- Abholdatum -->
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Abholdatum:" VerticalAlignment="Center"/>
+                <DatePicker Grid.Row="3" Grid.Column="0" Margin="5,2"/>
+
+                <!-- Priorität -->
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="Priorität:" VerticalAlignment="Center"/>
+                <ComboBox Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="5,2"/>
+
+                <!-- Service -->
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Service:" VerticalAlignment="Center"/>
+                <ComboBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,2"/>
+
+                <!-- Kommentar -->
+                <TextBlock Grid.Row="4" Grid.Column="2" Text="Kommentar:" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" Margin="5,2" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+
+                <!-- Preis in CHF -->
+                <TextBlock Grid.Row="6" Grid.Column="0" Text="Preis in CHF:" VerticalAlignment="Center"/>
+                <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2"  Orientation="Horizontal" Margin="5,2">
+                    <TextBlock Text="CHF" VerticalAlignment="Center"/>
+                    <TextBox Margin="5,0,0,0" Width="133"/>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>
