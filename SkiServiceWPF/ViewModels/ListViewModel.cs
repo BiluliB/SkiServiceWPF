@@ -21,7 +21,6 @@ namespace SkiServiceWPF.ViewModels
         // Event for property change notifications
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        private readonly IConfiguration _configuration;
         // Command to load registration data
         public ICommand LoadOpenRegistrationsCommand { get; private set; }
 
@@ -56,10 +55,9 @@ namespace SkiServiceWPF.ViewModels
         /// </summary>
         /// <param name="backendService">Service for backend operations</param>
         #region ListViewModel
-        public ListViewModel(IConfiguration configuration, BackendService backendService)
+        public ListViewModel(BackendService backendService)
         {
             _backendService = backendService;
-            _configuration = configuration;
             Registrations = new ObservableCollection<RegistrationModel>();
             LoadRegistrationsCommand = new AsyncRelayCommand(Load_Registrations);
             LoadOpenRegistrationsCommand = new AsyncRelayCommand(Load_OpenRegistrations);

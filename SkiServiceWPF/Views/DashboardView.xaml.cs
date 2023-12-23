@@ -68,20 +68,14 @@ namespace SkiServiceWPF.Views
 
         private void TreeViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            // Ihre vorhandene Logik
             if (e.Source is TreeViewItem item && item.Header is string header)
             {
-                var listViewViewModel = new ListViewModel(_configuration, _backendService);
+                // Deklarieren Sie die Variablen einmal außerhalb der if-Anweisungen
+                var listViewViewModel = new ListViewModel(_backendService);
+                ListViewUserControl listViewControl;
 
                 if (header == "Alle Aufträge")
                 {
-
-                    var listViewViewModel = new ListViewModel(_backendService);
-                    var listViewControl = new ListViewUserControl
-                    {
-                        DataContext = listViewViewModel
-                    };
-                    this.ContentPlaceholder.Content = listViewControl;
                     listViewViewModel.LoadRegistrationsCommand.Execute(null);
                 }
                 else if (header == "Offene Aufträge")
@@ -97,7 +91,8 @@ namespace SkiServiceWPF.Views
                     listViewViewModel.LoadDoneRegistrationsCommand.Execute(null);
                 }
 
-                var listViewControl = new ListViewUserControl
+                // Erstellen des ListViewUserControls
+                listViewControl = new ListViewUserControl
                 {
                     DataContext = listViewViewModel
                 };
@@ -105,6 +100,7 @@ namespace SkiServiceWPF.Views
                 this.ContentPlaceholder.Content = listViewControl;
             }
         }
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
