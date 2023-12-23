@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,7 +29,16 @@ namespace SkiServiceWPF.Commands
 
         public async void Execute(object parameter)
         {
-            await _execute();
+            Debug.WriteLine("Execute called.");
+            try
+            {
+                await _execute();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error during execution: {ex.Message}");
+                // Handle exceptions if needed
+            }
         }
 
         public event EventHandler CanExecuteChanged

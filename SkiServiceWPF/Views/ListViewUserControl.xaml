@@ -3,47 +3,88 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:helpers="clr-namespace:SkiServiceWPF.Helpers">
     <UserControl.Resources>
-        <helpers:WidthConverter x:Key="WidthConverter"/>
-
-        <DataTemplate x:Key="HeaderTemplate">
-            <Button Content="Enddatum" Command="{Binding DataContext.SortCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="PickupDate"/>
-        </DataTemplate>
-
+        <!-- Stil für DataGridColumnHeader -->
+        <Style TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                        <Border BorderBrush="Gray" BorderThickness="1" Background="LightGray">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter Content="{TemplateBinding Content}" 
+                                              VerticalAlignment="Center"
+                                              Grid.Column="0"/>
+                                <Image x:Name="SortArrowImage" Source="C:\GitHub\SkiServiceWPF\SkiServiceWPF\Assets\Icons\sortarrow.png" 
+                                   Width="12" Height="12"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Center"
+                                   Visibility="Collapsed"
+                                   Margin="0,0,5,0"
+                                   RenderTransformOrigin="0.5,0.5"
+                                   Grid.Column="1">
+                                    <Image.RenderTransform>
+                                        <RotateTransform Angle="0"/>
+                                    </Image.RenderTransform>
+                                </Image>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="SortDirection" Value="Ascending">
+                                <Setter TargetName="SortArrowImage" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="SortArrowImage" Property="RenderTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="0"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="SortDirection" Value="Descending">
+                                <Setter TargetName="SortArrowImage" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="SortArrowImage" Property="RenderTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="180"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
+
     <Grid>
-        <ListView x:Name="ListView" ItemsSource="{Binding Registrations}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Auftrags-Nr."
-                                    Width="{Binding ActualWidth, ElementName=ListView, 
-                                    Converter={StaticResource WidthConverter}, ConverterParameter=0.2}" 
-                                    DisplayMemberBinding="{Binding RegistrationId}" />
-                    <GridViewColumn Header="Nachname"
-                                    Width="{Binding ActualWidth, ElementName=ListView, 
-                                    Converter={StaticResource WidthConverter}, ConverterParameter=0.15}" 
-                                    DisplayMemberBinding="{Binding LastName}" />
-                    <GridViewColumn Header="Vorname"
-                                    Width="{Binding ActualWidth, ElementName=ListView, 
-                                            Converter={StaticResource WidthConverter}, ConverterParameter=0.15}" 
-                                    DisplayMemberBinding="{Binding FirstName}" />
-                    <GridViewColumn Header="Service"
-                                    Width="{Binding ActualWidth, ElementName=ListView, 
-                                    Converter={StaticResource WidthConverter}, ConverterParameter=0.15}" 
-                                    DisplayMemberBinding="{Binding Service}" />
-                    <GridViewColumn Header="Enddatum" HeaderTemplate="{StaticResource HeaderTemplate}"
-                                    Width="{Binding ActualWidth, ElementName=ListView, 
-                                    Converter={StaticResource WidthConverter}, ConverterParameter=0.15}" 
-                                    DisplayMemberBinding="{Binding PickupDate}" />
-                    <GridViewColumn Header="Status"
-                                    Width="{Binding ActualWidth, ElementName=ListView, 
-                                    Converter={StaticResource WidthConverter}, ConverterParameter=0.1}" 
-                                    DisplayMemberBinding="{Binding Status}" />
-                    <GridViewColumn Header="Priorität"
-                                    Width="{Binding ActualWidth, ElementName=ListView, 
-                                    Converter={StaticResource WidthConverter}, ConverterParameter=0.1}" 
-                                    DisplayMemberBinding="{Binding Priority}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <DataGrid x:Name="DataGrid" 
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding Registrations}"
+                  CanUserResizeColumns="True"
+                  CanUserSortColumns="True"
+                  IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Auftrags-Nr." 
+                                    Width="0.2*"
+                                    Binding="{Binding RegistrationId}" />
+                <DataGridTextColumn Header="Nachname"
+                                    Width="0.15*"
+                                    Binding="{Binding LastName}" />
+                <DataGridTextColumn Header="Vorname"
+                                    Width="0.15*"
+                                    Binding="{Binding FirstName}" />
+                <DataGridTextColumn Header="Service"
+                                    Width="0.15*"
+                                    Binding="{Binding Service}" />
+                <DataGridTextColumn Header="PickupDate"
+                                    Width="0.15*"
+                                    Binding="{Binding PickupDate}" />
+                <DataGridTextColumn Header="Status"
+                                    Width="0.1*"
+                                    Binding="{Binding Status}" />
+                <DataGridTextColumn Header="Priorität"
+                                    Width="0.1*"
+                                    Binding="{Binding Priority}" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

@@ -9,8 +9,8 @@ namespace SkiServiceWPF.Helpers
         {
             if (value is double totalWidth && double.TryParse(parameter.ToString(), out double factor))
             {
-                double result = totalWidth * factor - 5; // 5 ist ein kleiner Offset für Padding/Margin
-                return result > 0 ? result : 0; // Stellt sicher, dass der Wert nicht negativ ist
+                double result = totalWidth * factor - 5;
+                return result > 0 ? result : 0;
             }
             return 0;
         }

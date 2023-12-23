@@ -97,6 +97,20 @@ namespace SkiServiceWPF.ViewModels
         }
         #endregion
 
+        private double _sortArrowAngle;
+        public double SortArrowTransform
+        {
+            get => _sortArrowAngle;
+            set
+            {
+                if (_sortArrowAngle != value)
+                {
+                    _sortArrowAngle = value;
+                    OnPropertyChanged(nameof(SortArrowTransform));
+                }
+            }
+        }
+
         private void SortRegistrations(string sortProperty)
         {
             if (sortProperty == "PickupDate")
@@ -110,7 +124,7 @@ namespace SkiServiceWPF.ViewModels
                 {
                     Registrations.Add(item);
                 }
-
+                SortArrowTransform = _isAscending ? 0 : 180;
                 _isAscending = !_isAscending;
             }
         }
