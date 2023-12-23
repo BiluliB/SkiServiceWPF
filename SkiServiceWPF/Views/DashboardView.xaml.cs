@@ -4,6 +4,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows;
 using System.Diagnostics;
+using SkiServiceWPF.ViewModel;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace SkiServiceWPF.Views
 {
@@ -18,6 +20,10 @@ namespace SkiServiceWPF.Views
         {
             InitializeComponent();
             _backendService = backendService;
+
+            var viewModel = ((App)Application.Current).ServiceProvider.GetRequiredService<DashboardViewModel>();
+            DataContext = viewModel;
+
         }
 
         private void TreeViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)

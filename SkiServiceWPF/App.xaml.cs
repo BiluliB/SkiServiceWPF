@@ -68,12 +68,16 @@ namespace SkiServiceWPF
             services.AddSingleton<LoginViewModel>();
             services.AddSingleton<BackendService>();
             services.AddSingleton<ListViewModel>();
+            services.AddSingleton<DashboardViewModel>();
+
 
             services.AddSingleton<INavigationService>(provider =>
             {
                 var navigationService = new NavigationService();
                 navigationService.RegisterView("Login", () => new LoginView());
                 navigationService.RegisterView("Dashboard", () => new DashboardView(provider.GetRequiredService<BackendService>()));
+                navigationService.RegisterView("LoginView", () => new LoginView());
+
                 return navigationService;
             });
 

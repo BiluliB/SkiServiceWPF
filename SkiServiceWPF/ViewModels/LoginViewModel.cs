@@ -23,6 +23,14 @@ namespace SkiServiceWPF.ViewModel
         // Command for handling login
         public ICommand LoginCommand { get; }
 
+        public void ClearInputs()
+        {
+            // Setzen Sie die Eigenschaften zurück
+            UserName = string.Empty;
+            Password = string.Empty;
+            ErrorMessage = string.Empty;
+        }
+
         // Event to notify when a property changes
         public event PropertyChangedEventHandler PropertyChanged;
 
