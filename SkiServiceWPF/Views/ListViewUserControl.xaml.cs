@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.Globalization;
 
 
 namespace SkiServiceWPF.Views

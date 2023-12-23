@@ -4,8 +4,8 @@
              xmlns:helpers="clr-namespace:SkiServiceWPF.Helpers">
     <UserControl.Resources>
         <helpers:DateTimeConverter x:Key="DateTimeConverter"/>
-        <!-- Stil für DataGridColumnHeader -->
         <Style TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">

@@ -105,28 +105,10 @@
                 <TreeViewItem Header="Alle Aufträge" MouseDoubleClick="TreeViewItem_MouseDoubleClick"  HeaderTemplate="{StaticResource TreeViewItemTemplate}">
                 </TreeViewItem>
                 <TreeViewItem Header="Offene Aufträge" MouseDoubleClick="TreeViewItem_MouseDoubleClick" HeaderTemplate="{StaticResource TreeViewItemTemplate}">
-                    <TreeViewItem Header="Kleiner Service"/>
-                    <TreeViewItem Header="Grosser Service"/>
-                    <TreeViewItem Header="Rennski Service"/>
-                    <TreeViewItem Header="Bindungen montieren und einstellen"/>
-                    <TreeViewItem Header="Fell zuschneiden"/>
-                    <TreeViewItem Header="Heisswachsen"/>
                 </TreeViewItem>
                 <TreeViewItem Header="In Arbeit" MouseDoubleClick="TreeViewItem_MouseDoubleClick" HeaderTemplate="{StaticResource TreeViewItemTemplate}">
-                    <TreeViewItem Header="Kleiner Service"/>
-                    <TreeViewItem Header="Grosser Service"/>
-                    <TreeViewItem Header="Rennski Service"/>
-                    <TreeViewItem Header="Bindungen montieren und einstellen"/>
-                    <TreeViewItem Header="Fell zuschneiden"/>
-                    <TreeViewItem Header="Heisswachsen"/>
                 </TreeViewItem>
                 <TreeViewItem Header="Abgeschlossene Aufträge" MouseDoubleClick="TreeViewItem_MouseDoubleClick" HeaderTemplate="{StaticResource TreeViewItemTemplate}">
-                    <TreeViewItem Header="Kleiner Service"/>
-                    <TreeViewItem Header="Grosser Service"/>
-                    <TreeViewItem Header="Rennski Service"/>
-                    <TreeViewItem Header="Bindungen montieren und einstellen"/>
-                    <TreeViewItem Header="Fell zuschneiden"/>
-                    <TreeViewItem Header="Heisswachsen"/>
                 </TreeViewItem>
             </TreeView>
             <!-- GridSplitter -->
