@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Converters\**" />
+    <EmbeddedResource Remove="Converters\**" />
+    <None Remove="Converters\**" />
+    <Page Remove="Converters\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Assets\Icons\password.png" />
     <None Remove="Assets\Icons\sortarrow.png" />
     <None Remove="Assets\Icons\username.png" />
@@ -34,7 +41,6 @@
   </ItemGroup>
 
 	<ItemGroup>
-    <Folder Include="Converters\" />
     <Folder Include="Resources\" />
   </ItemGroup>
 

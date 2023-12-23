@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:helpers="clr-namespace:SkiServiceWPF.Helpers">
     <UserControl.Resources>
+        <helpers:DateTimeConverter x:Key="DateTimeConverter"/>
         <!-- Stil für DataGridColumnHeader -->
         <Style TargetType="{x:Type DataGridColumnHeader}">
             <Setter Property="Template">
@@ -17,7 +18,7 @@
                                 <ContentPresenter Content="{TemplateBinding Content}" 
                                               VerticalAlignment="Center"
                                               Grid.Column="0"/>
-                                <Image x:Name="SortArrowImage" Source="C:\GitHub\SkiServiceWPF\SkiServiceWPF\Assets\Icons\sortarrow.png" 
+                                <Image x:Name="SortArrowImage" Source="..\Assets\Icons\sortarrow.png" 
                                    Width="12" Height="12"
                                    HorizontalAlignment="Right"
                                    VerticalAlignment="Center"
@@ -75,9 +76,9 @@
                 <DataGridTextColumn Header="Service"
                                     Width="0.15*"
                                     Binding="{Binding Service}" />
-                <DataGridTextColumn Header="PickupDate"
+                <DataGridTextColumn Header="Enddatum"
                                     Width="0.15*"
-                                    Binding="{Binding PickupDate}" />
+                                    Binding="{Binding PickupDate, Converter={StaticResource DateTimeConverter}}" />
                 <DataGridTextColumn Header="Status"
                                     Width="0.1*"
                                     Binding="{Binding Status}" />

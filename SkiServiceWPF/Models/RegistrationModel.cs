@@ -14,5 +14,4 @@
         public string Service { get; set; }
         public string Status { get; set; }
     }
-
 }
