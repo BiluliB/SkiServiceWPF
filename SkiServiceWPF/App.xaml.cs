@@ -77,6 +77,7 @@ namespace SkiServiceWPF
                 navigationService.RegisterView("Login", () => new LoginView());
                 navigationService.RegisterView("Dashboard", () => new DashboardView(provider.GetRequiredService<BackendService>()));
                 navigationService.RegisterView("LoginView", () => new LoginView());
+                navigationService.RegisterView("EditViewUserControl", () => new EditViewUserControl());
 
                 return navigationService;
             });

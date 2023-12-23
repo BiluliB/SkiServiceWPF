@@ -4,11 +4,13 @@ using SkiServiceWPF.Commands;
 using SkiServiceWPF.Interfaces;
 using SkiServiceWPF.Services;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 public class DashboardViewModel : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler PropertyChanged;
     public AsyncRelayCommand LogoutCommand { get; }
+    public ICommand OpenEditViewCommand { get; private set; }
 
     private readonly INavigationService _navigationService;
 
@@ -28,6 +30,7 @@ public class DashboardViewModel : INotifyPropertyChanged
     {
         _navigationService = navigationService;
         LogoutCommand = new AsyncRelayCommand(ExecuteLogout, CanExecuteLogout);
+        OpenEditViewCommand = new RelayCommandNotGeneric(OnOpenEditViewCommandExecuted);
     }
 
     /// <summary>
@@ -53,4 +56,12 @@ public class DashboardViewModel : INotifyPropertyChanged
             _navigationService.NavigateTo("LoginView");
         }
     }
+
+    private void OnOpenEditViewCommandExecuted()
+    {
+        // Ereignis, das im Code-Behind abgefangen wird
+        RequestEditView?.Invoke(this, EventArgs.Empty);
+    }
+
+    public event EventHandler RequestEditView;
 }
