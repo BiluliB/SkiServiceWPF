@@ -21,9 +21,6 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-
-
-
     <Grid>
         <!-- MainGrid for two lines: One for Ribbon and one for Menu and their contents -->
         <Grid.RowDefinitions>
@@ -35,9 +32,6 @@
 
         <!-- Menu -->
         <DockPanel Grid.Row="0">
-
-
-
             <Menu DockPanel.Dock="Top" Height="25">
 
                 <MenuItem Header="Bearbeiten" Height="25" >
@@ -57,11 +51,6 @@
                     <MenuItem Header="Über Ski Service WPF"/>
                 </MenuItem>
             </Menu>
-
-
-
-
-
             <!-- Ribbon -->
             <Fluent:Ribbon Height="90">
                 <Fluent:RibbonTabItem Header="" Height="0" Width="0">

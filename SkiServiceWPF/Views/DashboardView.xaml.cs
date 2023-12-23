@@ -21,9 +21,22 @@ namespace SkiServiceWPF.Views
             InitializeComponent();
             _backendService = backendService;
 
-            var viewModel = ((App)Application.Current).ServiceProvider.GetRequiredService<DashboardViewModel>();
-            DataContext = viewModel;
+            // ViewModel für DashboardView
+            var dashboardViewModel = ((App)Application.Current).ServiceProvider.GetRequiredService<DashboardViewModel>();
+            DataContext = dashboardViewModel;
 
+            // ViewModel für ListView
+            var listViewViewModel = new ListViewModel(_backendService);
+            var listViewControl = new ListViewUserControl
+            {
+                DataContext = listViewViewModel
+            };
+
+            // ListViewUserControl als Inhalt setzen
+            this.ContentPlaceholder.Content = listViewControl;
+
+            // Daten laden
+            listViewViewModel.LoadRegistrationsCommand.Execute(null);
         }
 
         private void TreeViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)

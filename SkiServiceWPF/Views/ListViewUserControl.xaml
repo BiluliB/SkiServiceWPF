@@ -9,7 +9,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
-                        <Border BorderBrush="Gray" BorderThickness="1" Background="LightGray">
+                        <Border BorderBrush="Gray" BorderThickness="1" Background="LightGray" Padding="1,0,0,0">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
