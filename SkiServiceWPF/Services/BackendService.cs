@@ -61,6 +61,40 @@ namespace SkiServiceWPF.Services
         #endregion
 
         /// <summary>
+        /// Gets a list of statuses with their registrations from the backend
+        /// </summary>
+        /// <param name="routeKey">Route key to identify specific endpoints for statuses</param>
+        /// <returns>List of StatusDto instances</returns>
+        /// <exception cref="Exception">Throws an exception if the request fails</exception>
+        public async Task<List<StatusDto>> GetStatuses(string routeKey)
+        {
+            try
+            {
+                string baseUrl = _configuration["ApiSettings:BaseUrl"];
+                string endpoint = _configuration[$"ApiSettings:{routeKey}"];
+                string fullUrl = $"{baseUrl}{endpoint}";
+
+                var response = await _httpClient.GetAsync(fullUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    var statuses = JsonConvert.DeserializeObject<List<StatusDto>>(json);
+                    return statuses;
+                }
+                else
+                {
+                    // Behandeln Sie nicht erfolgreiche Statuscodes entsprechend
+                    throw new Exception($"Anfrage fehlgeschlagen mit Statuscode: {response.StatusCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Fehler beim Abrufen der Statusdaten: {ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
         /// Convers a RegistrationsDto instance to a RegistrationModel instance
         /// </summary>
         /// <param name="registrationdto"></param>
