@@ -13,6 +13,11 @@ namespace SkiServiceWPF.Views
         public LoginView()
         {
             InitializeComponent();
+
+            var loginViewModel = ((App)Application.Current).ServiceProvider.GetRequiredService<LoginViewModel>();
+            loginViewModel.ClearInputs();
+
+
             var viewModel = ((App)Application.Current).ServiceProvider.GetRequiredService<LoginViewModel>();
             DataContext = viewModel;
 
