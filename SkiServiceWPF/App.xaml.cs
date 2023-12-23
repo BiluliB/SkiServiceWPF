@@ -3,7 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using SkiServiceWPF.Interfaces;
 using SkiServiceWPF.Services;
 using SkiServiceWPF.ViewModel;
+using SkiServiceWPF.ViewModels;
 using SkiServiceWPF.Views;
+using System.ComponentModel;
 using System.IO;
 using System.Windows;
 
@@ -65,6 +67,7 @@ namespace SkiServiceWPF
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<LoginViewModel>();
             services.AddSingleton<BackendService>();
+            services.AddSingleton<ListViewModel>();
 
             services.AddSingleton<INavigationService>(provider =>
             {

@@ -32,7 +32,6 @@
 	<ItemGroup>
     <Folder Include="Converters\" />
     <Folder Include="Resources\" />
-    <Folder Include="Helpers" />
   </ItemGroup>
 
   <ItemGroup>

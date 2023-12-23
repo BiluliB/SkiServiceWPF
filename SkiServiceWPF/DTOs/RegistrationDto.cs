@@ -23,10 +23,10 @@ namespace SkiServiceWPF.DTOs
         public string Phone { get; set; }
 
         [JsonProperty("create_date")]
-        public string CreateDate { get; set; }
+        public DateTime CreateDate { get; set; }
 
         [JsonProperty("pickup_date")]
-        public string PickupDate { get; set; }
+        public DateTime PickupDate { get; set; }
 
         [JsonProperty("priority")]
         public string Priority { get; set; }

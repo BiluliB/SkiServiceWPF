@@ -6,39 +6,40 @@
         <helpers:WidthConverter x:Key="WidthConverter"/>
 
         <DataTemplate x:Key="HeaderTemplate">
-            <Button Content="{Binding}" Command="{Binding DataContext.SortCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" CommandParameter="{Binding}"/>
+            <Button Content="Enddatum" Command="{Binding DataContext.SortCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="PickupDate"/>
         </DataTemplate>
+
     </UserControl.Resources>
     <Grid>
-        <ListView x:Name="MyListView" ItemsSource="{Binding Registrations}">
+        <ListView x:Name="ListView" ItemsSource="{Binding Registrations}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Auftrags-Nr."
-                                    Width="{Binding ActualWidth, ElementName=MyListView, 
+                                    Width="{Binding ActualWidth, ElementName=ListView, 
                                     Converter={StaticResource WidthConverter}, ConverterParameter=0.2}" 
                                     DisplayMemberBinding="{Binding RegistrationId}" />
                     <GridViewColumn Header="Nachname"
-                                    Width="{Binding ActualWidth, ElementName=MyListView, 
+                                    Width="{Binding ActualWidth, ElementName=ListView, 
                                     Converter={StaticResource WidthConverter}, ConverterParameter=0.15}" 
                                     DisplayMemberBinding="{Binding LastName}" />
                     <GridViewColumn Header="Vorname"
-                                    Width="{Binding ActualWidth, ElementName=MyListView, 
+                                    Width="{Binding ActualWidth, ElementName=ListView, 
                                             Converter={StaticResource WidthConverter}, ConverterParameter=0.15}" 
                                     DisplayMemberBinding="{Binding FirstName}" />
                     <GridViewColumn Header="Service"
-                                    Width="{Binding ActualWidth, ElementName=MyListView, 
+                                    Width="{Binding ActualWidth, ElementName=ListView, 
                                     Converter={StaticResource WidthConverter}, ConverterParameter=0.15}" 
                                     DisplayMemberBinding="{Binding Service}" />
                     <GridViewColumn Header="Enddatum" HeaderTemplate="{StaticResource HeaderTemplate}"
-                                    Width="{Binding ActualWidth, ElementName=MyListView, 
+                                    Width="{Binding ActualWidth, ElementName=ListView, 
                                     Converter={StaticResource WidthConverter}, ConverterParameter=0.15}" 
                                     DisplayMemberBinding="{Binding PickupDate}" />
                     <GridViewColumn Header="Status"
-                                    Width="{Binding ActualWidth, ElementName=MyListView, 
+                                    Width="{Binding ActualWidth, ElementName=ListView, 
                                     Converter={StaticResource WidthConverter}, ConverterParameter=0.1}" 
                                     DisplayMemberBinding="{Binding Status}" />
                     <GridViewColumn Header="Priorität"
-                                    Width="{Binding ActualWidth, ElementName=MyListView, 
+                                    Width="{Binding ActualWidth, ElementName=ListView, 
                                     Converter={StaticResource WidthConverter}, ConverterParameter=0.1}" 
                                     DisplayMemberBinding="{Binding Priority}" />
                 </GridView>

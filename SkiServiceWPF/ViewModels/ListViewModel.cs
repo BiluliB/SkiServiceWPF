@@ -3,6 +3,7 @@ using SkiServiceWPF.Models;
 using SkiServiceWPF.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows.Input;
 
 namespace SkiServiceWPF.ViewModels
@@ -20,13 +21,31 @@ namespace SkiServiceWPF.ViewModels
         // Event for property change notifications
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        // Collection of registration models for data binding
-        public ObservableCollection<RegistrationModel> Registrations { get; private set; }
 
         // Command to load registration data
         public ICommand LoadRegistrationsCommand { get; private set; }
 
         public ICommand SortCommand { get; private set; }
+
+        private ObservableCollection<RegistrationModel> _registrations;
+        public ObservableCollection<RegistrationModel> Registrations
+        {
+            get => _registrations;
+            set
+            {
+                if (_registrations != value)
+                {
+                    _registrations = value;
+                    OnPropertyChanged(nameof(Registrations));
+                }
+            }
+        }
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
 
         /// <summary>
         /// Constructor initializing the ViewModel with a backend service
@@ -69,6 +88,7 @@ namespace SkiServiceWPF.ViewModels
                     };
                     Registrations.Add(model);
                 }
+                SortRegistrations("PickupDate");
             }
             catch (Exception ex)
             {
@@ -81,17 +101,18 @@ namespace SkiServiceWPF.ViewModels
         {
             if (sortProperty == "PickupDate")
             {
-                if (_isAscending)
+                var sortedList = _isAscending
+                    ? Registrations.OrderBy(r => r.PickupDate).ToList()
+                    : Registrations.OrderByDescending(r => r.PickupDate).ToList();
+
+                Registrations.Clear();
+                foreach (var item in sortedList)
                 {
-                    Registrations = new ObservableCollection<RegistrationModel>(Registrations.OrderBy(r => r.PickupDate));
+                    Registrations.Add(item);
                 }
-                else
-                {
-                    Registrations = new ObservableCollection<RegistrationModel>(Registrations.OrderByDescending(r => r.PickupDate));
-                }
+
                 _isAscending = !_isAscending;
             }
-           
         }
     }
 }

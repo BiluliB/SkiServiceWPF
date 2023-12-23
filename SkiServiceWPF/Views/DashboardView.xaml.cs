@@ -18,7 +18,6 @@ namespace SkiServiceWPF.Views
         {
             InitializeComponent();
             _backendService = backendService;
-            Debug.WriteLine($"Image path: {DashboardImage.Source}");
         }
 
         private void TreeViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
