@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SkiServiceWPF.Views"
-             mc:Ignorable="d" d:DesignWidth="400" Height="451">
+             
+             Background="White">
 
     <UserControl.Resources>
         <Style x:Key="InputControlStyle" TargetType="Control">
@@ -13,8 +14,10 @@
         </Style>
     </UserControl.Resources>
 
-
-    <Grid Margin="10">
+    
+        
+        <Viewbox Stretch="Uniform" >
+        <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <!-- Kundeninformationen -->
@@ -28,12 +31,12 @@
         <GroupBox Grid.Row="0" Header="Kunde" Margin="5">
             <Grid Margin="5">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100"/>
@@ -67,14 +70,14 @@
         <GroupBox Header="Service Auftrag" Margin="5,1,5,16" Grid.Row="1">
             <Grid Margin="5">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100"/>
@@ -116,4 +119,7 @@
             </Grid>
         </GroupBox>
     </Grid>
+        </Viewbox>
+    
+    
 </UserControl>
