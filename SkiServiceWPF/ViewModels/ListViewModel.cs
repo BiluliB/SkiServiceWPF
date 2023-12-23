@@ -1,4 +1,5 @@
-﻿using SkiServiceWPF.Commands;
+﻿using Microsoft.Extensions.Configuration;
+using SkiServiceWPF.Commands;
 using SkiServiceWPF.Models;
 using SkiServiceWPF.Services;
 using System.Collections.ObjectModel;
@@ -20,9 +21,13 @@ namespace SkiServiceWPF.ViewModels
         // Event for property change notifications
         public event PropertyChangedEventHandler? PropertyChanged;
 
-
+        private readonly IConfiguration _configuration;
         // Command to load registration data
+        public ICommand LoadOpenRegistrationsCommand { get; private set; }
+
         public ICommand LoadRegistrationsCommand { get; private set; }
+        public ICommand LoadWorkRegistrationsCommand { get; private set; }
+        public ICommand LoadDoneRegistrationsCommand { get; private set; }
 
         public ICommand SortCommand { get; private set; }
 
@@ -51,11 +56,15 @@ namespace SkiServiceWPF.ViewModels
         /// </summary>
         /// <param name="backendService">Service for backend operations</param>
         #region ListViewModel
-        public ListViewModel(BackendService backendService)
+        public ListViewModel(IConfiguration configuration, BackendService backendService)
         {
             _backendService = backendService;
+            _configuration = configuration;
             Registrations = new ObservableCollection<RegistrationModel>();
             LoadRegistrationsCommand = new AsyncRelayCommand(Load_Registrations);
+            LoadOpenRegistrationsCommand = new AsyncRelayCommand(Load_OpenRegistrations);
+            LoadWorkRegistrationsCommand = new AsyncRelayCommand(Load_WorkRegistrations);
+            LoadDoneRegistrationsCommand = new AsyncRelayCommand(Load_DoneRegistrations);
             SortCommand = new RelayCommand<string>(SortRegistrations);
         }
         #endregion
@@ -95,6 +104,114 @@ namespace SkiServiceWPF.ViewModels
             }
         }
         #endregion
+
+        private async Task Load_OpenRegistrations()
+        {
+            try
+            {
+                var statusDtos = await _backendService.GetStatuses("GetStatusEndpoint");
+
+                Registrations.Clear();
+
+                foreach (var statusDto in statusDtos)
+                {
+                    if (statusDto.StatusName == "Offen" && statusDto.Registrations != null)
+                    {
+                        foreach (var registrationDto in statusDto.Registrations)
+                        {
+                            var model = new RegistrationModel
+                            {
+                                RegistrationId = registrationDto.RegistrationId,
+                                LastName = registrationDto.LastName,
+                                FirstName = registrationDto.FirstName,
+                                PickupDate = registrationDto.PickupDate,
+                                Priority = registrationDto.Priority,
+                                Service = registrationDto.Service,
+                                Status = registrationDto.Status
+                            };
+                            Registrations.Add(model);
+                        }
+                    }
+                }
+                SortRegistrations("PickupDate");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+        }
+
+        private async Task Load_WorkRegistrations()
+        {
+            try
+            {
+                var statusDtos = await _backendService.GetStatuses("GetStatusEndpoint");
+
+                Registrations.Clear();
+
+                foreach (var statusDto in statusDtos)
+                {
+                    if (statusDto.StatusName == "InArbeit" && statusDto.Registrations != null)
+                    {
+                        foreach (var registrationDto in statusDto.Registrations)
+                        {
+                            var model = new RegistrationModel
+                            {
+                                RegistrationId = registrationDto.RegistrationId,
+                                LastName = registrationDto.LastName,
+                                FirstName = registrationDto.FirstName,
+                                PickupDate = registrationDto.PickupDate,
+                                Priority = registrationDto.Priority,
+                                Service = registrationDto.Service,
+                                Status = registrationDto.Status
+                            };
+                            Registrations.Add(model);
+                        }
+                    }
+                }
+                SortRegistrations("PickupDate");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+        }
+
+        private async Task Load_DoneRegistrations()
+        {
+            try
+            {
+                var statusDtos = await _backendService.GetStatuses("GetStatusEndpoint");
+
+                Registrations.Clear();
+
+                foreach (var statusDto in statusDtos)
+                {
+                    if (statusDto.StatusName == "abgeschlossen" && statusDto.Registrations != null)
+                    {
+                        foreach (var registrationDto in statusDto.Registrations)
+                        {
+                            var model = new RegistrationModel
+                            {
+                                RegistrationId = registrationDto.RegistrationId,
+                                LastName = registrationDto.LastName,
+                                FirstName = registrationDto.FirstName,
+                                PickupDate = registrationDto.PickupDate,
+                                Priority = registrationDto.Priority,
+                                Service = registrationDto.Service,
+                                Status = registrationDto.Status
+                            };
+                            Registrations.Add(model);
+                        }
+                    }
+                }
+                SortRegistrations("PickupDate");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+        }
 
         private double _sortArrowAngle;
         public double SortArrowTransform
