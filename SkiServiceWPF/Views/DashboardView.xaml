@@ -6,6 +6,24 @@
              xmlns:Fluent="urn:fluent-ribbon"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <Style TargetType="RibbonTabHeader">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RibbonTabHeader">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+
+
     <Grid>
         <!-- MainGrid for two lines: One for Ribbon and one for Menu and their contents -->
         <Grid.RowDefinitions>
@@ -17,14 +35,17 @@
 
         <!-- Menu -->
         <DockPanel Grid.Row="0">
+
+
+
             <Menu DockPanel.Dock="Top" Height="25">
-                
+
                 <MenuItem Header="Bearbeiten" Height="25" >
                     <MenuItem Header="Editieren" Height="25"/>
                     <MenuItem Header="Löschen" Height="25"/>
                     <MenuItem Header="Hinzufügen" Height="25"/>
                 </MenuItem>
-                    
+
                 <MenuItem Header="Einstellung" Height="25">
                     <MenuItem Header="Sprache Einstellen" Height="25"/>
                     <Separator/>
@@ -35,28 +56,33 @@
                     <MenuItem Header="GitHub Repository (Updates)"/>
                     <MenuItem Header="Über Ski Service WPF"/>
                 </MenuItem>
-                
             </Menu>
-            
+
+
+
+
 
             <!-- Ribbon -->
-            <Fluent:Ribbon>
-                <Fluent:RibbonTabItem Header="">
+            <Fluent:Ribbon Height="90">
+                <Fluent:RibbonTabItem Header="" Height="0" Width="0">
                     <Fluent:RibbonGroupBox Width="190">
-                        <StackPanel Orientation="Horizontal" Margin="0,17,0,0">
-                        <Fluent:Button Header="Editieren" Icon=".\Assets\Images\pen.png" LargeIcon=".\Assets\Images\pen.png"  />
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <Fluent:Button Header="Editieren" Icon=".\Assets\Images\pen.png" LargeIcon=".\Assets\Images\pen.png"  />
                             <Fluent:Button Header="Löschen" Icon=".\Assets\Images\trashcan.png" LargeIcon=".\Assets\Images\trashcan.png" Margin=" 10,0,0,0"/>
-                            <Fluent:Button Header="Hinzufügen" Icon=".\Assets\Images\add.png" Margin=" 10,0,0,0"/>
+                            <Fluent:Button Header="Hinzufügen" Icon=".\Assets\Images\add.png" Margin=" 7,0,0,0"/>
                         </StackPanel>
                     </Fluent:RibbonGroupBox>
                 </Fluent:RibbonTabItem>
             </Fluent:Ribbon>
         </DockPanel>
 
+        <Button Content="Logout" Command="{Binding LogoutCommand}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,53,4,0" Width="86" />
+
+
         <!-- Searchbar right on the menu -->
-        <DockPanel Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,60,10,10">
+        <DockPanel Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,60,4,10">
             <TextBox Width="200"/>
-            <Button Content="Suchen" Width="80" Margin="10,0,0,0"/>
+            <Button Content="Suchen" Width="86" Margin="10,0,0,0"/>
         </DockPanel>
 
         <!-- Second Grid for TreeView and ListViewUserControl -->
