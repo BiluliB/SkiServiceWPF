@@ -38,6 +38,8 @@
                 <TextBlock Text="{Binding}" Margin="5,0" />
             </StackPanel>
         </DataTemplate>
+        
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
     <Grid>
         <!-- MainGrid for two lines: One for Ribbon and one for Menu and their contents -->
@@ -79,6 +81,19 @@
                             <Fluent:Button Header="Hinzufügen" Icon=".\Assets\Images\add.png" Margin=" 7,0,0,0"/>
                         </StackPanel>
                     </Fluent:RibbonGroupBox>
+                    <Fluent:RibbonGroupBox Visibility="{Binding IsEditViewActive, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <Fluent:Button Header="Zurück"
+                                           Click="ReturnToListView_Click"
+                                           Icon=".\Assets\Icons\zurueck.png"
+                                           LargeIcon=".\Assets\Icons\zurueck.png"
+                                           Visibility="{Binding IsEditViewActive, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            <Fluent:Button Header="Speichern"
+                                           Icon=".\Assets\Icons\speichern.png"
+                                           LargeIcon=".\Assets\Icons\speichern.png"
+                                           Visibility="{Binding IsEditViewActive, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        </StackPanel>
+                    </Fluent:RibbonGroupBox>
                 </Fluent:RibbonTabItem>
             </Fluent:Ribbon>
         </DockPanel>
@@ -116,7 +131,7 @@
 
             <!-- ContentControl: ListViewUserControl -->
             <Image x:Name="DashboardImage" Source="../Assets/Images/dashboardImage.png" Grid.Column="2" Margin="0,40,0,0"/>
-            <ContentControl x:Name="ContentPlaceholder" Grid.Column="2" />
+            <ContentControl x:Name="ContentPlaceholder" Grid.Column="2" Content="{Binding CurrentView}" />
         </Grid>
     </Grid>
 </UserControl>

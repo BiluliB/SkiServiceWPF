@@ -20,7 +20,9 @@
     <None Remove="Assets\Icons\folderopen.png" />
     <None Remove="Assets\Icons\password.png" />
     <None Remove="Assets\Icons\sortarrow.png" />
+    <None Remove="Assets\Icons\speichern.png" />
     <None Remove="Assets\Icons\username.png" />
+    <None Remove="Assets\Icons\zurueck.png" />
     <None Remove="Assets\Images\add.png" />
     <None Remove="Assets\Images\dashboardImage.png" />
     <None Remove="Assets\Images\pen.png" />
@@ -38,6 +40,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\Icons\sortarrow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\speichern.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\zurueck.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\Images\dashboardImage.png">

@@ -5,65 +5,67 @@ using SkiServiceWPF.Interfaces;
 using SkiServiceWPF.Services;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using SkiServiceWPF.Views;
 
-namespace SkiServiceWPF { 
-public class DashboardViewModel : INotifyPropertyChanged
+namespace SkiServiceWPF.ViewModels
 {
-    public event PropertyChangedEventHandler PropertyChanged;
-    public AsyncRelayCommand LogoutCommand { get; }
-    public ICommand OpenEditViewCommand { get; private set; }
-
-    private readonly INavigationService _navigationService;
-
-    /// <summary>
-    /// Benachrichtigt Abonnenten über Änderungen an Eigenschaften.
-    /// </summary>
-    protected virtual void OnPropertyChanged(string propertyName)
+    public class DashboardViewModel : INotifyPropertyChanged
     {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
+        // Deklaration der privaten Felder
+        private bool _isEditViewActive;
 
-    /// <summary>
-    /// Konstruktor für DashboardViewModel.
-    /// </summary>
-    /// <param name="navigationService">Der Navigationsservice zur Steuerung der Ansichten.</param>
-    public DashboardViewModel(INavigationService navigationService)
-    {
-        _navigationService = navigationService;
-        LogoutCommand = new AsyncRelayCommand(ExecuteLogout, CanExecuteLogout);
-        OpenEditViewCommand = new RelayCommandNotGeneric(OnOpenEditViewCommandExecuted);
-    }
+        public event PropertyChangedEventHandler PropertyChanged;
 
-    /// <summary>
-    /// Bestimmt, ob der Logout-Befehl ausgeführt werden kann.
-    /// </summary>
-    private bool CanExecuteLogout()
-    {
-        // Hier können Sie Bedingungen prüfen, wann der Logout möglich ist
-        return true;
-    }
 
-    /// <summary>
-    /// Führt den Logout-Prozess aus.
-    /// </summary>
-    private async Task ExecuteLogout()
-    {
-        // Bestätigungsdialog
-        MessageBoxResult result = MessageBox.Show("Möchten Sie sich wirklich abmelden?", "Abmeldung", MessageBoxButton.YesNo);
-        if (result == MessageBoxResult.Yes)
+        // Public Properties
+        public bool IsEditViewActive
         {
-            // Führen Sie hier den Logout-Prozess durch (z.B. Token löschen, Session beenden)
-            // Navigieren zur LoginView
-            _navigationService.NavigateTo("LoginView");
+            get => _isEditViewActive;
+            set
+            {
+                _isEditViewActive = value;
+                OnPropertyChanged(nameof(IsEditViewActive));
+            }
+        }
+
+        public AsyncRelayCommand LogoutCommand { get; }
+        public ICommand OpenEditViewCommand { get; private set; }
+
+        public event EventHandler RequestEditView;
+
+        private readonly INavigationService _navigationService;
+
+        // Konstruktor und Methoden
+        public DashboardViewModel(INavigationService navigationService)
+        {
+            _navigationService = navigationService;
+            LogoutCommand = new AsyncRelayCommand(ExecuteLogout, CanExecuteLogout);
+            OpenEditViewCommand = new RelayCommandNotGeneric(OnOpenEditViewCommandExecuted);
+        }
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private bool CanExecuteLogout()
+        {
+            return true;
+        }
+
+        private async Task ExecuteLogout()
+        {
+            MessageBoxResult result = MessageBox.Show("Möchten Sie sich wirklich abmelden?", "Abmeldung", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                _navigationService.NavigateTo("LoginView");
+            }
+        }
+
+        private void OnOpenEditViewCommandExecuted()
+        {
+            RequestEditView?.Invoke(this, EventArgs.Empty);
+            IsEditViewActive = true;
         }
     }
-
-    private void OnOpenEditViewCommandExecuted()
-    {
-        // Ereignis, das im Code-Behind abgefangen wird
-        RequestEditView?.Invoke(this, EventArgs.Empty);
-    }
-
-    public event EventHandler RequestEditView;
-  }
 }
