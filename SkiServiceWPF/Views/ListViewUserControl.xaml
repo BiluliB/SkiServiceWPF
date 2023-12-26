@@ -79,7 +79,7 @@
                                     Binding="{Binding Service}" />
                 <DataGridTextColumn Header="Enddatum"
                                     Width="0.15*"
-                                    Binding="{Binding PickupDate, Converter={StaticResource DateTimeConverter}}" />
+                                    Binding="{Binding PickupDate, Converter={StaticResource DateTimeConverter}, FallbackValue='Binding Failed'}" />
                 <DataGridTextColumn Header="Status"
                                     Width="0.1*"
                                     Binding="{Binding Status}" />

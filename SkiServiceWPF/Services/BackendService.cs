@@ -36,7 +36,7 @@ namespace SkiServiceWPF.Services
         /// <returns>List of RegistrationModel instances</returns>
         /// <exception cref="Exception">Throws an exception if the request fails</exception>
         #region GetRegistrations
-        public async Task<List<RegistrationModel>> GetRegistrations(string routeKey)
+        public async Task<List<RegistrationsDto>> GetRegistrations(string routeKey)
         {
             try
             {
@@ -44,10 +44,11 @@ namespace SkiServiceWPF.Services
                 string endpoint = _configuration[$"ApiSettings:{routeKey}"];
                 string fullUrl = $"{baseUrl}{endpoint}";
                 var response = await _httpClient.GetAsync(fullUrl);
+
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var registrationdto = JsonConvert.DeserializeObject<List<RegistrationModel>>(json);
+                    var registrationdto = JsonConvert.DeserializeObject<List<RegistrationsDto>>(json);
                     
                     return registrationdto;
                 }
@@ -56,7 +57,7 @@ namespace SkiServiceWPF.Services
             {
                 throw new Exception(ex.Message, ex);
             }
-            return new List<RegistrationModel>();
+            return new List<RegistrationsDto>();
         }
         #endregion
 
@@ -66,33 +67,34 @@ namespace SkiServiceWPF.Services
         /// <param name="routeKey">Route key to identify specific endpoints for statuses</param>
         /// <returns>List of StatusDto instances</returns>
         /// <exception cref="Exception">Throws an exception if the request fails</exception>
-        //public async Task<List<StatusDto>> GetStatuses(string routeKey)
-        //{
-        //    try
-        //    {
-        //        string baseUrl = _configuration["ApiSettings:BaseUrl"];
-        //        string endpoint = _configuration[$"ApiSettings:{routeKey}"];
-        //        string fullUrl = $"{baseUrl}{endpoint}";
+        public async Task<List<StatusDto>> GetStatuses(string routeKey)
+            {
+        
+            try
+            {
+                string baseUrl = _configuration["ApiSettings:BaseUrl"];
+                string endpoint = _configuration[$"ApiSettings:{routeKey}"];
+                string fullUrl = $"{baseUrl}{endpoint}";
 
-        //        var response = await _httpClient.GetAsync(fullUrl);
+                var response = await _httpClient.GetAsync(fullUrl);
 
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            var json = await response.Content.ReadAsStringAsync();
-        //            var statuses = JsonConvert.DeserializeObject<List<StatusDto>>(json);
-        //            return statuses;
-        //        }
-        //        else
-        //        {
-        //            // Behandeln Sie nicht erfolgreiche Statuscodes entsprechend
-        //            throw new Exception($"Anfrage fehlgeschlagen mit Statuscode: {response.StatusCode}");
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception($"Fehler beim Abrufen der Statusdaten: {ex.Message}", ex);
-        //    }
-        //}
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    var statuses = JsonConvert.DeserializeObject<List<StatusDto>>(json);
+                    return statuses;
+                }
+                else
+                {
+                    // Behandeln Sie nicht erfolgreiche Statuscodes entsprechend
+                    throw new Exception($"Anfrage fehlgeschlagen mit Statuscode: {response.StatusCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Fehler beim Abrufen der Statusdaten: {ex.Message}", ex);
+            }
+        }
 
    
         
