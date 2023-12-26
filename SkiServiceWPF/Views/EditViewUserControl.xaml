@@ -102,7 +102,7 @@
 
                 <!-- Abholdatum -->
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="Abholdatum:" Margin="5,2" VerticalAlignment="Center"/>
-                    <DatePicker Text="{Binding Model.PickupDate, Converter={StaticResource DateTimeConverter}}" Grid.Row="3" Grid.Column="0" Style="{StaticResource InputControlStyle}"/>
+                    <DatePicker Text="{Binding Model.PickupDate}" Grid.Row="3" Grid.Column="0" Style="{StaticResource InputControlStyle}"/>
 
                 <!-- Priorität -->
                 <TextBlock Grid.Row="2" Grid.Column="2" Text="Priorität:" Margin="5,2" VerticalAlignment="Center"/>
