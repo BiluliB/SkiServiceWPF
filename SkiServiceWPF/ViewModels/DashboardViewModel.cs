@@ -6,6 +6,7 @@ using SkiServiceWPF.Services;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
+namespace SkiServiceWPF { 
 public class DashboardViewModel : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler PropertyChanged;
@@ -64,4 +65,5 @@ public class DashboardViewModel : INotifyPropertyChanged
     }
 
     public event EventHandler RequestEditView;
+  }
 }

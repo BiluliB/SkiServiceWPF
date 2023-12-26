@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SkiServiceWPF.Common;
 using SkiServiceWPF.Interfaces;
 using SkiServiceWPF.Services;
 using SkiServiceWPF.ViewModel;
@@ -77,7 +78,7 @@ namespace SkiServiceWPF
                 navigationService.RegisterView("Login", () => new LoginView());
                 navigationService.RegisterView("Dashboard", () => new DashboardView(Configuration, provider.GetRequiredService<BackendService>()));
                 navigationService.RegisterView("LoginView", () => new LoginView());
-                navigationService.RegisterView("EditViewUserControl", () => new EditViewUserControl());
+                navigationService.RegisterView("EditViewUserControl", () => new EditViewUserControl(SelectionHelper.Selected));
 
                 return navigationService;
             });

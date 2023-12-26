@@ -8,6 +8,7 @@ using SkiServiceWPF.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using System.Configuration;
 using Microsoft.Extensions.Configuration;
+using SkiServiceWPF.Common;
 
 namespace SkiServiceWPF.Views
 {
@@ -53,7 +54,7 @@ namespace SkiServiceWPF.Views
         private void ViewModel_RequestEditView(object sender, EventArgs e)
         {
             // ContentPlaceholder aktualisieren
-            this.ContentPlaceholder.Content = new EditViewUserControl();
+            this.ContentPlaceholder.Content = new EditViewUserControl(SelectionHelper.Selected);
         }
 
         private void DashboardView_Unloaded(object sender, RoutedEventArgs e)
@@ -104,7 +105,7 @@ namespace SkiServiceWPF.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var editViewControl = new EditViewUserControl();
+            var editViewControl = new EditViewUserControl(SelectionHelper.Selected);
             this.ContentPlaceholder.Content = editViewControl;
         }
     }

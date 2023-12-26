@@ -95,24 +95,25 @@
         <!-- Second Grid for TreeView and ListViewUserControl -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="190"/>
+                <!--    <ColumnDefinition Width="190"/> -->
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <!-- TreeView -->
-            <TreeView Grid.Column="0">
-                <TreeViewItem Header="Alle Aufträge" MouseDoubleClick="TreeViewItem_MouseDoubleClick"  HeaderTemplate="{StaticResource TreeViewItemTemplate}">
-                </TreeViewItem>
-                <TreeViewItem Header="Offene Aufträge" MouseDoubleClick="TreeViewItem_MouseDoubleClick" HeaderTemplate="{StaticResource TreeViewItemTemplate}">
-                </TreeViewItem>
-                <TreeViewItem Header="In Arbeit" MouseDoubleClick="TreeViewItem_MouseDoubleClick" HeaderTemplate="{StaticResource TreeViewItemTemplate}">
-                </TreeViewItem>
-                <TreeViewItem Header="Abgeschlossene Aufträge" MouseDoubleClick="TreeViewItem_MouseDoubleClick" HeaderTemplate="{StaticResource TreeViewItemTemplate}">
-                </TreeViewItem>
-            </TreeView>
+            <!--<TreeView Grid.Column="0">-->
+             <!--   <TreeViewItem Header="Alle Aufträge" MouseDoubleClick="TreeViewItem_MouseDoubleClick"  HeaderTemplate="{StaticResource TreeViewItemTemplate}">-->
+             <!--   </TreeViewItem>-->
+             <!--   <TreeViewItem Header="Offene Aufträge" MouseDoubleClick="TreeViewItem_MouseDoubleClick" HeaderTemplate="{StaticResource TreeViewItemTemplate}">-->
+              <!--  </TreeViewItem>-->
+             <!--   <TreeViewItem Header="In Arbeit" MouseDoubleClick="TreeViewItem_MouseDoubleClick" HeaderTemplate="{StaticResource TreeViewItemTemplate}">-->
+             <!--   </TreeViewItem>-->
+             <!--   <TreeViewItem Header="Abgeschlossene Aufträge" MouseDoubleClick="TreeViewItem_MouseDoubleClick" HeaderTemplate="{StaticResource TreeViewItemTemplate}">-->
+            <!--    </TreeViewItem>-->
+         <!--   </TreeView>-->
+            
             <!-- GridSplitter -->
-            <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns"/>
+            <!-- <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns"/> -->
 
             <!-- ContentControl: ListViewUserControl -->
             <Image x:Name="DashboardImage" Source="../Assets/Images/dashboardImage.png" Grid.Column="2" Margin="0,40,0,0"/>
