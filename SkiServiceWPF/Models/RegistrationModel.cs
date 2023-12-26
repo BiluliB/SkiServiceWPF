@@ -22,10 +22,10 @@
         public string Phone { get; set; }
 
         
-        public DateTime CreateDate { get; set; }
+        public string CreateDate { get; set; }
 
         
-        public DateTime PickupDate { get; set; }
+        public string PickupDate { get; set; }
 
         
         public string Priority { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,16 @@ namespace SkiServiceWPF.Helpers
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is DateTime dateTime)
+            if (value is string dateString && !string.IsNullOrEmpty(dateString))
             {
-                return dateTime.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture);
+                if (DateTime.TryParse(dateString, null, DateTimeStyles.RoundtripKind, out DateTime dateTime))
+                {
+                    return dateTime.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture);
+                }
+                else
+                {
+                    Debug.WriteLine("DateTimeConverter: Konnte Datum nicht parsen - " + dateString);
+                }
             }
             return value;
         }
