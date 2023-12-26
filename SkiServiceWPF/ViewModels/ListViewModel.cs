@@ -60,9 +60,9 @@ namespace SkiServiceWPF.ViewModels
             _backendService = backendService;
             Registrations = new ObservableCollection<RegistrationModel>();
             LoadRegistrationsCommand = new AsyncRelayCommand(Load_Registrations);
-            LoadOpenRegistrationsCommand = new AsyncRelayCommand(Load_OpenRegistrations);
-            LoadWorkRegistrationsCommand = new AsyncRelayCommand(Load_WorkRegistrations);
-            LoadDoneRegistrationsCommand = new AsyncRelayCommand(Load_DoneRegistrations);
+            //LoadOpenRegistrationsCommand = new AsyncRelayCommand(Load_OpenRegistrations);
+            //LoadWorkRegistrationsCommand = new AsyncRelayCommand(Load_WorkRegistrations);
+            //LoadDoneRegistrationsCommand = new AsyncRelayCommand(Load_DoneRegistrations);
             SortCommand = new RelayCommand<string>(SortRegistrations);
         }
         #endregion
@@ -81,18 +81,8 @@ namespace SkiServiceWPF.ViewModels
                 Registrations.Clear();
                 foreach (var registrationdto in registrationDtos)
                 {
-                    var model = new RegistrationModel
-                    {
-                        RegistrationId = registrationdto.RegistrationId,
-                        LastName = registrationdto.LastName,
-                        FirstName = registrationdto.FirstName,
-                        PickupDate = registrationdto.PickupDate,
-                        Priority = registrationdto.Priority,
-                        Service = registrationdto.Service,
-                        Status = registrationdto.Status
-
-                    };
-                    Registrations.Add(model);
+                   
+                    Registrations.Add(registrationdto);
                 }
                 SortRegistrations("PickupDate");
             }
@@ -103,113 +93,113 @@ namespace SkiServiceWPF.ViewModels
         }
         #endregion
 
-        private async Task Load_OpenRegistrations()
-        {
-            try
-            {
-                var statusDtos = await _backendService.GetStatuses("GetStatusEndpoint");
+            //private async Task Load_OpenRegistrations()
+            //{
+            //    try
+            //    {
+            //        var statusDtos = await _backendService.GetStatuses("GetStatusEndpoint");
 
-                Registrations.Clear();
+            //        Registrations.Clear();
 
-                foreach (var statusDto in statusDtos)
-                {
-                    if (statusDto.StatusName == "Offen" && statusDto.Registrations != null)
-                    {
-                        foreach (var registrationDto in statusDto.Registrations)
-                        {
-                            var model = new RegistrationModel
-                            {
-                                RegistrationId = registrationDto.RegistrationId,
-                                LastName = registrationDto.LastName,
-                                FirstName = registrationDto.FirstName,
-                                PickupDate = registrationDto.PickupDate,
-                                Priority = registrationDto.Priority,
-                                Service = registrationDto.Service,
-                                Status = registrationDto.Status
-                            };
-                            Registrations.Add(model);
-                        }
-                    }
-                }
-                SortRegistrations("PickupDate");
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message, ex);
-            }
-        }
+            //        foreach (var statusDto in statusDtos)
+            //        {
+            //            if (statusDto.StatusName == "Offen" && statusDto.Registrations != null)
+            //            {
+            //                foreach (var registrationDto in statusDto.Registrations)
+            //                {
+            //                    var model = new RegistrationModel
+            //                    {
+            //                        RegistrationId = registrationDto.RegistrationId,
+            //                        LastName = registrationDto.LastName,
+            //                        FirstName = registrationDto.FirstName,
+            //                        PickupDate = registrationDto.PickupDate,
+            //                        Priority = registrationDto.Priority,
+            //                        Service = registrationDto.Service,
+            //                        Status = registrationDto.Status
+            //                    };
+            //                    Registrations.Add(model);
+            //                }
+            //            }
+            //        }
+            //        SortRegistrations("PickupDate");
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        throw new Exception(ex.Message, ex);
+            //    }
+            //}
 
-        private async Task Load_WorkRegistrations()
-        {
-            try
-            {
-                var statusDtos = await _backendService.GetStatuses("GetStatusEndpoint");
+        //private async Task Load_WorkRegistrations()
+        //{
+        //    try
+        //    {
+        //        var statusDtos = await _backendService.GetStatuses("GetStatusEndpoint");
 
-                Registrations.Clear();
+        //        Registrations.Clear();
 
-                foreach (var statusDto in statusDtos)
-                {
-                    if (statusDto.StatusName == "InArbeit" && statusDto.Registrations != null)
-                    {
-                        foreach (var registrationDto in statusDto.Registrations)
-                        {
-                            var model = new RegistrationModel
-                            {
-                                RegistrationId = registrationDto.RegistrationId,
-                                LastName = registrationDto.LastName,
-                                FirstName = registrationDto.FirstName,
-                                PickupDate = registrationDto.PickupDate,
-                                Priority = registrationDto.Priority,
-                                Service = registrationDto.Service,
-                                Status = registrationDto.Status
-                            };
-                            Registrations.Add(model);
-                        }
-                    }
-                }
-                SortRegistrations("PickupDate");
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message, ex);
-            }
-        }
+        //        foreach (var statusDto in statusDtos)
+        //        {
+        //            if (statusDto.StatusName == "InArbeit" && statusDto.Registrations != null)
+        //            {
+        //                foreach (var registrationDto in statusDto.Registrations)
+        //                {
+        //                    var model = new RegistrationModel
+        //                    {
+        //                        RegistrationId = registrationDto.RegistrationId,
+        //                        LastName = registrationDto.LastName,
+        //                        FirstName = registrationDto.FirstName,
+        //                        PickupDate = registrationDto.PickupDate,
+        //                        Priority = registrationDto.Priority,
+        //                        Service = registrationDto.Service,
+        //                        Status = registrationDto.Status
+        //                    };
+        //                    Registrations.Add(model);
+        //                }
+        //            }
+        //        }
+        //        SortRegistrations("PickupDate");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message, ex);
+        //    }
+        //}
 
-        private async Task Load_DoneRegistrations()
-        {
-            try
-            {
-                var statusDtos = await _backendService.GetStatuses("GetStatusEndpoint");
+        //private async Task Load_DoneRegistrations()
+        //{
+        //    try
+        //    {
+        //        var statusDtos = await _backendService.GetStatuses("GetStatusEndpoint");
 
-                Registrations.Clear();
+        //        Registrations.Clear();
 
-                foreach (var statusDto in statusDtos)
-                {
-                    if (statusDto.StatusName == "abgeschlossen" && statusDto.Registrations != null)
-                    {
-                        foreach (var registrationDto in statusDto.Registrations)
-                        {
-                            var model = new RegistrationModel
-                            {
-                                RegistrationId = registrationDto.RegistrationId,
-                                LastName = registrationDto.LastName,
-                                FirstName = registrationDto.FirstName,
-                                PickupDate = registrationDto.PickupDate,
-                                Priority = registrationDto.Priority,
-                                Service = registrationDto.Service,
-                                Status = registrationDto.Status
-                            };
-                            Registrations.Add(model);
-                        }
-                    }
-                }
-                SortRegistrations("PickupDate");
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message, ex);
-            }
-        }
+        //        foreach (var statusDto in statusDtos)
+        //        {
+        //            if (statusDto.StatusName == "abgeschlossen" && statusDto.Registrations != null)
+        //            {
+        //                foreach (var registrationDto in statusDto.Registrations)
+        //                {
+        //                    var model = new RegistrationModel
+        //                    {
+        //                        RegistrationId = registrationDto.RegistrationId,
+        //                        LastName = registrationDto.LastName,
+        //                        FirstName = registrationDto.FirstName,
+        //                        PickupDate = registrationDto.PickupDate,
+        //                        Priority = registrationDto.Priority,
+        //                        Service = registrationDto.Service,
+        //                        Status = registrationDto.Status
+        //                    };
+        //                    Registrations.Add(model);
+        //                }
+        //            }
+        //        }
+        //        SortRegistrations("PickupDate");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message, ex);
+        //    }
+        //}
 
         private double _sortArrowAngle;
         public double SortArrowTransform

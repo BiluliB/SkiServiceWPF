@@ -47,9 +47,9 @@ namespace SkiServiceWPF.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var registrationdto = JsonConvert.DeserializeObject<List<RegistrationsDto>>(json);
-                    var models = registrationdto.Select(dto => ConvertDtoToModel(dto)).ToList();
-                    return models;
+                    var registrationdto = JsonConvert.DeserializeObject<List<RegistrationModel>>(json);
+                    
+                    return registrationdto;
                 }
             }
             catch (Exception ex)
@@ -66,53 +66,36 @@ namespace SkiServiceWPF.Services
         /// <param name="routeKey">Route key to identify specific endpoints for statuses</param>
         /// <returns>List of StatusDto instances</returns>
         /// <exception cref="Exception">Throws an exception if the request fails</exception>
-        public async Task<List<StatusDto>> GetStatuses(string routeKey)
-        {
-            try
-            {
-                string baseUrl = _configuration["ApiSettings:BaseUrl"];
-                string endpoint = _configuration[$"ApiSettings:{routeKey}"];
-                string fullUrl = $"{baseUrl}{endpoint}";
+        //public async Task<List<StatusDto>> GetStatuses(string routeKey)
+        //{
+        //    try
+        //    {
+        //        string baseUrl = _configuration["ApiSettings:BaseUrl"];
+        //        string endpoint = _configuration[$"ApiSettings:{routeKey}"];
+        //        string fullUrl = $"{baseUrl}{endpoint}";
 
-                var response = await _httpClient.GetAsync(fullUrl);
+        //        var response = await _httpClient.GetAsync(fullUrl);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    var json = await response.Content.ReadAsStringAsync();
-                    var statuses = JsonConvert.DeserializeObject<List<StatusDto>>(json);
-                    return statuses;
-                }
-                else
-                {
-                    // Behandeln Sie nicht erfolgreiche Statuscodes entsprechend
-                    throw new Exception($"Anfrage fehlgeschlagen mit Statuscode: {response.StatusCode}");
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Fehler beim Abrufen der Statusdaten: {ex.Message}", ex);
-            }
-        }
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            var json = await response.Content.ReadAsStringAsync();
+        //            var statuses = JsonConvert.DeserializeObject<List<StatusDto>>(json);
+        //            return statuses;
+        //        }
+        //        else
+        //        {
+        //            // Behandeln Sie nicht erfolgreiche Statuscodes entsprechend
+        //            throw new Exception($"Anfrage fehlgeschlagen mit Statuscode: {response.StatusCode}");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception($"Fehler beim Abrufen der Statusdaten: {ex.Message}", ex);
+        //    }
+        //}
 
-        /// <summary>
-        /// Convers a RegistrationsDto instance to a RegistrationModel instance
-        /// </summary>
-        /// <param name="registrationdto"></param>
-        /// <returns></returns>
-        private RegistrationModel ConvertDtoToModel(RegistrationsDto registrationdto)
-        {
-            return new RegistrationModel
-            {
-                RegistrationId = registrationdto.RegistrationId,
-                LastName = registrationdto.LastName,
-                FirstName = registrationdto.FirstName,
-                PickupDate = registrationdto.PickupDate,
-                Priority = registrationdto.Priority,
-                Service = registrationdto.Service,
-                Status = registrationdto.Status
-
-            };
-        }
+   
+        
 
         /// <summary>
         /// Processes login requests asynchronously

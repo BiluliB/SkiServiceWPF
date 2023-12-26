@@ -62,7 +62,8 @@
                   ItemsSource="{Binding Registrations}"
                   CanUserResizeColumns="True"
                   CanUserSortColumns="True"
-                  IsReadOnly="True">
+                  IsReadOnly="True"
+                  SelectionChanged="DataGrid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Auftrags-Nr." 
                                     Width="0.2*"

@@ -6,6 +6,8 @@ using System.Windows.Input;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Globalization;
+using SkiServiceWPF.Models;
+using SkiServiceWPF.Common;
 
 
 namespace SkiServiceWPF.Views
@@ -18,6 +20,13 @@ namespace SkiServiceWPF.Views
         public ListViewUserControl()
         {
             InitializeComponent();
+        }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+           var grid = sender as DataGrid;
+            var selectedItem = grid.SelectedItem as RegistrationModel;
+            SelectionHelper.Selected = selectedItem;
         }
     }
 }
