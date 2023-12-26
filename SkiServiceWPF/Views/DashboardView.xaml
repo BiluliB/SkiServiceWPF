@@ -100,18 +100,17 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- TreeView -->
-            <!--<TreeView Grid.Column="0">-->
-             <!--   <TreeViewItem Header="Alle Aufträge" MouseDoubleClick="TreeViewItem_MouseDoubleClick"  HeaderTemplate="{StaticResource TreeViewItemTemplate}">-->
-             <!--   </TreeViewItem>-->
-             <!--   <TreeViewItem Header="Offene Aufträge" MouseDoubleClick="TreeViewItem_MouseDoubleClick" HeaderTemplate="{StaticResource TreeViewItemTemplate}">-->
-              <!--  </TreeViewItem>-->
-             <!--   <TreeViewItem Header="In Arbeit" MouseDoubleClick="TreeViewItem_MouseDoubleClick" HeaderTemplate="{StaticResource TreeViewItemTemplate}">-->
-             <!--   </TreeViewItem>-->
-             <!--   <TreeViewItem Header="Abgeschlossene Aufträge" MouseDoubleClick="TreeViewItem_MouseDoubleClick" HeaderTemplate="{StaticResource TreeViewItemTemplate}">-->
-            <!--    </TreeViewItem>-->
-         <!--   </TreeView>-->
-            
+            <TreeView Grid.Column="0">
+                <TreeViewItem Header="Alle Aufträge" MouseDoubleClick="TreeViewItem_MouseDoubleClick"  HeaderTemplate="{StaticResource TreeViewItemTemplate}">
+                </TreeViewItem>
+                <TreeViewItem Header="Offene Aufträge" MouseDoubleClick="TreeViewItem_MouseDoubleClick" HeaderTemplate="{StaticResource TreeViewItemTemplate}">
+                </TreeViewItem>
+                <TreeViewItem Header="In Arbeit" MouseDoubleClick="TreeViewItem_MouseDoubleClick" HeaderTemplate="{StaticResource TreeViewItemTemplate}">
+                </TreeViewItem>
+                <TreeViewItem Header="Abgeschlossene Aufträge" MouseDoubleClick="TreeViewItem_MouseDoubleClick" HeaderTemplate="{StaticResource TreeViewItemTemplate}">
+                </TreeViewItem> 
+            </TreeView>
+
             <!-- GridSplitter -->
             <!-- <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns"/> -->
 
