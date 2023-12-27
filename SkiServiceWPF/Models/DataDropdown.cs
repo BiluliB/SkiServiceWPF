@@ -11,9 +11,5 @@ namespace SkiServiceWPF.Models
         public int Id { get; set; }
 
         public string Display {  get; set; }
-
-
-
-
     }
 }

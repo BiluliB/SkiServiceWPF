@@ -51,6 +51,20 @@ namespace SkiServiceWPF.ViewModels
         }
 
 
+        private RegistrationModel _selectedItem;
+        public RegistrationModel SelectedItem
+        {
+            get => _selectedItem;
+            set
+            {
+                if (_selectedItem != value)
+                {
+                    _selectedItem = value;
+                    OnPropertyChanged(nameof(SelectedItem));
+                }
+            }
+        }
+
         /// <summary>
         /// Constructor initializing the ViewModel with a backend service
         /// </summary>
@@ -67,6 +81,14 @@ namespace SkiServiceWPF.ViewModels
             SortCommand = new RelayCommand<string>(SortRegistrations);
         }
         #endregion
+        public async Task LoadRegistrations()
+        {
+            await Load_Registrations();
+            await Load_OpenRegistrations();
+            await Load_WorkRegistrations();
+            await Load_DoneRegistrations();
+        }
+
 
         /// <summary>
         /// Asynchronously loads registrations from the backend

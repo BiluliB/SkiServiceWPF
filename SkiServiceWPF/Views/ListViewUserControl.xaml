@@ -60,6 +60,7 @@
         <DataGrid x:Name="DataGrid" 
                   AutoGenerateColumns="False"
                   ItemsSource="{Binding Registrations}"
+                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                   CanUserResizeColumns="True"
                   CanUserSortColumns="True"
                   IsReadOnly="True"
@@ -79,7 +80,7 @@
                                     Binding="{Binding Service}" />
                 <DataGridTextColumn Header="Enddatum"
                                     Width="0.15*"
-                                    Binding="{Binding PickupDate, Converter={StaticResource DateTimeConverter}, FallbackValue='Binding Failed'}" />
+                                    Binding="{Binding PickupDate, Converter={StaticResource DateTimeConverter}}"/>
                 <DataGridTextColumn Header="Status"
                                     Width="0.1*"
                                     Binding="{Binding Status}" />

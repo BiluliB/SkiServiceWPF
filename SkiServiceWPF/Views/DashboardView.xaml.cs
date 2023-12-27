@@ -35,11 +35,17 @@ namespace SkiServiceWPF.Views
             if (dashboardViewModel is DashboardViewModel viewModel)
             {
                 viewModel.RequestEditView += ViewModel_RequestEditView;
+                viewModel.OnRequireRefresh += ViewModel_OnRequireRefresh;
             }
 
             // ListView initialisieren
             InitializeListView();
             Unloaded += DashboardView_Unloaded;
+        }
+
+        private void ViewModel_OnRequireRefresh()
+        {
+            InitializeListView();
         }
 
         private void InitializeListView()
@@ -65,6 +71,7 @@ namespace SkiServiceWPF.Views
             if (DataContext is DashboardViewModel viewModel)
             {
                 viewModel.RequestEditView -= ViewModel_RequestEditView;
+                viewModel.OnRequireRefresh -= ViewModel_OnRequireRefresh;
             }
         }
 

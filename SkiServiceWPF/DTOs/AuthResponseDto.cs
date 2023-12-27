@@ -12,5 +12,7 @@ namespace SkiServiceWPF.DTOs
 
         [JsonProperty("responseMessage")]
         public string ResponseMessage { get; set; }
+        [JsonProperty("token")]
+        public string Token { get; set; }
     }
 }
