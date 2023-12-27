@@ -76,8 +76,8 @@
                 <Fluent:RibbonTabItem Header="" Height="0" Width="0">
                     <Fluent:RibbonGroupBox Width="190">
                         <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                            <Fluent:Button Header="Editieren" Icon=".\Assets\Images\pen.png" LargeIcon=".\Assets\Images\pen.png" Command="{Binding OpenEditViewCommand}" />
-                            <Fluent:Button Header="Löschen" Icon=".\Assets\Images\trashcan.png" LargeIcon=".\Assets\Images\trashcan.png" Margin=" 10,0,0,0" Command="{Binding DeleteCommand}"/>
+                            <Fluent:Button Header="Editieren" Icon=".\Assets\Images\pen.png" LargeIcon=".\Assets\Images\pen.png" Command="{Binding OpenEditViewCommand}" ToolTip="Auf ein Auftrag klicken um zu editieren"/>
+                            <Fluent:Button Header="Löschen" Icon=".\Assets\Images\trashcan.png" LargeIcon=".\Assets\Images\trashcan.png" Margin=" 10,0,0,0" Command="{Binding DeleteCommand}" ToolTip="Auf ein Auftrag klicken zum löschen/stornieren."/>
                             <Fluent:Button Header="Hinzufügen" Icon=".\Assets\Images\add.png" Margin=" 7,0,0,0"/>
                         </StackPanel>
                     </Fluent:RibbonGroupBox>
@@ -87,11 +87,13 @@
                                            Click="ReturnToListView_Click"
                                            Icon=".\Assets\Icons\zurueck.png"
                                            LargeIcon=".\Assets\Icons\zurueck.png"
-                                           Visibility="{Binding IsEditViewActive, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                           Visibility="{Binding IsEditViewActive, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                                           ToolTip="Zurück zur Liste"/>
                             <Fluent:Button Header="Speichern"
                                            Icon=".\Assets\Icons\speichern.png"
                                            LargeIcon=".\Assets\Icons\speichern.png"
-                                           Visibility="{Binding IsEditViewActive, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                           Visibility="{Binding IsEditViewActive, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                           ToolTip="Änderungen speichern"/>
                         </StackPanel>
                     </Fluent:RibbonGroupBox>
                 </Fluent:RibbonTabItem>
