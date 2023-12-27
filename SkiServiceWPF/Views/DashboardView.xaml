@@ -92,6 +92,7 @@
                             <Fluent:Button Header="Speichern"
                                            Icon=".\Assets\Icons\speichern.png"
                                            LargeIcon=".\Assets\Icons\speichern.png"
+                                           Command="{Binding SaveEditCommand}"
                                            Visibility="{Binding IsEditViewActive, Converter={StaticResource BooleanToVisibilityConverter}}"
                                            ToolTip="Änderungen speichern"/>
                         </StackPanel>

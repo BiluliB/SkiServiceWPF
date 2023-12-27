@@ -20,7 +20,7 @@ namespace SkiServiceWPF.Views
         private readonly BackendService _backendService;
         private IConfiguration _configuration;
         private object _previousView;
-
+  
         public DashboardView(IConfiguration configuration, BackendService backendService)
         {
             InitializeComponent();
@@ -105,8 +105,15 @@ namespace SkiServiceWPF.Views
                 };
 
                 this.ContentPlaceholder.Content = listViewControl;
+
+                // Setzen von IsEditViewActive auf false im ViewModel
+                if (DataContext is DashboardViewModel viewModel)
+                {
+                    viewModel.IsEditViewActive = false;
+                }
             }
         }
+
 
         private void ReturnToListView_Click(object sender, RoutedEventArgs e)
         {

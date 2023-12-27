@@ -20,6 +20,7 @@ namespace SkiServiceWPF.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         private readonly BackendService _backendService;
         private ObservableCollection<RegistrationModel> _registrations;
+        public ICommand SaveEditCommand { get; private set; }
         public event Action OnRequireRefresh;
 
         public bool IsEditViewActive
@@ -60,6 +61,7 @@ namespace SkiServiceWPF.ViewModels
             OpenEditViewCommand = new RelayCommandNotGeneric(OnOpenEditViewCommandExecuted);
             DeleteCommand = new RelayCommandNotGeneric(ExecuteDeleteCommand);
             Registrations = new ObservableCollection<RegistrationModel>();
+            SaveEditCommand = new RelayCommandNotGeneric(SaveEdit);
         }
 
         protected virtual void OnPropertyChanged(string propertyName)
@@ -129,7 +131,30 @@ namespace SkiServiceWPF.ViewModels
                     MessageBox.Show("Fehler beim Löschen des Auftrags.");
                 }
             }
-        }
 
         }
+
+        private async void SaveEdit()
+        {
+            var editModel = SelectionHelper.Selected as RegistrationModel;
+            if (editModel != null)
+            {
+                var success = await _backendService.UpdateRegistrationAsync(editModel);
+                if (success)
+                {
+                    MessageBox.Show("Änderungen gespeichert.");
+                    OnRequireRefresh?.Invoke();
+                    IsEditViewActive = false;
+                }
+                else
+                {
+                    MessageBox.Show("Fehler beim Speichern der Änderungen.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Kein Auftrag ausgewählt.");
+            }
+        }
     }
+}
