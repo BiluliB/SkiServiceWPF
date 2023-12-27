@@ -19,7 +19,8 @@ namespace SkiServiceWPF.Views
     {
         private readonly BackendService _backendService;
         private IConfiguration _configuration;
-
+        private object _previousView;
+  
         public DashboardView(IConfiguration configuration, BackendService backendService)
         {
             InitializeComponent();
@@ -30,48 +31,54 @@ namespace SkiServiceWPF.Views
             var dashboardViewModel = ((App)Application.Current).ServiceProvider.GetRequiredService<DashboardViewModel>();
             DataContext = dashboardViewModel;
 
-
             // Ereignis abonnieren
             if (dashboardViewModel is DashboardViewModel viewModel)
             {
                 viewModel.RequestEditView += ViewModel_RequestEditView;
+                viewModel.OnRequireRefresh += ViewModel_OnRequireRefresh;
             }
 
             // ListView initialisieren
-            var listViewViewModel = new ListViewModel(_backendService);
-            var listViewControl = new ListViewUserControl
-            {
-                DataContext = listViewViewModel
-            };
-            this.ContentPlaceholder.Content = listViewControl;
-
-            listViewViewModel.LoadRegistrationsCommand.Execute(null);
-
-            // Unloaded Event hinzufügen
+            InitializeListView();
             Unloaded += DashboardView_Unloaded;
+        }
+
+        private void ViewModel_OnRequireRefresh()
+        {
+            InitializeListView();
+        }
+
+        private void InitializeListView()
+        {
+            if (_previousView == null)
+            {
+                var listViewViewModel = new ListViewModel(_backendService);
+                var listViewControl = new ListViewUserControl { DataContext = listViewViewModel };
+                listViewViewModel.LoadRegistrationsCommand.Execute(null);
+                _previousView = listViewControl;
+            }
+            this.ContentPlaceholder.Content = _previousView;
         }
 
         private void ViewModel_RequestEditView(object sender, EventArgs e)
         {
-            // ContentPlaceholder aktualisieren
-            this.ContentPlaceholder.Content = new EditViewUserControl(SelectionHelper.Selected);
+            var editViewControl = new EditViewUserControl(SelectionHelper.Selected);
+            this.ContentPlaceholder.Content = editViewControl;
         }
 
         private void DashboardView_Unloaded(object sender, RoutedEventArgs e)
         {
-            // Ereignis abbestellen, um Speicherlecks zu vermeiden
             if (DataContext is DashboardViewModel viewModel)
             {
                 viewModel.RequestEditView -= ViewModel_RequestEditView;
+                viewModel.OnRequireRefresh -= ViewModel_OnRequireRefresh;
             }
-
         }
 
         private void TreeViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (e.Source is TreeViewItem item && item.Header is string header)
             {
-                // Deklarieren Sie die Variablen einmal außerhalb der if-Anweisungen
                 var listViewViewModel = new ListViewModel(_backendService);
                 ListViewUserControl listViewControl;
 
@@ -92,21 +99,30 @@ namespace SkiServiceWPF.Views
                     listViewViewModel.LoadDoneRegistrationsCommand.Execute(null);
                 }
 
-                // Erstellen des ListViewUserControls
                 listViewControl = new ListViewUserControl
                 {
                     DataContext = listViewViewModel
                 };
 
                 this.ContentPlaceholder.Content = listViewControl;
+
+                // Setzen von IsEditViewActive auf false im ViewModel
+                if (DataContext is DashboardViewModel viewModel)
+                {
+                    viewModel.IsEditViewActive = false;
+                }
             }
         }
 
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ReturnToListView_Click(object sender, RoutedEventArgs e)
         {
-            var editViewControl = new EditViewUserControl(SelectionHelper.Selected);
-            this.ContentPlaceholder.Content = editViewControl;
+            InitializeListView();
+
+            if (DataContext is DashboardViewModel viewModel)
+            {
+                viewModel.IsEditViewActive = false;
+            }
         }
     }
 }

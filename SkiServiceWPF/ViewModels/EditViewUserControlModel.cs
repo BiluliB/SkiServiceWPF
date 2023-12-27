@@ -35,17 +35,17 @@ namespace SkiServiceWPF.ViewModels
                 new DataDropdown
                 {
                     Id= 2,
-                    Display = "In Arbeit"
+                    Display = "InArbeit"
                 },
                 new DataDropdown 
                 { 
                     Id= 3, 
-                    Display = "Abgeschlossen"
+                    Display = "abgeschlossen"
                 },
                 new DataDropdown
                 { 
                     Id= 4,
-                    Display = "Storniert"
+                    Display = "storniert"
                 }
              };
             SelectedStatus = StatusDropdown.Where(s => s.Display.Equals(Model.Status)).FirstOrDefault();
@@ -85,7 +85,7 @@ namespace SkiServiceWPF.ViewModels
                 new DataDropdown
                 {
                     Id= 2,
-                    Display = "Grosser Serivce"
+                    Display = "Grosser Service"
                 },
                 new DataDropdown
                 {
@@ -95,7 +95,7 @@ namespace SkiServiceWPF.ViewModels
                 new DataDropdown
                 {
                     Id= 4,
-                    Display = "Bindungen montieren und einestellen"
+                    Display = "Bindungen montieren und einstellen"
                 },
                 new DataDropdown
                 {

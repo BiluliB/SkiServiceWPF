@@ -38,6 +38,8 @@
                 <TextBlock Text="{Binding}" Margin="5,0" />
             </StackPanel>
         </DataTemplate>
+        
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
     <Grid>
         <!-- MainGrid for two lines: One for Ribbon and one for Menu and their contents -->
@@ -74,9 +76,25 @@
                 <Fluent:RibbonTabItem Header="" Height="0" Width="0">
                     <Fluent:RibbonGroupBox Width="190">
                         <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                            <Fluent:Button Header="Editieren" Icon=".\Assets\Images\pen.png" LargeIcon=".\Assets\Images\pen.png" Command="{Binding OpenEditViewCommand}" />
-                            <Fluent:Button Header="Löschen" Icon=".\Assets\Images\trashcan.png" LargeIcon=".\Assets\Images\trashcan.png" Margin=" 10,0,0,0"/>
+                            <Fluent:Button Header="Editieren" Icon=".\Assets\Images\pen.png" LargeIcon=".\Assets\Images\pen.png" Command="{Binding OpenEditViewCommand}" ToolTip="Auf ein Auftrag klicken um zu editieren"/>
+                            <Fluent:Button Header="Löschen" Icon=".\Assets\Images\trashcan.png" LargeIcon=".\Assets\Images\trashcan.png" Margin=" 10,0,0,0" Command="{Binding DeleteCommand}" ToolTip="Auf ein Auftrag klicken zum löschen/stornieren."/>
                             <Fluent:Button Header="Hinzufügen" Icon=".\Assets\Images\add.png" Margin=" 7,0,0,0"/>
+                        </StackPanel>
+                    </Fluent:RibbonGroupBox>
+                    <Fluent:RibbonGroupBox Visibility="{Binding IsEditViewActive, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <Fluent:Button Header="Zurück"
+                                           Click="ReturnToListView_Click"
+                                           Icon=".\Assets\Icons\zurueck.png"
+                                           LargeIcon=".\Assets\Icons\zurueck.png"
+                                           Visibility="{Binding IsEditViewActive, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                                           ToolTip="Zurück zur Liste"/>
+                            <Fluent:Button Header="Speichern"
+                                           Icon=".\Assets\Icons\speichern.png"
+                                           LargeIcon=".\Assets\Icons\speichern.png"
+                                           Command="{Binding SaveEditCommand}"
+                                           Visibility="{Binding IsEditViewActive, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                           ToolTip="Änderungen speichern"/>
                         </StackPanel>
                     </Fluent:RibbonGroupBox>
                 </Fluent:RibbonTabItem>
@@ -95,7 +113,7 @@
         <!-- Second Grid for TreeView and ListViewUserControl -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <!--    <ColumnDefinition Width="190"/> -->
+                <ColumnDefinition Width="190"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
@@ -112,11 +130,11 @@
             </TreeView>
 
             <!-- GridSplitter -->
-            <!-- <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns"/> -->
+            <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns"/>
 
-            <!-- ContentControl: ListViewUserControl -->
+            <!-- ContentControl: ListViewUserControl and EditViewUserControl -->
             <Image x:Name="DashboardImage" Source="../Assets/Images/dashboardImage.png" Grid.Column="2" Margin="0,40,0,0"/>
-            <ContentControl x:Name="ContentPlaceholder" Grid.Column="2" />
+            <ContentControl x:Name="ContentPlaceholder" Grid.Column="2" Content="{Binding CurrentView}" />
         </Grid>
     </Grid>
 </UserControl>

@@ -4,6 +4,7 @@ using SkiServiceWPF.DTOs;
 using SkiServiceWPF.Models;
 using System.Diagnostics;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace SkiServiceWPF.Services
@@ -15,6 +16,12 @@ namespace SkiServiceWPF.Services
     {
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
+        private string _authToken;
+
+        public void SetAuthToken(string token)
+        {
+            _authToken = token;
+        }
 
         /// <summary>
         /// Constructor for BackendService
@@ -96,9 +103,6 @@ namespace SkiServiceWPF.Services
             }
         }
 
-   
-        
-
         /// <summary>
         /// Processes login requests asynchronously
         /// </summary>
@@ -149,6 +153,28 @@ namespace SkiServiceWPF.Services
                 };
             }
             #endregion
+        }
+
+        public async Task<bool> DeleteRegistrationAsync(int registrationId)
+        {
+            string baseUrl = _configuration["ApiSettings:BaseUrl"];
+            string endpoint = $"{baseUrl}/Registrations/{registrationId}";
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _authToken);
+
+            var response = await _httpClient.DeleteAsync(endpoint);
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> UpdateRegistrationAsync(RegistrationModel model)
+        {
+            string baseUrl = _configuration["ApiSettings:BaseUrl"];
+            string endpoint = $"{baseUrl}/Registrations/{model.RegistrationId}";
+            var json = JsonConvert.SerializeObject(model);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _authToken);
+
+            var response = await _httpClient.PutAsync(endpoint, content);
+            return response.IsSuccessStatusCode;
         }
     }
 }

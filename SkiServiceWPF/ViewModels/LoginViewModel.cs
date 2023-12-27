@@ -105,30 +105,29 @@ namespace SkiServiceWPF.ViewModel
         {
             try
             {
-                // Erstellen einer Instanz von AuthRequestDTO
                 var authRequestDto = new AuthRequestDto
                 {
                     UserName = this.UserName,
                     Password = this.Password
                 };
 
-                // Rufen Sie den Login-Service auf und erwarten Sie eine AuthResponseDTO
                 var responseDto = await _backendService.LoginAsync(authRequestDto);
 
                 if (responseDto.IsSuccess)
                 {
-                    // Erfolgreicher Login
+                    // Speichern Sie den Token im BackendService
+                    _backendService.SetAuthToken(responseDto.Token);
+
+                    // Navigieren zum Dashboard
                     NavigateToDashboard();
                 }
                 else
                 {
-                    // Authentifizierungsfehler
                     ErrorMessage = responseDto.ResponseMessage;
                 }
             }
             catch (Exception ex)
             {
-                // Allgemeiner Fehler
                 ErrorMessage = ex.Message;
             }
         }

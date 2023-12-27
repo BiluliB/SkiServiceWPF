@@ -49,7 +49,20 @@ namespace SkiServiceWPF.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
+        
+        private RegistrationModel _selectedItem;
+        public RegistrationModel SelectedItem
+        {
+            get => _selectedItem;
+            set
+            {
+                if (_selectedItem != value)
+                {
+                    _selectedItem = value;
+                    OnPropertyChanged(nameof(SelectedItem));
+                }
+            }
+        }
 
         /// <summary>
         /// Constructor initializing the ViewModel with a backend service
@@ -67,6 +80,7 @@ namespace SkiServiceWPF.ViewModels
             SortCommand = new RelayCommand<string>(SortRegistrations);
         }
         #endregion
+
 
         /// <summary>
         /// Asynchronously loads registrations from the backend
@@ -132,7 +146,12 @@ namespace SkiServiceWPF.ViewModels
                                 PickupDate = registrationDto.PickupDate,
                                 Priority = registrationDto.Priority,
                                 Service = registrationDto.Service,
-                                Status = registrationDto.Status
+                                Status = registrationDto.Status,
+                                CreateDate = registrationDto.CreateDate,
+                                Email = registrationDto.Email,
+                                Phone = registrationDto.Phone,
+                                Price = registrationDto.Price,
+                                Comment = registrationDto.Comment
                             };
                             Registrations.Add(model);
                         }
@@ -168,7 +187,12 @@ namespace SkiServiceWPF.ViewModels
                                 PickupDate = registrationDto.PickupDate,
                                 Priority = registrationDto.Priority,
                                 Service = registrationDto.Service,
-                                Status = registrationDto.Status
+                                Status = registrationDto.Status,
+                                CreateDate = registrationDto.CreateDate,
+                                Email = registrationDto.Email,
+                                Phone = registrationDto.Phone,
+                                Price = registrationDto.Price,
+                                Comment = registrationDto.Comment
                             };
                             Registrations.Add(model);
                         }
@@ -204,7 +228,12 @@ namespace SkiServiceWPF.ViewModels
                                 PickupDate = registrationDto.PickupDate,
                                 Priority = registrationDto.Priority,
                                 Service = registrationDto.Service,
-                                Status = registrationDto.Status
+                                Status = registrationDto.Status,
+                                CreateDate = registrationDto.CreateDate,
+                                Email = registrationDto.Email,
+                                Phone = registrationDto.Phone,
+                                Price = registrationDto.Price,
+                                Comment = registrationDto.Comment
                             };
                             Registrations.Add(model);
                         }
