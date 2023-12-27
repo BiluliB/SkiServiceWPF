@@ -18,11 +18,11 @@
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Grid.Row="0">
-            <Image HorizontalAlignment="Left" Height="30" Margin="10"  VerticalAlignment="Center" Width="30" Source="..\Assets\Icons\username.png"/>
+            <Image HorizontalAlignment="Left" Height="30" Margin="10"  VerticalAlignment="Center" Width="30" Source="..\Assets\Icons\muelleimer.png"/>
             <Label Content="Sind Sie sicher, dass Sie diesen Serviceauftrag stornieren möchten?" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="390" Height="40" FontSize="12" FontWeight="Bold"/>
         </StackPanel>
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="1">
-            <Image HorizontalAlignment="Left" Height="50" Margin="10"  VerticalAlignment="Center" Width="50" Source="..\Assets\Icons\username.png"/>
+            <Image HorizontalAlignment="Left" Height="100" Margin="10"  VerticalAlignment="Center" Width="100" Source="..\Assets\Icons\dokument.png"/>
             <StackPanel Orientation="Vertical" Margin="-2">
                 <Label Content="Auftrag zum stornieren:" FontWeight="Bold"/>
                 <Label Content="{Binding RegistrationId}" />
