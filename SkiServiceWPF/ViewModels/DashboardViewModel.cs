@@ -23,6 +23,17 @@ namespace SkiServiceWPF.ViewModels
         public ICommand SaveEditCommand { get; private set; }
         public event Action OnRequireRefresh;
 
+        private ListViewModel _listViewModel;
+        public ListViewModel ListViewModel
+        {
+            get => _listViewModel;
+            set
+            {
+                _listViewModel = value;
+                OnPropertyChanged(nameof(ListViewModel));
+            }
+        }
+
         public bool IsEditViewActive
         {
             get => _isEditViewActive;

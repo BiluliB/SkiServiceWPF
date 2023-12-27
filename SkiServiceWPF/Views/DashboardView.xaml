@@ -106,8 +106,8 @@
 
         <!-- Searchbar right on the menu -->
         <DockPanel Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,60,4,10">
-            <TextBox Width="200"/>
-            <Button Content="Suchen" Width="86" Margin="10,0,0,0"/>
+            <TextBox Width="200" Text="{Binding ListViewModel.SearchText, UpdateSourceTrigger=PropertyChanged}" />
+            
         </DockPanel>
 
         <!-- Second Grid for TreeView and ListViewUserControl -->

@@ -6,6 +6,7 @@ using SkiServiceWPF.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace SkiServiceWPF.ViewModels
 {
@@ -31,7 +32,15 @@ namespace SkiServiceWPF.ViewModels
 
         public ICommand SortCommand { get; private set; }
 
+
         private ObservableCollection<RegistrationModel> _registrations;
+
+        private ObservableCollection<RegistrationModel> _allRegistrations;
+
+        private string _searchText;
+
+       
+
         public ObservableCollection<RegistrationModel> Registrations
         {
             get => _registrations;
@@ -44,6 +53,49 @@ namespace SkiServiceWPF.ViewModels
                 }
             }
         }
+
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                _searchText = value;
+                OnPropertyChanged(nameof(SearchText));
+                FilterRegistrations();
+            }
+        }
+
+
+        private void FilterRegistrations()
+        {
+            if (_allRegistrations == null)
+            {
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(SearchText))
+            {
+                Registrations = new ObservableCollection<RegistrationModel>(_allRegistrations);
+            }
+            else
+            {
+                var searchText = SearchText.Trim().ToLower();
+                var filtered = _allRegistrations.Where(r =>
+                    r.RegistrationId.ToString().Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+                    r.LastName.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+                    r.FirstName.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+                    r.Service.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+                    (r.PickupDate != null && r.PickupDate.ToString().Contains(SearchText, StringComparison.OrdinalIgnoreCase)) ||
+                    r.Status.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+                    r.Priority.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
+                );
+                Registrations = new ObservableCollection<RegistrationModel>(filtered);
+            }
+        }
+
+
+
+
 
         protected virtual void OnPropertyChanged(string propertyName)
         {
@@ -78,6 +130,7 @@ namespace SkiServiceWPF.ViewModels
             LoadWorkRegistrationsCommand = new AsyncRelayCommand(Load_WorkRegistrations);
             LoadDoneRegistrationsCommand = new AsyncRelayCommand(Load_DoneRegistrations);
             SortCommand = new RelayCommand<string>(SortRegistrations);
+            _allRegistrations = new ObservableCollection<RegistrationModel>();
         }
         #endregion
 
@@ -95,6 +148,8 @@ namespace SkiServiceWPF.ViewModels
                 var registrationDtos = await _backendService.GetRegistrations("GetAllRegistrationsEndpoint");
 
                 Registrations.Clear();
+                _allRegistrations.Clear();
+
 
                 foreach (var registrationDto in registrationDtos)
                 {
@@ -114,6 +169,7 @@ namespace SkiServiceWPF.ViewModels
                         Comment = registrationDto.Comment
                     };
                     Registrations.Add(model);
+                    _allRegistrations.Add(model);
                 }
                 SortRegistrations("PickupDate");
             }

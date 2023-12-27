@@ -29,8 +29,9 @@ namespace SkiServiceWPF.Views
 
             // ViewModel aus dem DI-Container holen
             var dashboardViewModel = ((App)Application.Current).ServiceProvider.GetRequiredService<DashboardViewModel>();
+            dashboardViewModel.ListViewModel = new ListViewModel(_backendService);
             DataContext = dashboardViewModel;
-
+           
             // Ereignis abonnieren
             if (dashboardViewModel is DashboardViewModel viewModel)
             {
@@ -52,7 +53,9 @@ namespace SkiServiceWPF.Views
         {
             if (_previousView == null)
             {
-                var listViewViewModel = new ListViewModel(_backendService);
+                // Abrufen der Singleton-Instanz von ListViewModel
+                var listViewViewModel = ((App)Application.Current).ServiceProvider.GetService<ListViewModel>();
+
                 var listViewControl = new ListViewUserControl { DataContext = listViewViewModel };
                 listViewViewModel.LoadRegistrationsCommand.Execute(null);
                 _previousView = listViewControl;
@@ -79,8 +82,8 @@ namespace SkiServiceWPF.Views
         {
             if (e.Source is TreeViewItem item && item.Header is string header)
             {
-                var listViewViewModel = new ListViewModel(_backendService);
-                ListViewUserControl listViewControl;
+                // Abrufen der Singleton-Instanz von ListViewModel
+                var listViewViewModel = ((App)Application.Current).ServiceProvider.GetService<ListViewModel>();
 
                 if (header == "Alle Aufträge")
                 {
@@ -99,7 +102,7 @@ namespace SkiServiceWPF.Views
                     listViewViewModel.LoadDoneRegistrationsCommand.Execute(null);
                 }
 
-                listViewControl = new ListViewUserControl
+                var listViewControl = new ListViewUserControl
                 {
                     DataContext = listViewViewModel
                 };

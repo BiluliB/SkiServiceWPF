@@ -65,8 +65,6 @@ namespace SkiServiceWPF
                 client.BaseAddress = new Uri(baseUrl);
             });
 
-            services.AddSingleton<INavigationService, NavigationService>();
-            services.AddTransient<DashboardViewModel>();
             services.AddSingleton<LoginViewModel>();
             services.AddSingleton<BackendService>();
             services.AddSingleton<ListViewModel>();
