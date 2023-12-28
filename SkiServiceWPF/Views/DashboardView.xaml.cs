@@ -20,7 +20,15 @@ namespace SkiServiceWPF.Views
         private readonly BackendService _backendService;
         private IConfiguration _configuration;
         private object _previousView;
-  
+        public delegate void SearchEventHandler(string searchText);
+        public event SearchEventHandler OnSearch;
+
+       
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            OnSearch?.Invoke(SearchTextBox.Text);
+        }
+
         public DashboardView(IConfiguration configuration, BackendService backendService)
         {
             InitializeComponent();
@@ -30,7 +38,11 @@ namespace SkiServiceWPF.Views
             // ViewModel aus dem DI-Container holen
             var dashboardViewModel = ((App)Application.Current).ServiceProvider.GetRequiredService<DashboardViewModel>();
             DataContext = dashboardViewModel;
+            var listViewControl = new ListViewUserControl(this);
+            var listViewModel = new ListViewModel(backendService);
 
+            listViewModel.LoadRegistrationsCommand.Execute(null);
+            listViewControl.LoadItems(listViewModel.Registrations);
             // Ereignis abonnieren
             if (dashboardViewModel is DashboardViewModel viewModel)
             {
@@ -53,7 +65,10 @@ namespace SkiServiceWPF.Views
             if (_previousView == null)
             {
                 var listViewViewModel = new ListViewModel(_backendService);
-                var listViewControl = new ListViewUserControl { DataContext = listViewViewModel };
+                var listViewControl = new ListViewUserControl(this)
+                {
+                    DataContext = listViewViewModel
+                };
                 listViewViewModel.LoadRegistrationsCommand.Execute(null);
                 _previousView = listViewControl;
             }
@@ -99,7 +114,7 @@ namespace SkiServiceWPF.Views
                     listViewViewModel.LoadDoneRegistrationsCommand.Execute(null);
                 }
 
-                listViewControl = new ListViewUserControl
+                listViewControl = new ListViewUserControl(this)
                 {
                     DataContext = listViewViewModel
                 };
@@ -113,7 +128,7 @@ namespace SkiServiceWPF.Views
                 }
             }
         }
-
+       
 
         private void ReturnToListView_Click(object sender, RoutedEventArgs e)
         {

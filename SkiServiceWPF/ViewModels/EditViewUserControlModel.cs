@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SkiServiceWPF.ViewModels
 {
@@ -22,6 +23,13 @@ namespace SkiServiceWPF.ViewModels
         public EditViewUserControlModel(Models.RegistrationModel registrationModel)
         {
             Model = registrationModel;
+
+            if (Model == null)
+            {
+                MessageBox.Show("Bitte wählen Sie einen Auftrag aus, um zu bearbeiten.", "Auswahl erforderlich", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
 
             StatusDropdown = new ObservableCollection<DataDropdown>
             {
