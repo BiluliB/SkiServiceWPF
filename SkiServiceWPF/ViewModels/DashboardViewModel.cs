@@ -96,9 +96,17 @@ namespace SkiServiceWPF.ViewModels
 
         private void OnOpenEditViewCommandExecuted()
         {
+            var selectedRegistration = SelectionHelper.Selected as RegistrationModel;
+            if (selectedRegistration == null)
+            {
+                MessageBox.Show("Bitte wählen Sie einen Auftrag aus der Liste aus, bevor Sie bearbeiten.");
+                return;
+            }
+
             RequestEditView?.Invoke(this, EventArgs.Empty);
             IsEditViewActive = true;
         }
+
 
         private async void ExecuteDeleteCommand()
         {
