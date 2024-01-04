@@ -155,16 +155,6 @@ namespace SkiServiceWPF.Services
             #endregion
         }
 
-        public async Task<bool> DeleteRegistrationAsync(int registrationId)
-        {
-            string baseUrl = _configuration["ApiSettings:BaseUrl"];
-            string endpoint = $"{baseUrl}/Registrations/{registrationId}";
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _authToken);
-
-            var response = await _httpClient.DeleteAsync(endpoint);
-            return response.IsSuccessStatusCode;
-        }
-
         public async Task<bool> UpdateRegistrationAsync(RegistrationModel model)
         {
             string baseUrl = _configuration["ApiSettings:BaseUrl"];

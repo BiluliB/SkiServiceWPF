@@ -117,29 +117,27 @@ namespace SkiServiceWPF.ViewModels
                 return;
             }
 
-            var deleteWindow = new DeleteWindow
+            var confirmCancelWindow = new DeleteWindow // Ändern Sie den Namen des Fensters entsprechend
             {
                 DataContext = selectedRegistration
             };
 
-            var dialogResult = deleteWindow.ShowDialog();
+            var dialogResult = confirmCancelWindow.ShowDialog();
             if (dialogResult == true)
             {
-                var success = await _backendService.DeleteRegistrationAsync(selectedRegistration.RegistrationId);
+                // Ändern des Status auf "storniert" statt des Löschens
+                selectedRegistration.Status = "storniert";
+                var success = await _backendService.UpdateRegistrationAsync(selectedRegistration);
                 if (success)
                 {
-                    MessageBox.Show("Auftrag wurde gelöscht.");
-                    Registrations.Remove(selectedRegistration);
-                    SelectedItem = null;
-
+                    MessageBox.Show("Auftrag wurde storniert.");
                     OnRequireRefresh?.Invoke();
                 }
                 else
                 {
-                    MessageBox.Show("Fehler beim Löschen des Auftrags.");
+                    MessageBox.Show("Fehler beim Stornieren des Auftrags.");
                 }
             }
-
         }
 
         private async void SaveEdit()
