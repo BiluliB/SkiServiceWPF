@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Globalization;
 using SkiServiceWPF.Models;
 using SkiServiceWPF.Common;
+using System.Collections.ObjectModel;
 
 
 namespace SkiServiceWPF.Views
@@ -17,9 +18,52 @@ namespace SkiServiceWPF.Views
     /// </summary>
     public partial class ListViewUserControl : UserControl
     {
-        public ListViewUserControl()
+        private DashboardView _dashboardView;
+
+        public ListViewUserControl(DashboardView dashboardView)
         {
             InitializeComponent();
+            this.Unloaded += ListViewUserControl_Unloaded;
+
+            _dashboardView = dashboardView;
+            _dashboardView.OnSearch += DashboardView_OnSearch;
+        }
+
+        private void ListViewUserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (_dashboardView != null)
+            {
+                _dashboardView.OnSearch -= DashboardView_OnSearch;
+            }
+        }
+
+        private void DashboardView_OnSearch(string searchText)
+        {
+            FilterItems(searchText);
+        }
+
+        public void FilterItems(string searchText)
+        {
+            var listViewItems = DataGrid.ItemsSource as ObservableCollection<RegistrationModel>;
+            if (listViewItems == null) return;
+
+            if (string.IsNullOrWhiteSpace(searchText))
+            {
+                DataGrid.ItemsSource = listViewItems;
+                return;
+            }
+
+            searchText = searchText.ToLower();
+            var filteredItems = new ObservableCollection<RegistrationModel>(
+                listViewItems.Where(item =>
+                    item.FirstName.ToLower().Contains(searchText) ||
+                    item.LastName.ToLower().Contains(searchText) ||
+                    item.PickupDate.ToLower().Contains(searchText) ||
+                    item.Priority.ToLower().Contains(searchText) ||
+                    item.Service.ToLower().Contains(searchText) ||
+                    item.Status.ToLower().Contains(searchText)));
+
+            DataGrid.ItemsSource = filteredItems;
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)

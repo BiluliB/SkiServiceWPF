@@ -43,6 +43,14 @@ namespace SkiServiceWPF.Views
             Unloaded += DashboardView_Unloaded;
         }
 
+        public delegate void SearchEventHandler(string searchText);
+        public event SearchEventHandler OnSearch;
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            OnSearch?.Invoke(SearchTextBox.Text);
+        }
+
         private void ViewModel_OnRequireRefresh()
         {
             InitializeListView();
@@ -53,7 +61,7 @@ namespace SkiServiceWPF.Views
             if (_previousView == null)
             {
                 var listViewViewModel = new ListViewModel(_backendService);
-                var listViewControl = new ListViewUserControl { DataContext = listViewViewModel };
+                var listViewControl = new ListViewUserControl(this) { DataContext = listViewViewModel };
                 listViewViewModel.LoadRegistrationsCommand.Execute(null);
                 _previousView = listViewControl;
             }
@@ -99,7 +107,7 @@ namespace SkiServiceWPF.Views
                     listViewViewModel.LoadDoneRegistrationsCommand.Execute(null);
                 }
 
-                listViewControl = new ListViewUserControl
+                listViewControl = new ListViewUserControl(this)
                 {
                     DataContext = listViewViewModel
                 };
