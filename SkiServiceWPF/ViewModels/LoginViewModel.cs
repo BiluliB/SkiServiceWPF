@@ -51,7 +51,7 @@ namespace SkiServiceWPF.ViewModel
             get => _username;
             set
             {
-                _username = value;
+                _username = value.Trim();
                 OnPropertyChanged(nameof(UserName));
             }
         }
