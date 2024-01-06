@@ -14,7 +14,7 @@ Nachdem Sie das Projekt geklont haben, müssen Sie die Startup-Einstellungen in 
 
    - Klicken Sie im Solution Explorer mit der rechten Maustaste auf die Lösung und wählen Sie „Properties“ (Eigenschaften).
    - Wechseln Sie im linken Menü zu „Common Properties“ > „Startup Project“.
-   - Wählen Sie „Multiple startup projects“ (Mehrere Startprojekte) und setzen Sie die gewünschten Projekte auf „Start“, das dass Backend und die WPF Anwendung gestartet wird.
+   - Wählen Sie „Multiple startup projects“ (Mehrere Startprojekte) und setzen Sie die gewünschten Projekte auf „Start“, damit das Backend und die WPF Anwendung gestartet wird.
 
 3. **Anwenden der Einstellungen**:
    - Nachdem Sie Ihre Auswahl getroffen haben, klicken Sie auf „OK“, um die Einstellungen zu speichern.
@@ -147,6 +147,16 @@ Die SkiServiceWPF-Anwendung bietet eine intuitive und benutzerfreundliche grafis
 
 - Beim Starten der Anwendung werden die Benutzer zu einem Anmeldebildschirm geführt, wo sie sich mit ihren Anmeldedaten einloggen können.
 - Der Anmeldevorgang ist sicher und stellt sicher, dass nur autorisierte Benutzer Zugang zum System haben.
+- Nach drei Anmeldeversuchen wird der account gesperrt und kann nur von einem Admin entsperrt werden bzw. über Swagger im Browser wenn mann 
+  mit dem JWT Token Authorisiert ist.
+- Beim erstellen der Datenbank werden dummy Daten erstellt ein `admin` und 10 Benutzer `employee`, 
+die alle das selbe Passwort haben `password`
+- Passwort: `password`
+- Benutzer:
+  `admin`
+  `employee1`
+   bis
+  `employee10`
 
 ### Dashboard
 
