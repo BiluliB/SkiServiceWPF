@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using SkiServiceWPF.Commands;
-using SkiServiceWPF.DTOs;
+﻿using SkiServiceWPF.Commands;
 using SkiServiceWPF.Models;
 using SkiServiceWPF.Services;
 using System.Collections.ObjectModel;
@@ -11,27 +9,18 @@ namespace SkiServiceWPF.ViewModels
 {
 
     /// <summary>
-    /// ViewModel for managing and displaying a list of registrations
+    /// ViewModel for managing and displaying a list of registrations.
     /// </summary>
     public class ListViewModel : INotifyPropertyChanged
     {
         private readonly BackendService _backendService;
-
         private bool _isAscending = true;
+        private ObservableCollection<RegistrationModel> _registrations;
+        private RegistrationModel _selectedItem;
+        private double _sortArrowAngle;
 
-        // Event for property change notifications
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        // Command to load registration data
-        public ICommand LoadOpenRegistrationsCommand { get; private set; }
-
-        public ICommand LoadRegistrationsCommand { get; private set; }
-        public ICommand LoadWorkRegistrationsCommand { get; private set; }
-        public ICommand LoadDoneRegistrationsCommand { get; private set; }
-
-        public ICommand SortCommand { get; private set; }
-
-        private ObservableCollection<RegistrationModel> _registrations;
         public ObservableCollection<RegistrationModel> Registrations
         {
             get => _registrations;
@@ -45,12 +34,6 @@ namespace SkiServiceWPF.ViewModels
             }
         }
 
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        
-        private RegistrationModel _selectedItem;
         public RegistrationModel SelectedItem
         {
             get => _selectedItem;
@@ -64,6 +47,26 @@ namespace SkiServiceWPF.ViewModels
             }
         }
 
+        public double SortArrowTransform
+        {
+            get => _sortArrowAngle;
+            set
+            {
+                if (_sortArrowAngle != value)
+                {
+                    _sortArrowAngle = value;
+                    OnPropertyChanged(nameof(SortArrowTransform));
+                }
+            }
+        }
+
+        // Commands for various operations like loading and sorting registrations
+        public ICommand LoadOpenRegistrationsCommand { get; private set; }
+        public ICommand LoadRegistrationsCommand { get; private set; }
+        public ICommand LoadWorkRegistrationsCommand { get; private set; }
+        public ICommand LoadDoneRegistrationsCommand { get; private set; }
+        public ICommand SortCommand { get; private set; }        
+        
         /// <summary>
         /// Constructor initializing the ViewModel with a backend service
         /// </summary>
@@ -81,13 +84,20 @@ namespace SkiServiceWPF.ViewModels
         }
         #endregion
 
+        /// <summary>
+        /// Property changed event handler
+        /// </summary>
+        /// <param name="propertyName"></param>
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         /// <summary>
         /// Asynchronously loads registrations from the backend
         /// </summary>
         /// <returns>Task representing the asynchronous operation</returns>
-        /// <exception cref="Exception">Throws an exception if the loading process fails</exception>
-        #region Load_Registrations
+        /// <exception cref="Exception">Throws an exception if the loading process fails</exception>        
         private async Task Load_Registrations()
         {
             try
@@ -122,7 +132,6 @@ namespace SkiServiceWPF.ViewModels
                 throw new Exception(ex.Message, ex);
             }
         }
-        #endregion
 
         private async Task Load_OpenRegistrations()
         {
@@ -247,20 +256,10 @@ namespace SkiServiceWPF.ViewModels
             }
         }
 
-        private double _sortArrowAngle;
-        public double SortArrowTransform
-        {
-            get => _sortArrowAngle;
-            set
-            {
-                if (_sortArrowAngle != value)
-                {
-                    _sortArrowAngle = value;
-                    OnPropertyChanged(nameof(SortArrowTransform));
-                }
-            }
-        }
-
+        /// <summary>
+        /// Sorts the registrations by the given property
+        /// </summary>
+        /// <param name="sortProperty"></param>
         private void SortRegistrations(string sortProperty)
         {
             if (sortProperty == "PickupDate")
@@ -277,6 +276,6 @@ namespace SkiServiceWPF.ViewModels
                 SortArrowTransform = _isAscending ? 0 : 180;
                 _isAscending = !_isAscending;
             }
-        }
+        }        
     }
 }

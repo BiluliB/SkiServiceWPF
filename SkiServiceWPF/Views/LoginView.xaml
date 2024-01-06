@@ -4,22 +4,31 @@
         xmlns:adorners="http://gu.se/Adorners"
         Height="700" Width="800">
 
+    <!-- UserControl resources and styles -->
     <UserControl.Resources>
+
+        <!-- Style for adorning text blocks -->
         <Style x:Key="AdornerTextStyle" TargetType="{x:Type TextBlock}">
             <Setter Property="FontStyle" Value="Normal"/>
             <Setter Property="Foreground" Value="Gray"/>
         </Style>
 
+        <!-- Style for text box with error indication -->
         <Style x:Key="TextBoxErrorStyle" TargetType="TextBox">
             <Setter Property="BorderBrush" Value="#abadb3"/>
             <Style.Triggers>
+
+                <!-- Trigger for error condition -->
                 <DataTrigger Binding="{Binding ErrorMessage}" Value="User not found">
                     <Setter Property="BorderBrush" Value="Red"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
 
+        <!-- Style for the eye button used to toggle password visibility -->
         <Style x:Key="EyeButtonStyle" TargetType="Button">
+
+            <!-- Setters for button appearance -->
             <Setter Property="Width" Value="40"/>
             <Setter Property="Height" Value="40"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -35,12 +44,10 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
                             <TextBlock x:Name="EyeText" Text="👁" Foreground="#808080" VerticalAlignment="Center" HorizontalAlignment="Center"/> 
-                            <!-- Standardfarbe festlegen -->
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="EyeText" Property="Foreground" Value="#7eb4ea"/>
-                                <!-- Farbe beim Hover ändern -->
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -50,7 +57,10 @@
 
     </UserControl.Resources>
 
+    <!-- Main Grid Layout -->
     <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+        
+        <!-- Grid row definitions for layout -->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="20"/>
@@ -60,12 +70,15 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
+        <!-- Login Title -->
         <TextBlock Grid.Row="0" HorizontalAlignment="Center" Margin="0,30,0,0" FontSize="40">
             Bitte einloggen
         </TextBlock>
 
+        <!-- Separator Line -->
         <Border Grid.Row="1" Background="Black" Height="2" Margin="5,9,15,9" Width="350" />
 
+        <!-- Username Input Field -->
         <StackPanel 
             Grid.Row="2" 
             Orientation="Horizontal" 
@@ -81,27 +94,31 @@
             adorners:Watermark.TextStyle="{StaticResource AdornerTextStyle}" />
         </StackPanel>
 
+        <!-- Password Input Field -->
         <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+
+            <!-- PasswordBox, TextBox for hidden text, and EyeButton for password visibility toggle -->
             <Image Source="pack://application:,,,/Assets/Icons/password.png" Width="40" Height="40"/>
             <Grid>
                 <PasswordBox x:Name="passwordBox" TabIndex="1" PasswordChanged="PasswordBox_PasswordChanged"                         
               adorners:Watermark.Text="Passwort" Width="300" Height="40" Margin="10,4" FontSize="25" adorners:Watermark.TextStyle="{StaticResource AdornerTextStyle}"/>
                 <TextBox Name="passwordTxtBox" Width="300" Height="40" Margin="10,4" FontSize="25" Visibility="Collapsed" />
-                <!-- Button zum Anzeigen des Passworts -->
+                
+                <!-- Button to show the password -->
                 <Button Style="{StaticResource EyeButtonStyle}"
-        PreviewMouseDown="Button_PreviewMouseDown" 
-        PreviewMouseUp="Button_PreviewMouseUp">
+                    PreviewMouseDown="Button_PreviewMouseDown" 
+                    PreviewMouseUp="Button_PreviewMouseUp">
                     <TextBlock Text="👁"/>
                 </Button>
-
             </Grid>
-
         </StackPanel>
 
+        <!-- Error Message Display -->
         <StackPanel Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" FontSize="20" Height="30" />
         </StackPanel>
 
+        <!-- Login Button -->
         <Button TabIndex="2" Grid.Row="5" Width="343" Height="40" Margin="7,4,10,4" Content="Login" Command="{Binding LoginCommand}" FontSize="20" Padding="10,5" IsDefault="True"/>
     </Grid>
 </UserControl>

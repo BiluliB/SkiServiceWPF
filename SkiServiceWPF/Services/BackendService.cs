@@ -149,7 +149,7 @@ namespace SkiServiceWPF.Services
                 return new AuthResponseDto
                 {
                     IsSuccess = false,
-                    ResponseMessage = $"Ein Fehler ist aufgetreten HTTP 404"
+                    ResponseMessage = $"Ein Fehler ist aufgetreten versuchen Sie es erneut"
                 };
             }
             #endregion

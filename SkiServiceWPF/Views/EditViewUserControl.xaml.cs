@@ -8,14 +8,12 @@ namespace SkiServiceWPF.Views
     /// Interaction logic for DetailViewUserControl.xaml
     /// </summary>
     public partial class EditViewUserControl : UserControl
-    {
- 
+    { 
         public EditViewUserControl(RegistrationModel registrationModel)
         {
             InitializeComponent();
 
             DataContext = new EditViewUserControlModel(registrationModel);
-
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using SkiServiceWPF.Commands;
 using SkiServiceWPF.DTOs;
 using SkiServiceWPF.Interfaces;
-using SkiServiceWPF.Models;
 using SkiServiceWPF.Services;
 using System.ComponentModel;
 using System.Windows;
@@ -25,7 +24,6 @@ namespace SkiServiceWPF.ViewModel
 
         public void ClearInputs()
         {
-            // Setzen Sie die Eigenschaften zurück
             UserName = string.Empty;
             Password = string.Empty;
             ErrorMessage = string.Empty;
@@ -115,10 +113,7 @@ namespace SkiServiceWPF.ViewModel
 
                 if (responseDto.IsSuccess)
                 {
-                    // Speichern Sie den Token im BackendService
                     _backendService.SetAuthToken(responseDto.Token);
-
-                    // Navigieren zum Dashboard
                     NavigateToDashboard();
                 }
                 else

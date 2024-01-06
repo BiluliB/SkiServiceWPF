@@ -1,28 +1,36 @@
-﻿using System.ComponentModel;
-using System.Windows;
-using SkiServiceWPF.Commands;
-using SkiServiceWPF.Interfaces;
-using SkiServiceWPF.Services;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using SkiServiceWPF.Views;
-using SkiServiceWPF.Models;
+﻿using SkiServiceWPF.Commands;
 using SkiServiceWPF.Common;
+using SkiServiceWPF.Interfaces;
+using SkiServiceWPF.Models;
+using SkiServiceWPF.Services;
+using SkiServiceWPF.Views;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Input;
 
 namespace SkiServiceWPF.ViewModels
 {
+    /// <summary>
+    /// ViewModel for the Dashboard view.
+    /// </summary>
     public class DashboardViewModel : INotifyPropertyChanged
     {
-        // Deklaration der privaten Felder
+        private readonly INavigationService _navigationService;
+        private readonly BackendService _backendService;
+
         private bool _isEditViewActive;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        private readonly BackendService _backendService;
         private ObservableCollection<RegistrationModel> _registrations;
-        public ICommand SaveEditCommand { get; private set; }
+        private RegistrationModel _selectedItem;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler RequestEditView;
         public event Action OnRequireRefresh;
 
+        /// <summary>
+        /// Indicates if the edit view is active.
+        /// </summary>
         public bool IsEditViewActive
         {
             get => _isEditViewActive;
@@ -33,7 +41,9 @@ namespace SkiServiceWPF.ViewModels
             }
         }
 
-        private RegistrationModel _selectedItem;
+        /// <summary>
+        /// The selected registration item.
+        /// </summary>
         public RegistrationModel SelectedItem
         {
             get => _selectedItem;
@@ -44,15 +54,29 @@ namespace SkiServiceWPF.ViewModels
             }
         }
 
+        /// <summary>
+        /// Collection of registration models.
+        /// </summary>
+        public ObservableCollection<RegistrationModel> Registrations
+        {
+            get => _registrations;
+            set
+            {
+                _registrations = value;
+                OnPropertyChanged(nameof(Registrations));
+            }
+        }
+
+        // Commands
         public AsyncRelayCommand LogoutCommand { get; }
         public ICommand OpenEditViewCommand { get; private set; }
         public ICommand DeleteCommand { get; }
+        public ICommand SaveEditCommand { get; private set; }
 
-        public event EventHandler RequestEditView;
 
-        private readonly INavigationService _navigationService;
-
-        // Konstruktor und Methoden
+        /// <summary>
+        /// Constructor initializing commands and services.
+        /// </summary>
         public DashboardViewModel(INavigationService navigationService, BackendService backendService)
         {
             _backendService = backendService;
@@ -64,27 +88,13 @@ namespace SkiServiceWPF.ViewModels
             SaveEditCommand = new RelayCommandNotGeneric(SaveEdit);
         }
 
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-
-        public ObservableCollection<RegistrationModel> Registrations
-        {
-            get => _registrations;
-            set
-            {
-                _registrations = value;
-                OnPropertyChanged(nameof(Registrations));
-            }
-        }
-
+        // Method to check if logout can be executed
         private bool CanExecuteLogout()
         {
             return true;
         }
 
+        // Method to perform logout operation
         private async Task ExecuteLogout()
         {
             MessageBoxResult result = MessageBox.Show("Möchten Sie sich wirklich abmelden?", "Abmeldung", MessageBoxButton.YesNo);
@@ -94,6 +104,7 @@ namespace SkiServiceWPF.ViewModels
             }
         }
 
+        // Command execution for opening the edit view
         private void OnOpenEditViewCommandExecuted()
         {
             var selectedRegistration = SelectionHelper.Selected as RegistrationModel;
@@ -107,7 +118,7 @@ namespace SkiServiceWPF.ViewModels
             IsEditViewActive = true;
         }
 
-
+        // Method to execute the delete command
         private async void ExecuteDeleteCommand()
         {
             var selectedRegistration = SelectionHelper.Selected as RegistrationModel;
@@ -117,7 +128,7 @@ namespace SkiServiceWPF.ViewModels
                 return;
             }
 
-            var confirmCancelWindow = new DeleteWindow // Ändern Sie den Namen des Fensters entsprechend
+            var confirmCancelWindow = new DeleteWindow
             {
                 DataContext = selectedRegistration
             };
@@ -125,7 +136,6 @@ namespace SkiServiceWPF.ViewModels
             var dialogResult = confirmCancelWindow.ShowDialog();
             if (dialogResult == true)
             {
-                // Ändern des Status auf "storniert" statt des Löschens
                 selectedRegistration.Status = "storniert";
                 var success = await _backendService.UpdateRegistrationAsync(selectedRegistration);
                 if (success)
@@ -140,6 +150,7 @@ namespace SkiServiceWPF.ViewModels
             }
         }
 
+        // Method to save edits
         private async void SaveEdit()
         {
             var editModel = SelectionHelper.Selected as RegistrationModel;
@@ -162,5 +173,11 @@ namespace SkiServiceWPF.ViewModels
                 MessageBox.Show("Kein Auftrag ausgewählt.");
             }
         }
+
+        // Property change notification
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        } 
     }
 }

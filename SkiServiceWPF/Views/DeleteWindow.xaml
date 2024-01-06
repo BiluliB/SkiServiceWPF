@@ -3,39 +3,54 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SkiServiceWPF.Views"
         xmlns:helpers="clr-namespace:SkiServiceWPF.Helpers"
         mc:Ignorable="d"
         Title="Auftrag löschen?" Height="350" Width="500" MinHeight="350" MinWidth="500" MaxHeight="350" MaxWidth="500"
         WindowStartupLocation="CenterScreen">
+
+    <!-- Resources for the Window -->
     <Window.Resources>
+
+        <!-- DateTimeConverter used for date formatting -->
         <helpers:DateTimeConverter x:Key="DateTimeConverter"/>
     </Window.Resources>
+    
     <Grid>
+        
+        <!-- Row definitions for layout -->
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition Height="47*"/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
+
+        <!-- Top section asking for confirmation -->
         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Grid.Row="0">
             <Image HorizontalAlignment="Left" Height="30" Margin="10"  VerticalAlignment="Center" Width="30" Source="..\Assets\Icons\muelleimer.png"/>
             <Label Content="Sind Sie sicher, dass Sie diesen Serviceauftrag stornieren möchten?" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="390" Height="40" FontSize="12" FontWeight="Bold"/>
         </StackPanel>
+
+        <!-- Middle section displaying order details -->
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="1">
             <Image HorizontalAlignment="Left" Height="100" Margin="10"  VerticalAlignment="Center" Width="100" Source="..\Assets\Icons\dokument.png"/>
             <StackPanel Orientation="Vertical" Margin="-2">
                 <Label Content="Auftrag zum stornieren:" FontWeight="Bold"/>
+
+                <!-- Binding order details to labels -->
                 <Label Content="{Binding RegistrationId}" />
                 <Label Content="{Binding LastName}" />
                 <Label Content="{Binding FirstName}" />
                 <Label Content="{Binding FirstName}" />
                 <Label Content="{Binding Service}" />
+
+                <!-- DateTimeConverter used for formatting pickup date -->
                 <Label Content="{Binding PickupDate, Converter={StaticResource DateTimeConverter}}" />
                 <Label Content="{Binding Status}" />
                 <Label Content="{Binding Priority}" />
             </StackPanel>
         </StackPanel>
 
+        <!-- Bottom section with Yes/No buttons for confirmation -->
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Row="2" Margin="5">
             <Button Content="Ja, stornieren" Width="80" Height="30" Click="YesButton_Click"/>
             <Button Content="Nein" Width="80" Height="30" Margin="10,0,0,0" Click="NoButton_Click"/>

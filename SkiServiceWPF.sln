@@ -5,7 +5,9 @@ VisualStudioVersion = 17.9.34407.89
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkiServiceWPF", "SkiServiceWPF\SkiServiceWPF.csproj", "{5FC220F1-B0F8-4D63-9CE4-ED1EAA5A4F56}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkiService.Tests", "SkiService.Tests\SkiService.Tests.csproj", "{7E88B4CA-6428-419D-A4D5-147AD01619A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkiService.Tests", "SkiService.Tests\SkiService.Tests.csproj", "{2F56CC4D-DF4A-4367-9A3C-3531324BA9FF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JetstreamSkiserviceAPI", "JetstreamSkiserviceAPI\JetstreamSkiserviceAPI\JetstreamSkiserviceAPI.csproj", "{51D7AC11-4746-4A95-8ABB-978601A5A393}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +19,14 @@ Global
 		{5FC220F1-B0F8-4D63-9CE4-ED1EAA5A4F56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FC220F1-B0F8-4D63-9CE4-ED1EAA5A4F56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FC220F1-B0F8-4D63-9CE4-ED1EAA5A4F56}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7E88B4CA-6428-419D-A4D5-147AD01619A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7E88B4CA-6428-419D-A4D5-147AD01619A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7E88B4CA-6428-419D-A4D5-147AD01619A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7E88B4CA-6428-419D-A4D5-147AD01619A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F56CC4D-DF4A-4367-9A3C-3531324BA9FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F56CC4D-DF4A-4367-9A3C-3531324BA9FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F56CC4D-DF4A-4367-9A3C-3531324BA9FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F56CC4D-DF4A-4367-9A3C-3531324BA9FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51D7AC11-4746-4A95-8ABB-978601A5A393}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51D7AC11-4746-4A95-8ABB-978601A5A393}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51D7AC11-4746-4A95-8ABB-978601A5A393}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51D7AC11-4746-4A95-8ABB-978601A5A393}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

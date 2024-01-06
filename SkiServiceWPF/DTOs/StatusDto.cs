@@ -1,9 +1,10 @@
-﻿using SkiServiceWPF.DTOs;
-using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace SkiServiceWPF.DTOs
 {
+    /// <summary>
+    /// Data Transfer Object for status.
+    /// </summary>
     public class StatusDto
     {
         [JsonProperty("statusId")]
@@ -15,5 +16,4 @@ namespace SkiServiceWPF.DTOs
         [JsonProperty("registration")]
         public List<RegistrationsDto> Registrations { get; set; } = new List<RegistrationsDto>();
     }
-
 }

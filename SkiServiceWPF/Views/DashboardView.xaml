@@ -7,7 +7,9 @@
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
 
+    <!-- Resource definitions for UI elements -->
     <UserControl.Resources>
+        <!-- Style for RibbonTabHeader -->
         <Style TargetType="RibbonTabHeader">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
@@ -21,8 +23,11 @@
             </Setter>
         </Style>
 
+        <!-- Style for RibbonGroupBox -->
         <DataTemplate x:Key="TreeViewItemTemplate">
             <StackPanel Orientation="Horizontal">
+                
+                <!-- Image with style change on TreeViewItem expand -->
                 <Image Width="16" Height="16" x:Name="Icon">
                     <Image.Style>
                         <Style TargetType="Image">
@@ -35,50 +40,58 @@
                         </Style>
                     </Image.Style>
                 </Image>
+
+                <!-- Display text for each item -->
                 <TextBlock Text="{Binding}" Margin="5,0" />
             </StackPanel>
         </DataTemplate>
-        
+
+        <!-- Converter for visibility based on boolean values -->
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
     <Grid>
-        <!-- MainGrid for two lines: One for Ribbon and one for Menu and their contents -->
+
+        <!-- Main grid layout -->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Ribbon and Menu -->
             <RowDefinition Height="*"/>
-            <!-- Content -->
         </Grid.RowDefinitions>
 
-        <!-- Menu -->
+        <!-- Top menu and ribbon section -->
         <DockPanel Grid.Row="0">
-            <Menu DockPanel.Dock="Top" Height="25">
 
+            <!-- Menu with various options like Edit, Settings, Help -->
+            <Menu DockPanel.Dock="Top" Height="25">                
                 <MenuItem Header="Bearbeiten" Height="25" >
+
+                    <!-- Sub-menu items -->
                     <MenuItem Header="Editieren" Height="25"/>
                     <MenuItem Header="Löschen" Height="25"/>
                     <MenuItem Header="Hinzufügen" Height="25"/>
                 </MenuItem>
 
+                <!-- Settings menu with language settings and logout -->
                 <MenuItem Header="Einstellung" Height="25">
                     <MenuItem Header="Sprache Einstellen" Height="25"/>
                     <Separator/>
                     <MenuItem Header="Logout"/>
                 </MenuItem>
 
+                <!-- Help menu with GitHub repository and about -->
                 <MenuItem Header="Hilfe" Height="25">
                     <MenuItem Header="GitHub Repository (Updates)"/>
                     <MenuItem Header="Über Ski Service WPF"/>
                 </MenuItem>
             </Menu>
-            <!-- Ribbon -->
+
+            <!-- Ribbon with buttons for different functionalities like Edit, Delete -->
             <Fluent:Ribbon Height="90">
                 <Fluent:RibbonTabItem Header="" Height="0" Width="0">
                     <Fluent:RibbonGroupBox Width="190">
                         <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                             <Fluent:Button Header="Editieren" Icon=".\Assets\Images\pen.png" LargeIcon=".\Assets\Images\pen.png" Command="{Binding OpenEditViewCommand}" ToolTip="Auf ein Auftrag klicken um zu editieren"/>
                             <Fluent:Button Header="Löschen" Icon=".\Assets\Images\trashcan.png" LargeIcon=".\Assets\Images\trashcan.png" Margin=" 10,0,0,0" Command="{Binding DeleteCommand}" ToolTip="Auf ein Auftrag klicken zum löschen/stornieren."/>
-                            <Fluent:Button Header="Hinzufügen" Icon=".\Assets\Images\add.png" Margin=" 7,0,0,0"/>
+                            <!-- <Fluent:Button Header="Hinzufügen" Icon=".\Assets\Images\add.png" Margin=" 7,0,0,0"/> -->
                         </StackPanel>
                     </Fluent:RibbonGroupBox>
                     <Fluent:RibbonGroupBox Visibility="{Binding IsEditViewActive, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -87,7 +100,7 @@
                                            Click="ReturnToListView_Click"
                                            Icon=".\Assets\Icons\zurueck.png"
                                            LargeIcon=".\Assets\Icons\zurueck.png"
-                                           Visibility="{Binding IsEditViewActive, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                                           Visibility="{Binding IsEditViewActive, Converter={StaticResource BooleanToVisibilityConverter}}"
                                            ToolTip="Zurück zur Liste"/>
                             <Fluent:Button Header="Speichern"
                                            Icon=".\Assets\Icons\speichern.png"
@@ -101,6 +114,7 @@
             </Fluent:Ribbon>
         </DockPanel>
 
+        <!-- Logout button -->
         <Button Content="Logout" Command="{Binding LogoutCommand}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,53,4,0" Width="86" />
 
 
@@ -110,7 +124,7 @@
             <Button Content="Suchen" Width="86" Margin="10,0,0,0" Click="SearchButton_Click"/>
         </DockPanel>
 
-        <!-- Second Grid for TreeView and ListViewUserControl -->
+        <!-- Main content area with TreeView and ListViewUserControl -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="190"/>
@@ -118,6 +132,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
+            <!-- TreeView for categories like All Orders, Open Orders, etc. -->
             <TreeView Grid.Column="0">
                 <TreeViewItem Header="Alle Aufträge" MouseDoubleClick="TreeViewItem_MouseDoubleClick"  HeaderTemplate="{StaticResource TreeViewItemTemplate}">
                 </TreeViewItem>
@@ -129,10 +144,10 @@
                 </TreeViewItem> 
             </TreeView>
 
-            <!-- GridSplitter -->
+            <!-- GridSplitter for resizing panels -->
             <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns"/>
 
-            <!-- ContentControl: ListViewUserControl and EditViewUserControl -->
+            <!-- Placeholder for dynamically changing content -->
             <Image x:Name="DashboardImage" Source="../Assets/Images/dashboardImage.png" Grid.Column="2" Margin="0,40,0,0"/>
             <ContentControl x:Name="ContentPlaceholder" Grid.Column="2" Content="{Binding CurrentView}" />
         </Grid>

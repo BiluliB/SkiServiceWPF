@@ -6,7 +6,6 @@ using SkiServiceWPF.Services;
 using SkiServiceWPF.ViewModel;
 using SkiServiceWPF.ViewModels;
 using SkiServiceWPF.Views;
-using System.ComponentModel;
 using System.IO;
 using System.Windows;
 
