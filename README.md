@@ -1,4 +1,4 @@
-# SkiServiceWPF Anwendung
+ # SkiServiceWPF Anwendung
 
 # Disclaimer
 
@@ -14,7 +14,7 @@ Nachdem Sie das Projekt geklont haben, müssen Sie die Startup-Einstellungen in 
 
    - Klicken Sie im Solution Explorer mit der rechten Maustaste auf die Lösung und wählen Sie „Properties“ (Eigenschaften).
    - Wechseln Sie im linken Menü zu „Common Properties“ > „Startup Project“.
-   - Wählen Sie entweder „Single startup project“ (Einzelnes Startprojekt) und wählen Sie das Hauptprojekt aus der Liste aus, oder wählen Sie „Multiple startup projects“ (Mehrere Startprojekte) und setzen Sie die gewünschten Projekte auf „Start“.
+   - Wählen Sie „Multiple startup projects“ (Mehrere Startprojekte) und setzen Sie die gewünschten Projekte auf „Start“, das dass Backend und die WPF Anwendung gestartet wird.
 
 3. **Anwenden der Einstellungen**:
    - Nachdem Sie Ihre Auswahl getroffen haben, klicken Sie auf „OK“, um die Einstellungen zu speichern.
