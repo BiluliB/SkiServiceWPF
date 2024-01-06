@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Name": "SkiServiceWPF\\SkiServiceWPF.csproj",
+        "Action": "Start"
+      },
+      {
+        "Name": "JetstreamSkiserviceAPI\\JetstreamSkiserviceAPI\\JetstreamSkiserviceAPI.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
