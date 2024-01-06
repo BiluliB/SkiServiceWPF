@@ -28,4 +28,8 @@
     <ProjectReference Include="..\SkiServiceWPF\SkiServiceWPF.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TestResults\" />
+  </ItemGroup>
+
 </Project>
