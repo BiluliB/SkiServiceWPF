@@ -1,24 +1,27 @@
 ﻿using SkiServiceWPF.Models;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SkiServiceWPF.ViewModels
 {
-    
+    /// <summary>
+    /// ViewModel for the EditView UserControl.
+    /// </summary>
     public class EditViewUserControlModel
     {
+        public RegistrationModel Model { get; set; }
+
         public ObservableCollection<DataDropdown> StatusDropdown { get; set; }
         public ObservableCollection<DataDropdown> PriorityDropdown { get; set; }
         public ObservableCollection<DataDropdown> ServiceDropdown { get; set; }
-        public RegistrationModel Model { get; set; }
+        
 
         public DataDropdown SelectedStatus { get; set; }
         public DataDropdown SelectedPriority { get; set; }
         public DataDropdown SelectedService { get; set; }
+
+        /// <summary>
+        /// Initializes the ViewModel with registrationModel and dropdowns.
+        /// </summary>
         public EditViewUserControlModel(Models.RegistrationModel registrationModel)
         {
             Model = registrationModel;

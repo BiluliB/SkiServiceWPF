@@ -1,14 +1,8 @@
-﻿using SkiServiceWPF.ViewModels;
-using System.Diagnostics;
+﻿using SkiServiceWPF.Common;
+using SkiServiceWPF.Models;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Data;
-using System.Windows.Media;
-using System.Globalization;
-using SkiServiceWPF.Models;
-using SkiServiceWPF.Common;
-using System.Collections.ObjectModel;
 
 
 namespace SkiServiceWPF.Views
@@ -20,6 +14,10 @@ namespace SkiServiceWPF.Views
     {
         private DashboardView _dashboardView;
 
+        /// <summary>
+        /// Initializes the UserControl and subscribes to the OnSearch event of the DashboardView.
+        /// </summary>
+        /// <param name="dashboardView">DashboardView to interact with.</param>
         public ListViewUserControl(DashboardView dashboardView)
         {
             InitializeComponent();
@@ -29,6 +27,9 @@ namespace SkiServiceWPF.Views
             _dashboardView.OnSearch += DashboardView_OnSearch;
         }
 
+        /// <summary>
+        /// Handles the UserControl's Unloaded event, unsubscribing from the OnSearch event.
+        /// </summary>
         private void ListViewUserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             if (_dashboardView != null)
@@ -42,6 +43,10 @@ namespace SkiServiceWPF.Views
             FilterItems(searchText);
         }
 
+        /// <summary>
+        /// Filters the DataGrid items based on the provided search text.
+        /// </summary>
+        /// <param name="searchText">Text used for filtering the items.</param>
         public void FilterItems(string searchText)
         {
             var listViewItems = DataGrid.ItemsSource as ObservableCollection<RegistrationModel>;
@@ -66,6 +71,9 @@ namespace SkiServiceWPF.Views
             DataGrid.ItemsSource = filteredItems;
         }
 
+        /// <summary>
+        /// Updates the selected item in the DataGrid when the selection changes.
+        /// </summary>
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
            var grid = sender as DataGrid;

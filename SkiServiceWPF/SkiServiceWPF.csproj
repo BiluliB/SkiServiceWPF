@@ -10,9 +10,13 @@
 
   <ItemGroup>
     <Compile Remove="Converters\**" />
+    <Compile Remove="Resources\**" />
     <EmbeddedResource Remove="Converters\**" />
+    <EmbeddedResource Remove="Resources\**" />
     <None Remove="Converters\**" />
+    <None Remove="Resources\**" />
     <Page Remove="Converters\**" />
+    <Page Remove="Resources\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -62,10 +66,6 @@
     <Content Include="Assets\Images\pen.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-	<ItemGroup>
-    <Folder Include="Resources\" />
   </ItemGroup>
 
   <ItemGroup>

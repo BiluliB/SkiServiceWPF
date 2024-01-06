@@ -1,8 +1,10 @@
-﻿using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 namespace SkiServiceWPF.Commands
 {
+    /// <summary>
+    /// Non-generic command for action execution.
+    /// </summary>
     public class RelayCommandNotGeneric : ICommand
     {
         private readonly Action _execute;

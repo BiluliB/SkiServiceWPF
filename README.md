@@ -1,5 +1,54 @@
 # SkiServiceWPF Anwendung
 
+# Disclaimer
+
+## Konfiguration der Startup-Einstellung nach dem Klonen
+
+Nachdem Sie das Projekt geklont haben, müssen Sie die Startup-Einstellungen in Visual Studio konfigurieren, um sicherzustellen, dass die richtigen Projekte beim Starten der Lösung ausgeführt werden.
+
+1. **Öffnen Sie die Lösung in Visual Studio**:
+
+   - Öffnen Sie die `.sln`-Datei des Projekts in Visual Studio.
+
+2. **Einstellung des Startprojekts**:
+
+   - Klicken Sie im Solution Explorer mit der rechten Maustaste auf die Lösung und wählen Sie „Properties“ (Eigenschaften).
+   - Wechseln Sie im linken Menü zu „Common Properties“ > „Startup Project“.
+   - Wählen Sie entweder „Single startup project“ (Einzelnes Startprojekt) und wählen Sie das Hauptprojekt aus der Liste aus, oder wählen Sie „Multiple startup projects“ (Mehrere Startprojekte) und setzen Sie die gewünschten Projekte auf „Start“.
+
+3. **Anwenden der Einstellungen**:
+   - Nachdem Sie Ihre Auswahl getroffen haben, klicken Sie auf „OK“, um die Einstellungen zu speichern.
+   - Jetzt können Sie die Lösung starten, und die ausgewählten Projekte werden entsprechend Ihrer Konfiguration gestartet.
+
+Diese Einstellung ist besonders wichtig, wenn Ihre Lösung aus mehreren Projekten besteht, die zusammenarbeiten müssen, wie z.B. einem Frontend und einem Backend.
+
+---
+
+**Um die ListView nach einem Suchvorgang oder Löschen zu aktualisieren, muss zweimal auf "Alle Aufträge" im Preview-Doppel geklickt werden.**
+
+---
+
+# Inhaltsverzeichnis
+
+- [Disclaimer](#disclaimer)
+- [Überblick](#überblick)
+- [Technische Details](#technische-details)
+  - [Hervorhebungen](#hervorhebungen)
+- [Installation](#installation)
+  - [Voraussetzungen](#voraussetzungen)
+  - [Schritte zur Installation](#schritte-zur-installation)
+  - [JetstreamSkiserviceAPI](#jetstreamskiserviceapi)
+- [Benutzung](#benutzung)
+  - [Anmeldung](#anmeldung)
+  - [Dashboard](#dashboard)
+  - [Auftragsverwaltung](#auftragsverwaltung)
+  - [Weitere Funktionen](#weitere-funktionen)
+- [Konfiguration](#konfiguration)
+  - [Schlüsselelemente der Konfiguration](#schlüsselelemente-der-konfiguration)
+- [Tests](#tests)
+- [Beitrag](#beitrag)
+- [Mitwirkende](#mitwirkende)
+
 ## Überblick
 
 SkiServiceWPF ist eine WPF-basierte Anwendung zur Verwaltung von Skiservice-Aufträgen. Diese Anwendung ermöglicht es Benutzern, Aufträge zu erstellen, zu bearbeiten und den Status von Skiservice-Aufträgen effizient zu verfolgen.
@@ -87,6 +136,10 @@ Infos für das JetstreamSkiserviceAPI Backend unter diesem Link:
 https://github.com/mahgoe/ICT-Module295-JetstreamWebAPI
 
 ## Benutzung
+
+# Disclaimer
+
+**Um die ListView nach einem Suchvorgang oder Löschen zu aktualisieren, muss zweimal auf "Alle Aufträge" im Preview-Doppel geklickt werden.**
 
 Die SkiServiceWPF-Anwendung bietet eine intuitive und benutzerfreundliche grafische Oberfläche, die speziell für die effiziente Verwaltung von Skiservice-Aufträgen entwickelt wurde. Die Benutzung der Anwendung umfasst mehrere Schlüsselaspekte:
 

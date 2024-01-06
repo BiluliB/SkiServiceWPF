@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using System.Windows.Input;
 
 namespace SkiServiceWPF.Commands
@@ -37,7 +32,6 @@ namespace SkiServiceWPF.Commands
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error during execution: {ex.Message}");
-                // Handle exceptions if needed
             }
         }
 

@@ -32,5 +32,4 @@ namespace SkiServiceWPF.Commands
             remove { CommandManager.RequerySuggested -= value; }
         }
     }
-
 }
